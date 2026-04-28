@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Registro CTO - Técnico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: #151A27;
+            --border-color: #2A3441;
+            --border-focus: #3B82F6;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --btn-primary: #3B82F6;
+            --btn-primary-hover: #2563EB;
+            --btn-secondary: #1E293B;
+            --btn-secondary-hover: #334155;
+            --success: #10B981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; }
+        
+        .app-container {
+            width: 100%; max-width: 480px; min-height: 100vh;
+            background-color: var(--bg-card); display: flex; flex-direction: column;
+            border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color);
+        }
+
+        .app-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--border-color);
+            background-color: #111520; position: sticky; top: 0; z-index: 10;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .header-title h1 { font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .header-title p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+        
+        .status-online { font-size: 0.8rem; color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+        .form-container { padding: 24px; flex: 1; overflow-y: auto; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input { width: 100%; background-color: #0B0F19; border: 1px solid var(--border-color); color: var(--text-main); padding: 14px 16px; border-radius: 8px; font-size: 1rem; transition: all 0.2s ease; }
+        .form-group input::placeholder { color: #475569; }
+        .form-group input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        input[readonly] { background-color: rgba(0,0,0,0.2) !important; color: var(--text-muted) !important; cursor: not-allowed; }
+
+        .form-row { display: flex; gap: 12px; margin-bottom: 16px; }
+        .form-row .form-group { margin-bottom: 0; }
+        .form-group.half { flex: 1; }
+
+        .input-with-icon { position: relative; }
+        .input-with-icon input { padding-right: 40px; }
+        .input-with-icon i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+
+        .input-with-button { display: flex; gap: 8px; }
+        .input-with-button input { flex: 1; }
+        .btn-icon { background-color: var(--btn-secondary); color: var(--btn-primary); border: 1px solid var(--border-color); border-radius: 8px; width: 52px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.2rem; transition: all 0.2s ease; }
+        .btn-icon:hover { background-color: var(--btn-secondary-hover); }
+
+        .divider { border: none; border-top: 1px dashed var(--border-color); margin: 20px 0 20px 0; }
+
+        .form-actions { display: flex; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .btn { padding: 16px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-secondary { background-color: var(--btn-secondary); color: var(--text-main); flex: 1; }
+        .btn-secondary:hover { background-color: var(--btn-secondary-hover); }
+        .btn-primary { background-color: var(--btn-primary); color: white; flex: 2; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover); }
+
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: var(--success); color: white; padding: 14px 24px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 1000; white-space: nowrap; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-title">
+                <h1>REGISTRO TÉCNICO</h1>
+                <p>Preenchimento em Campo</p>
+            </div>
+            <div class="status-online"><i class="fa-solid fa-wifi"></i> Online</div>
+        </header>
+
+        <main class="form-container">
+            <form id="cto-form">
+                
+                <div class="form-group">
+                    <label for="mac">MAC (Buscar / Confirmar)</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="mac" name="mac" placeholder="Digite ou selecione o MAC..." list="mac-list" required autocomplete="off">
+                        <i class="fa-solid fa-search"></i>
+                    </div>
+                    <datalist id="mac-list"></datalist>
+                </div>
+
+                <div class="form-group">
+                    <label for="cto">CTO DA CAIXA</label>
+                    <input type="text" id="cto" name="cto" placeholder="Ex: CTO.03.124" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="contrato">ID CONTRATO</label>
+                        <input type="text" id="contrato" name="contrato" placeholder="Automático" readonly>
+                    </div>
+                    <div class="form-group half">
+                        <label for="tipoCliente">TIPO CLIENTE</label>
+                        <input type="text" id="tipoCliente" name="tipoCliente" placeholder="Automático" readonly>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="form-group">
+                    <label for="localizacao">LOCALIZAÇÃO EXATA (GPS do Poste)</label>
+                    <div class="input-with-button">
+                        <input type="text" id="localizacao" name="localizacao" placeholder="Aguardando GPS..." required readonly>
+                        <button type="button" id="btn-gps" class="btn-icon" title="Atualizar GPS"><i class="fa-solid fa-location-crosshairs"></i></button>
+                    </div>
+                    <small style="color: #94A3B8; font-size: 0.65rem; display: block; margin-top: 4px;">Fique abaixo da caixa e aguarde o Erro ficar abaixo de 10m para precisão máxima.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lacre">LACRE A COLOCAR</label>
+                    <input type="text" id="lacre" name="lacre" placeholder="Ex: BDO002205" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sinalCto">SINAL DA CTO (dBm)</label>
+                    <input type="number" step="0.01" id="sinalCto" name="sinalCto" placeholder="Ex: -24.53" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancelar">Limpar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar p/ Central</button>
+                </div>
+            </form>
+        </main>
+        
+        <div id="toast" class="toast hidden">
+            <i class="fa-solid fa-check-circle"></i>
+            <span>Enviado!</span>
+        </div>
+    </div>
+
+    <script>
+        const mockDatabase = [
+            { mac: 'FHTT2320B318', cto: '', contrato: '23016', tipoCliente: '' },
+            { mac: 'FHTT928D3768', cto: 'CTO.03.124', contrato: '26529', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGCCEF5FFB', cto: 'CTO.03.124', contrato: '20154', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGCE89DC0B', cto: 'CTO.08.124', contrato: '', tipoCliente: '' },
+            { mac: 'ZTEGD285DC62', cto: 'CTO.04.124', contrato: '55700', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD4E539A5', cto: 'CTO.02.124', contrato: '25685', tipoCliente: 'BD PF' },
+            { mac: 'FHTT9116BA28', cto: '', contrato: '22926', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD4E53911', cto: 'CTO.03.124', contrato: '17222', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD1E634CE', cto: 'CTO.03.124', contrato: '23754', tipoCliente: 'BD PF' },
+            { mac: 'FHTT11FC47A0', cto: 'CTO.03.124', contrato: '23356', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGC4ACB2D0', cto: 'CTO.06.124', contrato: '28202', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD703B93D', cto: 'CTO.06.124', contrato: 'GF', tipoCliente: 'GF' },
+            { mac: 'ZTEGD42DDE16', cto: 'CTO.05.124', contrato: '15797', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGDB03E0DD', cto: '', contrato: '83311', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD8D5B89B', cto: '', contrato: '83543', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD2826F06', cto: '', contrato: '', tipoCliente: '' },
+            { mac: 'ZTEGD3E2A6EB', cto: '', contrato: 'GF', tipoCliente: 'GF' },
+            { mac: 'ZTEGD8D99F6B', cto: 'CTO.03.124', contrato: '78844', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD4D08055', cto: 'CTO.02.124', contrato: '61302', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD4242DD0', cto: 'CTO.06.124', contrato: '23232', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD1E637C6', cto: '', contrato: '42086', tipoCliente: '' },
+            { mac: 'ZTEGDAD3E6CE', cto: 'CTO.08.124', contrato: '86283', tipoCliente: 'BD PF' },
+            { mac: 'ZTEGD703B9BE', cto: 'CTO.02.124', contrato: 'GF', tipoCliente: 'GF' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj1JsKa0UIVCwtKoelGpxz1uTr8AaFuFlB8bKCroZpjXZcJJyIgAf2b_5VKSj62iU/exec";
+
+            const macInput = document.getElementById('mac');
+            const ctoInput = document.getElementById('cto');
+            const contratoInput = document.getElementById('contrato');
+            const tipoClienteInput = document.getElementById('tipoCliente');
+            const datalist = document.getElementById('mac-list');
+            const locInput = document.getElementById('localizacao');
+            const btnGps = document.getElementById('btn-gps');
+            const form = document.getElementById('cto-form');
+            const btnCancel = document.getElementById('btn-cancelar');
+            const toast = document.getElementById('toast');
+            const toastMsg = toast.querySelector('span');
+
+            mockDatabase.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.mac;
+                datalist.appendChild(option);
+            });
+
+            macInput.addEventListener('input', (e) => {
+                let val = e.target.value.toUpperCase().replace(/[^A-F0-9]/g, '');
+                if (val.length > 12) val = val.substring(0, 12);
+                e.target.value = val;
+
+                const found = mockDatabase.find(x => x.mac === val);
+                if (found) {
+                    ctoInput.value = found.cto;
+                    contratoInput.value = found.contrato;
+                    tipoClienteInput.value = found.tipoCliente;
+                } else {
+                    contratoInput.value = '';
+                    tipoClienteInput.value = '';
+                }
+            });
+
+            let watchId;
+            function getGPS() {
+                if (watchId) navigator.geolocation.clearWatch(watchId);
+                locInput.value = "Calculando GPS Exato...";
+                btnGps.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+                if (navigator.geolocation) {
+                    watchId = navigator.geolocation.watchPosition(
+                        (position) => {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            const acc = position.coords.accuracy;
+                            locInput.value = `${lat.toFixed(6)}, ${lng.toFixed(6)} (Erro: ${acc.toFixed(0)}m)`;
+                            btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                            if (acc <= 10) navigator.geolocation.clearWatch(watchId);
+                        },
+                        (error) => {
+                            locInput.value = "Céu aberto necessário / Permissão negada";
+                            btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                        },
+                        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+                    );
+                } else {
+                    locInput.value = "Dispositivo sem GPS";
+                }
+            }
+            getGPS();
+            btnGps.addEventListener('click', getGPS);
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (SCRIPT_URL === "SUA_URL_AQUI" || !SCRIPT_URL.startsWith("http")) {
+                    alert("Erro: URL da Planilha não configurada!");
+                    return;
+                }
+
+                const btnSubmit = form.querySelector('button[type="submit"]');
+                const originalBtnText = btnSubmit.innerHTML;
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitindo...';
+
+                const formData = new URLSearchParams();
+                formData.append('mac', macInput.value.trim());
+                formData.append('cto', ctoInput.value.trim());
+                formData.append('localizacao', locInput.value.trim().split(' (')[0]);
+                formData.append('contrato', contratoInput.value.trim());
+                formData.append('lacre', document.getElementById('lacre').value.trim());
+                formData.append('sinalCto', document.getElementById('sinalCto').value.trim());
+                formData.append('tipoCliente', tipoClienteInput.value.trim());
+                formData.append('timestamp', new Date().toLocaleString('pt-BR'));
+
+                try {
+                    await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+                    showToast("Recebido na Central com Sucesso!");
+                    form.reset();
+                    macInput.focus();
+                    getGPS();
+                } catch (err) {
+                    alert("Erro fatal: Aparelho sem internet.");
+                }
+
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalBtnText;
+            });
+
+            btnCancel.addEventListener('click', () => { if (confirm('Apagar tudo?')) { form.reset(); getGPS(); } });
+
+            function showToast(msg) {
+                toastMsg.innerText = msg;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 4000);
+            }
+
+            document.getElementById('lacre').addEventListener('input', e => e.target.value = e.target.value.toUpperCase());
+            document.getElementById('cto').addEventListener('input', e => e.target.value = e.target.value.toUpperCase());
+        });
+    </script>
+</body>
+</html>
