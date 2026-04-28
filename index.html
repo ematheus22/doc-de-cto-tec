@@ -7,40 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-        :root {
-            --bg-main: #0B0F19;
-            --bg-card: #151A27;
-            --border-color: #2A3441;
-            --border-focus: #3B82F6;
-            --text-main: #E2E8F0;
-            --text-muted: #94A3B8;
-            --btn-primary: #3B82F6;
-            --btn-primary-hover: #2563EB;
-            --btn-secondary: #1E293B;
-            --btn-secondary-hover: #334155;
-            --success: #10B981;
-        }
-
+        :root { --bg-main: #0B0F19; --bg-card: #151A27; --border-color: #2A3441; --border-focus: #3B82F6; --text-main: #E2E8F0; --text-muted: #94A3B8; --btn-primary: #3B82F6; --btn-primary-hover: #2563EB; --btn-secondary: #1E293B; --btn-secondary-hover: #334155; --success: #10B981; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; }
-        
-        .app-container {
-            width: 100%; max-width: 480px; min-height: 100vh;
-            background-color: var(--bg-card); display: flex; flex-direction: column;
-            border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color);
-        }
-
-        .app-header {
-            padding: 20px 24px; border-bottom: 1px solid var(--border-color);
-            background-color: #111520; position: sticky; top: 0; z-index: 10;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background-color: var(--bg-card); display: flex; flex-direction: column; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); }
+        .app-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); background-color: #111520; position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
         .header-title h1 { font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
         .header-title p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
-        
         .status-online { font-size: 0.8rem; color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 6px; }
-
         .form-container { padding: 24px; flex: 1; overflow-y: auto; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -48,29 +22,23 @@
         .form-group input::placeholder { color: #475569; }
         .form-group input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
         input[readonly] { background-color: rgba(0,0,0,0.2) !important; color: var(--text-muted) !important; cursor: not-allowed; }
-
         .form-row { display: flex; gap: 12px; margin-bottom: 16px; }
         .form-row .form-group { margin-bottom: 0; }
         .form-group.half { flex: 1; }
-
         .input-with-icon { position: relative; }
         .input-with-icon input { padding-right: 40px; }
         .input-with-icon i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-
         .input-with-button { display: flex; gap: 8px; }
         .input-with-button input { flex: 1; }
         .btn-icon { background-color: var(--btn-secondary); color: var(--btn-primary); border: 1px solid var(--border-color); border-radius: 8px; width: 52px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.2rem; transition: all 0.2s ease; }
         .btn-icon:hover { background-color: var(--btn-secondary-hover); }
-
         .divider { border: none; border-top: 1px dashed var(--border-color); margin: 20px 0 20px 0; }
-
         .form-actions { display: flex; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); }
         .btn { padding: 16px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .btn-secondary { background-color: var(--btn-secondary); color: var(--text-main); flex: 1; }
         .btn-secondary:hover { background-color: var(--btn-secondary-hover); }
         .btn-primary { background-color: var(--btn-primary); color: white; flex: 2; }
         .btn-primary:hover { background-color: var(--btn-primary-hover); }
-
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: var(--success); color: white; padding: 14px 24px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 1000; white-space: nowrap; }
         .toast.show { transform: translateX(-50%) translateY(0); }
     </style>
@@ -87,7 +55,6 @@
 
         <main class="form-container">
             <form id="cto-form">
-                
                 <div class="form-group">
                     <label for="mac">MAC (Buscar / Confirmar)</label>
                     <div class="input-with-icon">
@@ -143,7 +110,7 @@
         
         <div id="toast" class="toast hidden">
             <i class="fa-solid fa-check-circle"></i>
-            <span>Enviado!</span>
+            <span>Enviado com Sucesso!</span>
         </div>
     </div>
 
@@ -175,6 +142,7 @@
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
+            // AQUI ESTÁ A SUA URL DO GOOGLE (Pronta para uso!)
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj1JsKa0UIVCwtKoelGpxz1uTr8AaFuFlB8bKCroZpjXZcJJyIgAf2b_5VKSj62iU/exec";
 
             const macInput = document.getElementById('mac');
@@ -195,8 +163,9 @@
                 datalist.appendChild(option);
             });
 
+            // Permitindo a digitação de qualquer letra para os MACs da ZTE, FHTT, etc
             macInput.addEventListener('input', (e) => {
-                let val = e.target.value.toUpperCase().replace(/[^A-F0-9]/g, '');
+                let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
                 if (val.length > 12) val = val.substring(0, 12);
                 e.target.value = val;
 
@@ -243,8 +212,8 @@
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                if (SCRIPT_URL === "SUA_URL_AQUI" || !SCRIPT_URL.startsWith("http")) {
-                    alert("Erro: URL da Planilha não configurada!");
+                if (SCRIPT_URL === "SUA_URL_AQUI_GERADA_NO_GOOGLE" || !SCRIPT_URL.startsWith("http")) {
+                    alert("Erro: Você esqueceu de colocar a URL da Planilha no código!");
                     return;
                 }
 
