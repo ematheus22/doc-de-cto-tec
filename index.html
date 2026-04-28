@@ -50,7 +50,7 @@
                 <h1>REGISTRO TÉCNICO</h1>
                 <p>Preenchimento em Campo</p>
             </div>
-            <div class="status-online"><i class="fa-solid fa-wifi"></i> Online</div>
+            <div id="status-sinc" class="status-online"><i class="fa-solid fa-spinner fa-spin"></i> Baixando...</div>
         </header>
 
         <main class="form-container">
@@ -115,61 +115,50 @@
     </div>
 
     <script>
-        const mockDatabase = [
-            { mac: 'FHTT2320B318', cto: '', contrato: '23016', tipoCliente: '' },
-            { mac: 'FHTT928D3768', cto: 'CTO.03.124', contrato: '26529', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGCCEF5FFB', cto: 'CTO.03.124', contrato: '20154', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGCE89DC0B', cto: 'CTO.08.124', contrato: '', tipoCliente: '' },
-            { mac: 'ZTEGD285DC62', cto: 'CTO.04.124', contrato: '55700', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD4E539A5', cto: 'CTO.02.124', contrato: '25685', tipoCliente: 'BD PF' },
-            { mac: 'FHTT9116BA28', cto: '', contrato: '22926', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD4E53911', cto: 'CTO.03.124', contrato: '17222', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD1E634CE', cto: 'CTO.03.124', contrato: '23754', tipoCliente: 'BD PF' },
-            { mac: 'FHTT11FC47A0', cto: 'CTO.03.124', contrato: '23356', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGC4ACB2D0', cto: 'CTO.06.124', contrato: '28202', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD703B93D', cto: 'CTO.06.124', contrato: 'GF', tipoCliente: 'GF' },
-            { mac: 'ZTEGD42DDE16', cto: 'CTO.05.124', contrato: '15797', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGDB03E0DD', cto: '', contrato: '83311', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD8D5B89B', cto: '', contrato: '83543', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD2826F06', cto: '', contrato: '', tipoCliente: '' },
-            { mac: 'ZTEGD3E2A6EB', cto: '', contrato: 'GF', tipoCliente: 'GF' },
-            { mac: 'ZTEGD8D99F6B', cto: 'CTO.03.124', contrato: '78844', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD4D08055', cto: 'CTO.02.124', contrato: '61302', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD4242DD0', cto: 'CTO.06.124', contrato: '23232', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD1E637C6', cto: '', contrato: '42086', tipoCliente: '' },
-            { mac: 'ZTEGDAD3E6CE', cto: 'CTO.08.124', contrato: '86283', tipoCliente: 'BD PF' },
-            { mac: 'ZTEGD703B9BE', cto: 'CTO.02.124', contrato: 'GF', tipoCliente: 'GF' }
-        ];
-
         document.addEventListener('DOMContentLoaded', () => {
-            // AQUI ESTÁ A SUA URL DO GOOGLE (Pronta para uso!)
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj1JsKa0UIVCwtKoelGpxz1uTr8AaFuFlB8bKCroZpjXZcJJyIgAf2b_5VKSj62iU/exec";
+            // AQUI ESTÁ A SUA URL DO GOOGLE!
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv9Q1HTteYqc8BVHKTGeXP_ilzlsGcEKJIOIRL89kIpmPktTEWb9cC813smPIJ1Y0/exec";
 
+            let databaseLive = [];
             const macInput = document.getElementById('mac');
             const ctoInput = document.getElementById('cto');
             const contratoInput = document.getElementById('contrato');
             const tipoClienteInput = document.getElementById('tipoCliente');
             const datalist = document.getElementById('mac-list');
+            const statusSinc = document.getElementById('status-sinc');
+            const toast = document.getElementById('toast');
+            const toastMsg = toast.querySelector('span');
             const locInput = document.getElementById('localizacao');
             const btnGps = document.getElementById('btn-gps');
             const form = document.getElementById('cto-form');
-            const btnCancel = document.getElementById('btn-cancelar');
-            const toast = document.getElementById('toast');
-            const toastMsg = toast.querySelector('span');
 
-            mockDatabase.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item.mac;
-                datalist.appendChild(option);
-            });
+            // 1. CARREGAR OS MACS DIRETAMENTE DA PLANILHA DO GOOGLE
+            async function loadDatabase() {
+                try {
+                    const res = await fetch(SCRIPT_URL);
+                    databaseLive = await res.json();
+                    
+                    datalist.innerHTML = '';
+                    databaseLive.forEach(item => {
+                        if(item.mac) {
+                            const option = document.createElement('option');
+                            option.value = item.mac;
+                            datalist.appendChild(option);
+                        }
+                    });
+                    statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Planilha Sincronizada';
+                } catch(err) {
+                    statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
+                    console.error("Erro ao puxar dados: ", err);
+                }
+            }
+            loadDatabase();
 
-            // Permitindo a digitação de qualquer letra para os MACs da ZTE, FHTT, etc
-            macInput.addEventListener('input', (e) => {
-                let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-                if (val.length > 12) val = val.substring(0, 12);
-                e.target.value = val;
-
-                const found = mockDatabase.find(x => x.mac === val);
+            // 2. BUSCAR O MAC E PREENCHER (SEM TRAVAR O TECLADO DO CELULAR)
+            function searchMAC() {
+                let typed = macInput.value.trim().toUpperCase();
+                
+                const found = databaseLive.find(x => x.mac.toUpperCase() === typed);
                 if (found) {
                     ctoInput.value = found.cto;
                     contratoInput.value = found.contrato;
@@ -178,8 +167,18 @@
                     contratoInput.value = '';
                     tipoClienteInput.value = '';
                 }
+            }
+            
+            // Reage quando o usuário solta o teclado ou escolhe da lista
+            macInput.addEventListener('input', searchMAC);
+            macInput.addEventListener('change', searchMAC);
+
+            // Formata o MAC só quando sai do campo para não bugar o Android
+            macInput.addEventListener('blur', (e) => {
+                e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
             });
 
+            // 3. GPS
             let watchId;
             function getGPS() {
                 if (watchId) navigator.geolocation.clearWatch(watchId);
@@ -209,13 +208,9 @@
             getGPS();
             btnGps.addEventListener('click', getGPS);
 
+            // 4. ENVIO PARA O GOOGLE
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-
-                if (SCRIPT_URL === "SUA_URL_AQUI_GERADA_NO_GOOGLE" || !SCRIPT_URL.startsWith("http")) {
-                    alert("Erro: Você esqueceu de colocar a URL da Planilha no código!");
-                    return;
-                }
 
                 const btnSubmit = form.querySelector('button[type="submit"]');
                 const originalBtnText = btnSubmit.innerHTML;
@@ -223,18 +218,19 @@
                 btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitindo...';
 
                 const formData = new URLSearchParams();
-                formData.append('mac', macInput.value.trim());
-                formData.append('cto', ctoInput.value.trim());
+                formData.append('mac', macInput.value.trim().toUpperCase());
+                formData.append('cto', ctoInput.value.trim().toUpperCase());
                 formData.append('localizacao', locInput.value.trim().split(' (')[0]);
                 formData.append('contrato', contratoInput.value.trim());
-                formData.append('lacre', document.getElementById('lacre').value.trim());
+                formData.append('lacre', document.getElementById('lacre').value.trim().toUpperCase());
                 formData.append('sinalCto', document.getElementById('sinalCto').value.trim());
                 formData.append('tipoCliente', tipoClienteInput.value.trim());
                 formData.append('timestamp', new Date().toLocaleString('pt-BR'));
 
                 try {
                     await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-                    showToast("Recebido na Central com Sucesso!");
+                    
+                    showToast("Enviado para a Planilha!");
                     form.reset();
                     macInput.focus();
                     getGPS();
@@ -246,16 +242,13 @@
                 btnSubmit.innerHTML = originalBtnText;
             });
 
-            btnCancel.addEventListener('click', () => { if (confirm('Apagar tudo?')) { form.reset(); getGPS(); } });
+            document.getElementById('btn-cancelar').addEventListener('click', () => { if (confirm('Apagar tudo?')) { form.reset(); getGPS(); } });
 
             function showToast(msg) {
                 toastMsg.innerText = msg;
                 toast.classList.add('show');
                 setTimeout(() => toast.classList.remove('show'), 4000);
             }
-
-            document.getElementById('lacre').addEventListener('input', e => e.target.value = e.target.value.toUpperCase());
-            document.getElementById('cto').addEventListener('input', e => e.target.value = e.target.value.toUpperCase());
         });
     </script>
 </body>
