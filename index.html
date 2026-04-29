@@ -127,8 +127,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // A sua NOVA URL já está aqui pronta:
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby9kMfVcUKNQZqN1avDoKJVehD0KTQj3nO_VogjScAINdTpmxvI02jP8BaPZ2XwCP4/exec";
+            // A SUA NOVA URL DEFINITIVA AQUI:
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-y4hGaFTF_jioONwCJwALNrNy2FM-iyiOdu89PX6-jCgf3Zlcj58PnojSt0pb0-s/exec";
 
             let fullDatabase = {};
             let currentMacs = [];
@@ -154,7 +154,7 @@
                     
                     slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
                     
-                    // Cria as opções de cada Aba que existe na sua planilha
+                    // Cria as opções de cada Aba
                     Object.keys(fullDatabase).forEach(sheetName => {
                         const opt = document.createElement('option');
                         opt.value = sheetName;
@@ -163,6 +163,14 @@
                     });
                     
                     statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas';
+
+                    // RECUPERA O ÚLTIMO SLOT SALVO NA MEMÓRIA DO CELULAR
+                    const savedSlot = localStorage.getItem('slotPonSalvo');
+                    if (savedSlot && fullDatabase[savedSlot]) {
+                        slotPonSelect.value = savedSlot;
+                        slotPonSelect.dispatchEvent(new Event('change')); // Força a atualização dos MACs
+                    }
+
                 } catch(err) {
                     statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
                 }
@@ -172,11 +180,16 @@
             // 2. QUANDO O TÉCNICO ESCOLHE A ABA (SLOT PON)
             slotPonSelect.addEventListener('change', (e) => {
                 const selectedSlot = e.target.value;
+                
                 if (!selectedSlot) {
+                    localStorage.removeItem('slotPonSalvo');
                     macInput.disabled = true;
                     macInput.placeholder = "Selecione o Slot Primeiro...";
                     return;
                 }
+
+                // Salva a escolha do técnico na memória do celular!
+                localStorage.setItem('slotPonSalvo', selectedSlot);
 
                 macInput.disabled = false;
                 macInput.placeholder = "Digite ou selecione o MAC...";
@@ -199,7 +212,7 @@
                 if (found) {
                     ctoInput.value = found.cto;
                     contratoInput.value = found.contrato;
-                    tipoClienteInput.value = found.tipoCliente;
+                    tipoClienteInput.value = found.tipoCliente; // Agora puxa certinho da Coluna H
                 } else {
                     contratoInput.value = '';
                     tipoClienteInput.value = '';
@@ -240,7 +253,7 @@
             getGPS();
             btnGps.addEventListener('click', getGPS);
 
-            // 5. ENVIO PARA O GOOGLE (NA MESMA ABA)
+            // 5. ENVIO PARA O GOOGLE
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
@@ -255,7 +268,7 @@
                 btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitindo...';
 
                 const formData = new URLSearchParams();
-                formData.append('slotPon', slotPonSelect.value); // Envia o nome da Aba para salvar nela!
+                formData.append('slotPon', slotPonSelect.value);
                 formData.append('mac', macInput.value.trim().toUpperCase());
                 formData.append('cto', ctoInput.value.trim().toUpperCase());
                 formData.append('localizacao', locInput.value.trim().split(' (')[0]);
@@ -269,9 +282,15 @@
                     await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
                     
                     showToast("Enviado para a Planilha!");
+                    
+                    // Salva o slot atual antes de limpar o form
+                    const slotAtual = slotPonSelect.value;
+                    
                     form.reset();
-                    macInput.disabled = true;
-                    macInput.placeholder = "Selecione o Slot Primeiro...";
+                    
+                    // Restaura o slot para o técnico não precisar preencher de novo
+                    slotPonSelect.value = slotAtual;
+                    
                     getGPS();
                 } catch (err) {
                     alert("Erro fatal: Aparelho sem internet.");
@@ -281,7 +300,14 @@
                 btnSubmit.innerHTML = originalBtnText;
             });
 
-            document.getElementById('btn-cancelar').addEventListener('click', () => { if (confirm('Apagar tudo?')) { form.reset(); getGPS(); } });
+            document.getElementById('btn-cancelar').addEventListener('click', () => { 
+                if (confirm('Apagar tudo?')) { 
+                    const slotAtual = slotPonSelect.value;
+                    form.reset(); 
+                    slotPonSelect.value = slotAtual;
+                    getGPS(); 
+                } 
+            });
 
             function showToast(msg) {
                 toastMsg.innerText = msg;
