@@ -18,10 +18,12 @@
         .form-container { padding: 24px; flex: 1; overflow-y: auto; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input { width: 100%; background-color: #0B0F19; border: 1px solid var(--border-color); color: var(--text-main); padding: 14px 16px; border-radius: 8px; font-size: 1rem; transition: all 0.2s ease; }
+        
+        .form-group input, .form-group select { width: 100%; background-color: #0B0F19; border: 1px solid var(--border-color); color: var(--text-main); padding: 14px 16px; border-radius: 8px; font-size: 1rem; transition: all 0.2s ease; }
         .form-group input::placeholder { color: #475569; }
-        .form-group input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
         input[readonly] { background-color: rgba(0,0,0,0.2) !important; color: var(--text-muted) !important; cursor: not-allowed; }
+        
         .form-row { display: flex; gap: 12px; margin-bottom: 16px; }
         .form-row .form-group { margin-bottom: 0; }
         .form-group.half { flex: 1; }
@@ -50,15 +52,23 @@
                 <h1>REGISTRO TÉCNICO</h1>
                 <p>Preenchimento em Campo</p>
             </div>
-            <div id="status-sinc" class="status-online"><i class="fa-solid fa-spinner fa-spin"></i> Baixando...</div>
+            <div id="status-sinc" class="status-online"><i class="fa-solid fa-spinner fa-spin"></i> Baixando Abas...</div>
         </header>
 
         <main class="form-container">
             <form id="cto-form">
+
+                <div class="form-group">
+                    <label for="slotPon">SLOT PON (Aba da Planilha)</label>
+                    <select id="slotPon" name="slotPon" required>
+                        <option value="">Aguardando Sincronização...</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="mac">MAC (Buscar / Confirmar)</label>
                     <div class="input-with-icon">
-                        <input type="text" id="mac" name="mac" placeholder="Digite ou selecione o MAC..." list="mac-list" required autocomplete="off">
+                        <input type="text" id="mac" name="mac" placeholder="Selecione o Slot Primeiro..." list="mac-list" required autocomplete="off" disabled>
                         <i class="fa-solid fa-search"></i>
                     </div>
                     <datalist id="mac-list"></datalist>
@@ -88,7 +98,7 @@
                         <input type="text" id="localizacao" name="localizacao" placeholder="Aguardando GPS..." required readonly>
                         <button type="button" id="btn-gps" class="btn-icon" title="Atualizar GPS"><i class="fa-solid fa-location-crosshairs"></i></button>
                     </div>
-                    <small style="color: #94A3B8; font-size: 0.65rem; display: block; margin-top: 4px;">Fique abaixo da caixa e aguarde o Erro ficar abaixo de 10m para precisão máxima.</small>
+                    <small style="color: #94A3B8; font-size: 0.65rem; display: block; margin-top: 4px;">Fique abaixo da caixa e aguarde o Erro ficar abaixo de 10m.</small>
                 </div>
 
                 <div class="form-group">
@@ -116,10 +126,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // AQUI ESTÁ A SUA URL DO GOOGLE!
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv9Q1HTteYqc8BVHKTGeXP_ilzlsGcEKJIOIRL89kIpmPktTEWb9cC813smPIJ1Y0/exec";
+            
+            // A sua NOVA URL já está aqui pronta:
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby9kMfVcUKNQZqN1avDoKJVehD0KTQj3nO_VogjScAINdTpmxvI02jP8BaPZ2XwCP4/exec";
 
-            let databaseLive = [];
+            let fullDatabase = {};
+            let currentMacs = [];
+            
+            const slotPonSelect = document.getElementById('slotPon');
             const macInput = document.getElementById('mac');
             const ctoInput = document.getElementById('cto');
             const contratoInput = document.getElementById('contrato');
@@ -132,33 +146,56 @@
             const btnGps = document.getElementById('btn-gps');
             const form = document.getElementById('cto-form');
 
-            // 1. CARREGAR OS MACS DIRETAMENTE DA PLANILHA DO GOOGLE
+            // 1. CARREGAR TODAS AS ABAS DA PLANILHA
             async function loadDatabase() {
                 try {
                     const res = await fetch(SCRIPT_URL);
-                    databaseLive = await res.json();
+                    fullDatabase = await res.json();
                     
-                    datalist.innerHTML = '';
-                    databaseLive.forEach(item => {
-                        if(item.mac) {
-                            const option = document.createElement('option');
-                            option.value = item.mac;
-                            datalist.appendChild(option);
-                        }
+                    slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
+                    
+                    // Cria as opções de cada Aba que existe na sua planilha
+                    Object.keys(fullDatabase).forEach(sheetName => {
+                        const opt = document.createElement('option');
+                        opt.value = sheetName;
+                        opt.textContent = sheetName;
+                        slotPonSelect.appendChild(opt);
                     });
-                    statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Planilha Sincronizada';
+                    
+                    statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas';
                 } catch(err) {
                     statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
-                    console.error("Erro ao puxar dados: ", err);
                 }
             }
-            loadDatabase();
+            if(SCRIPT_URL.startsWith("http")) { loadDatabase(); }
 
-            // 2. BUSCAR O MAC E PREENCHER (SEM TRAVAR O TECLADO DO CELULAR)
+            // 2. QUANDO O TÉCNICO ESCOLHE A ABA (SLOT PON)
+            slotPonSelect.addEventListener('change', (e) => {
+                const selectedSlot = e.target.value;
+                if (!selectedSlot) {
+                    macInput.disabled = true;
+                    macInput.placeholder = "Selecione o Slot Primeiro...";
+                    return;
+                }
+
+                macInput.disabled = false;
+                macInput.placeholder = "Digite ou selecione o MAC...";
+                currentMacs = fullDatabase[selectedSlot] || [];
+                
+                datalist.innerHTML = '';
+                currentMacs.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.mac;
+                    datalist.appendChild(option);
+                });
+                
+                macInput.value = ''; ctoInput.value = ''; contratoInput.value = ''; tipoClienteInput.value = '';
+            });
+
+            // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA
             function searchMAC() {
                 let typed = macInput.value.trim().toUpperCase();
-                
-                const found = databaseLive.find(x => x.mac.toUpperCase() === typed);
+                const found = currentMacs.find(x => x.mac.toUpperCase() === typed);
                 if (found) {
                     ctoInput.value = found.cto;
                     contratoInput.value = found.contrato;
@@ -169,16 +206,13 @@
                 }
             }
             
-            // Reage quando o usuário solta o teclado ou escolhe da lista
             macInput.addEventListener('input', searchMAC);
             macInput.addEventListener('change', searchMAC);
-
-            // Formata o MAC só quando sai do campo para não bugar o Android
             macInput.addEventListener('blur', (e) => {
                 e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
             });
 
-            // 3. GPS
+            // 4. GPS DE ALTA PRECISÃO
             let watchId;
             function getGPS() {
                 if (watchId) navigator.geolocation.clearWatch(watchId);
@@ -196,21 +230,24 @@
                             if (acc <= 10) navigator.geolocation.clearWatch(watchId);
                         },
                         (error) => {
-                            locInput.value = "Céu aberto necessário / Permissão negada";
+                            locInput.value = "Céu aberto / Permissão negada";
                             btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
                         },
                         { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
                     );
-                } else {
-                    locInput.value = "Dispositivo sem GPS";
-                }
+                } else { locInput.value = "Sem GPS"; }
             }
             getGPS();
             btnGps.addEventListener('click', getGPS);
 
-            // 4. ENVIO PARA O GOOGLE
+            // 5. ENVIO PARA O GOOGLE (NA MESMA ABA)
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
+
+                if (!SCRIPT_URL.startsWith("http")) {
+                    alert("Aviso: Falta a URL da Planilha no código!");
+                    return;
+                }
 
                 const btnSubmit = form.querySelector('button[type="submit"]');
                 const originalBtnText = btnSubmit.innerHTML;
@@ -218,6 +255,7 @@
                 btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitindo...';
 
                 const formData = new URLSearchParams();
+                formData.append('slotPon', slotPonSelect.value); // Envia o nome da Aba para salvar nela!
                 formData.append('mac', macInput.value.trim().toUpperCase());
                 formData.append('cto', ctoInput.value.trim().toUpperCase());
                 formData.append('localizacao', locInput.value.trim().split(' (')[0]);
@@ -232,7 +270,8 @@
                     
                     showToast("Enviado para a Planilha!");
                     form.reset();
-                    macInput.focus();
+                    macInput.disabled = true;
+                    macInput.placeholder = "Selecione o Slot Primeiro...";
                     getGPS();
                 } catch (err) {
                     alert("Erro fatal: Aparelho sem internet.");
