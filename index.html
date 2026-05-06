@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        :root { --bg-main: #0B0F19; --bg-card: #151A27; --border-color: #2A3441; --border-focus: #3B82F6; --text-main: #E2E8F0; --text-muted: #94A3B8; --btn-primary: #3B82F6; --btn-primary-hover: #2563EB; --btn-secondary: #1E293B; --btn-secondary-hover: #334155; --success: #10B981; }
+        :root { --bg-main: #0B0F19; --bg-card: #151A27; --border-color: #2A3441; --border-focus: #3B82F6; --text-main: #E2E8F0; --text-muted: #94A3B8; --btn-primary: #3B82F6; --btn-primary-hover: #2563EB; --btn-secondary: #1E293B; --btn-secondary-hover: #334155; --success: #10B981; --warning: #F59E0B; --warning-bg: rgba(245, 158, 11, 0.1); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; }
         .app-container { width: 100%; max-width: 480px; min-height: 100vh; background-color: var(--bg-card); display: flex; flex-direction: column; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); }
@@ -22,7 +22,7 @@
         .form-group input, .form-group select { width: 100%; background-color: #0B0F19; border: 1px solid var(--border-color); color: var(--text-main); padding: 14px 16px; border-radius: 8px; font-size: 1rem; transition: all 0.2s ease; }
         .form-group input::placeholder { color: #475569; }
         .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
-        input[readonly] { background-color: rgba(0,0,0,0.2) !important; color: var(--text-muted) !important; cursor: not-allowed; }
+        input[readonly], input[disabled] { background-color: rgba(0,0,0,0.2) !important; color: var(--text-muted) !important; cursor: not-allowed; }
         
         .form-row { display: flex; gap: 12px; margin-bottom: 16px; }
         .form-row .form-group { margin-bottom: 0; }
@@ -34,6 +34,15 @@
         .input-with-button input { flex: 1; }
         .btn-icon { background-color: var(--btn-secondary); color: var(--btn-primary); border: 1px solid var(--border-color); border-radius: 8px; width: 52px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.2rem; transition: all 0.2s ease; }
         .btn-icon:hover { background-color: var(--btn-secondary-hover); }
+        
+        /* Estilos do Card de Observação */
+        .obs-card { background-color: var(--warning-bg); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 14px 16px; margin: 20px 0; display: none; align-items: flex-start; gap: 12px; animation: fadeIn 0.3s ease; }
+        .obs-card.show { display: flex; }
+        .obs-icon { color: var(--warning); font-size: 1.2rem; margin-top: 2px; }
+        .obs-content { flex: 1; }
+        .obs-title { font-size: 0.75rem; font-weight: 700; color: var(--warning); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .obs-text { font-size: 0.9rem; color: var(--text-main); line-height: 1.4; }
+
         .divider { border: none; border-top: 1px dashed var(--border-color); margin: 20px 0 20px 0; }
         .form-actions { display: flex; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); }
         .btn { padding: 16px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
@@ -41,8 +50,16 @@
         .btn-secondary:hover { background-color: var(--btn-secondary-hover); }
         .btn-primary { background-color: var(--btn-primary); color: white; flex: 2; }
         .btn-primary:hover { background-color: var(--btn-primary-hover); }
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: var(--success); color: white; padding: 14px 24px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 1000; white-space: nowrap; }
         .toast.show { transform: translateX(-50%) translateY(0); }
+        
+        .file-upload-wrapper { position: relative; width: 100%; height: 50px; background-color: #0B0F19; border: 1px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; overflow: hidden; transition: all 0.2s; }
+        .file-upload-wrapper:hover { border-color: var(--border-focus); color: var(--btn-primary); }
+        .file-upload-wrapper.has-file { background-color: rgba(16, 185, 129, 0.1); border-color: var(--success); color: var(--success); border-style: solid; }
+        .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -52,11 +69,23 @@
                 <h1>REGISTRO TÉCNICO</h1>
                 <p>Preenchimento em Campo</p>
             </div>
-            <div id="status-sinc" class="status-online"><i class="fa-solid fa-spinner fa-spin"></i> Baixando Abas...</div>
+            <div id="status-sinc" class="status-online"><i class="fa-solid fa-spinner fa-spin"></i> Baixando...</div>
         </header>
 
         <main class="form-container">
             <form id="cto-form">
+
+                <div class="form-group">
+                    <label for="colaborador"><i class="fa-solid fa-user-gear"></i> Colaborador</label>
+                    <select id="colaborador" name="colaborador" required>
+                        <option value="">Selecione seu nome...</option>
+                        <option value="Jhonatan Renan Feitosa Figueira">Jhonatan Renan Feitosa Figueira</option>
+                        <option value="Arthur Martins Queiroz">Arthur Martins Queiroz</option>
+                        <option value="Railton Kley Chagas da Costa">Railton Kley Chagas da Costa</option>
+                    </select>
+                </div>
+                
+                <hr class="divider">
 
                 <div class="form-group">
                     <label for="slotPon">SLOT PON (Aba da Planilha)</label>
@@ -108,12 +137,31 @@
 
                 <div class="form-group">
                     <label for="sinalCto">SINAL DA CTO (dBm)</label>
+                    <!-- Somente SINAL DA CTO (coluna G), o SINAL DO CLIENTE (coluna F) foi ignorado no salvamento -->
                     <input type="number" step="0.01" id="sinalCto" name="sinalCto" placeholder="Ex: -24.53" required>
+                </div>
+
+                <div class="form-group">
+                    <label>FOTO DO MAC/CTO (Obrigatório)</label>
+                    <div class="file-upload-wrapper" id="upload-wrapper">
+                        <i class="fa-solid fa-camera" id="upload-icon" style="margin-right: 8px;"></i> 
+                        <span id="upload-text">Tirar Foto</span>
+                        <input type="file" id="fotoMac" accept="image/*" capture="environment" required>
+                    </div>
+                </div>
+
+                <!-- NOVO CAMPO: INFORMAÇÕES / OBSERVAÇÕES -->
+                <div id="obs-container" class="obs-card">
+                    <i class="fa-solid fa-circle-exclamation obs-icon"></i>
+                    <div class="obs-content">
+                        <div class="obs-title">Aviso Importante do MAC</div>
+                        <div id="obs-texto" class="obs-text"></div>
+                    </div>
                 </div>
 
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" id="btn-cancelar">Limpar</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar p/ Central</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar</button>
                 </div>
             </form>
         </main>
@@ -127,17 +175,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // A SUA NOVA URL DEFINITIVA AQUI:
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-y4hGaFTF_jioONwCJwALNrNy2FM-iyiOdu89PX6-jCgf3Zlcj58PnojSt0pb0-s/exec";
+            // COLE AQUI A NOVA URL GERADA NO NOVO DEPLOY DO APPS SCRIPT
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyhP1fH7hWEiC_wfbM8iuYuBhEVYo5fDh6n0KPJoUThHPgGQqR6QDy6xKRAt944sxGg/exec";
 
             let fullDatabase = {};
             let currentMacs = [];
             
+            const colaboradorSelect = document.getElementById('colaborador');
             const slotPonSelect = document.getElementById('slotPon');
             const macInput = document.getElementById('mac');
             const ctoInput = document.getElementById('cto');
             const contratoInput = document.getElementById('contrato');
             const tipoClienteInput = document.getElementById('tipoCliente');
+            const obsContainer = document.getElementById('obs-container');
+            const obsTexto = document.getElementById('obs-texto');
+            const fotoInput = document.getElementById('fotoMac');
+            const uploadWrapper = document.getElementById('upload-wrapper');
+            const uploadText = document.getElementById('upload-text');
+            const uploadIcon = document.getElementById('upload-icon');
             const datalist = document.getElementById('mac-list');
             const statusSinc = document.getElementById('status-sinc');
             const toast = document.getElementById('toast');
@@ -145,6 +200,54 @@
             const locInput = document.getElementById('localizacao');
             const btnGps = document.getElementById('btn-gps');
             const form = document.getElementById('cto-form');
+            
+            let photoBase64Value = "";
+
+            // 0. CARREGAR/SALVAR COLABORADOR NO LOCAL STORAGE
+            const savedColaborador = localStorage.getItem('colaboradorSalvo');
+            if (savedColaborador) {
+                colaboradorSelect.value = savedColaborador;
+            }
+            colaboradorSelect.addEventListener('change', (e) => {
+                localStorage.setItem('colaboradorSalvo', e.target.value);
+            });
+
+            // 0.1 PREVIEW DA FOTO (Comprimir para Base64)
+            fotoInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                uploadWrapper.classList.add('has-file');
+                uploadText.innerText = "Foto Anexada!";
+                uploadIcon.className = "fa-solid fa-check";
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Comprimir a imagem (Max Width 800px para evitar travamento de rede)
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800;
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Converter para base64 com qualidade 70%
+                        photoBase64Value = canvas.toDataURL('image/jpeg', 0.7);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
 
             // 1. CARREGAR TODAS AS ABAS DA PLANILHA
             async function loadDatabase() {
@@ -154,7 +257,6 @@
                     
                     slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
                     
-                    // Cria as opções de cada Aba
                     Object.keys(fullDatabase).forEach(sheetName => {
                         const opt = document.createElement('option');
                         opt.value = sheetName;
@@ -164,11 +266,10 @@
                     
                     statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas';
 
-                    // RECUPERA O ÚLTIMO SLOT SALVO NA MEMÓRIA DO CELULAR
                     const savedSlot = localStorage.getItem('slotPonSalvo');
                     if (savedSlot && fullDatabase[savedSlot]) {
                         slotPonSelect.value = savedSlot;
-                        slotPonSelect.dispatchEvent(new Event('change')); // Força a atualização dos MACs
+                        slotPonSelect.dispatchEvent(new Event('change'));
                     }
 
                 } catch(err) {
@@ -177,7 +278,7 @@
             }
             if(SCRIPT_URL.startsWith("http")) { loadDatabase(); }
 
-            // 2. QUANDO O TÉCNICO ESCOLHE A ABA (SLOT PON)
+            // 2. QUANDO O TÉCNICO ESCOLHE A ABA
             slotPonSelect.addEventListener('change', (e) => {
                 const selectedSlot = e.target.value;
                 
@@ -188,9 +289,7 @@
                     return;
                 }
 
-                // Salva a escolha do técnico na memória do celular!
                 localStorage.setItem('slotPonSalvo', selectedSlot);
-
                 macInput.disabled = false;
                 macInput.placeholder = "Digite ou selecione o MAC...";
                 currentMacs = fullDatabase[selectedSlot] || [];
@@ -202,20 +301,32 @@
                     datalist.appendChild(option);
                 });
                 
-                macInput.value = ''; ctoInput.value = ''; contratoInput.value = ''; tipoClienteInput.value = '';
+                limparCampos(false);
             });
 
-            // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA
+            // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA E EXIBIR INFORMAÇÕES
             function searchMAC() {
                 let typed = macInput.value.trim().toUpperCase();
                 const found = currentMacs.find(x => x.mac.toUpperCase() === typed);
+                
                 if (found) {
                     ctoInput.value = found.cto;
                     contratoInput.value = found.contrato;
-                    tipoClienteInput.value = found.tipoCliente; // Agora puxa certinho da Coluna H
+                    tipoClienteInput.value = found.tipoCliente; 
+                    
+                    // LÓGICA DA OBSERVAÇÃO / INFORMAÇÃO
+                    if (found.observacao && found.observacao.trim() !== "") {
+                        obsTexto.innerText = found.observacao;
+                        obsContainer.classList.add('show');
+                    } else {
+                        obsContainer.classList.remove('show');
+                        obsTexto.innerText = "";
+                    }
                 } else {
                     contratoInput.value = '';
                     tipoClienteInput.value = '';
+                    obsContainer.classList.remove('show');
+                    obsTexto.innerText = "";
                 }
             }
             
@@ -225,12 +336,15 @@
                 e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
             });
 
-            // 4. GPS DE ALTA PRECISÃO
+            // 4. GPS DE ALTA PRECISÃO (Melhorado)
             let watchId;
+            let melhorPrecisao = 99999; // Armazena a melhor precisão encontrada
+            
             function getGPS() {
                 if (watchId) navigator.geolocation.clearWatch(watchId);
-                locInput.value = "Calculando GPS Exato...";
+                locInput.value = "Calculando GPS Exato (Aguarde)...";
                 btnGps.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                melhorPrecisao = 99999; // reseta a melhor precisão ao clicar de novo
 
                 if (navigator.geolocation) {
                     watchId = navigator.geolocation.watchPosition(
@@ -238,62 +352,79 @@
                             const lat = position.coords.latitude;
                             const lng = position.coords.longitude;
                             const acc = position.coords.accuracy;
-                            locInput.value = `${lat.toFixed(6)}, ${lng.toFixed(6)} (Erro: ${acc.toFixed(0)}m)`;
-                            btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
-                            if (acc <= 10) navigator.geolocation.clearWatch(watchId);
+                            
+                            // Só atualiza na tela se a nova leitura for mais exata que a anterior
+                            if (acc <= melhorPrecisao) {
+                                melhorPrecisao = acc;
+                                
+                                // Removido o toFixed(6) para enviar todas as casas decimais como o Google Maps
+                                locInput.value = `${lat}, ${lng} (Erro: ${acc.toFixed(0)}m)`;
+                                
+                                if (acc <= 15) {
+                                    btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--success)"></i>';
+                                } else {
+                                    btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--warning)"></i>';
+                                }
+                                
+                                // Agora não para de tentar melhorar, a menos que alcance 3 metros (quase perfeito)
+                                if (acc <= 3) navigator.geolocation.clearWatch(watchId);
+                            }
                         },
                         (error) => {
                             locInput.value = "Céu aberto / Permissão negada";
                             btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
                         },
-                        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+                        { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
                     );
                 } else { locInput.value = "Sem GPS"; }
             }
             getGPS();
             btnGps.addEventListener('click', getGPS);
 
-            // 5. ENVIO PARA O GOOGLE
+            // 5. ENVIO PARA O GOOGLE (SOMENTE ATUALIZAÇÃO E SALVAR FOTO/LOG)
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
                 if (!SCRIPT_URL.startsWith("http")) {
-                    alert("Aviso: Falta a URL da Planilha no código!");
+                    alert("Aviso: Falta a URL do Apps Script no código!");
+                    return;
+                }
+
+                if (photoBase64Value === "") {
+                    alert("Aguarde a foto ser processada antes de enviar!");
                     return;
                 }
 
                 const btnSubmit = form.querySelector('button[type="submit"]');
                 const originalBtnText = btnSubmit.innerHTML;
                 btnSubmit.disabled = true;
-                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitindo...';
+                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Atualizando...';
 
                 const formData = new URLSearchParams();
                 formData.append('slotPon', slotPonSelect.value);
                 formData.append('mac', macInput.value.trim().toUpperCase());
                 formData.append('cto', ctoInput.value.trim().toUpperCase());
                 formData.append('localizacao', locInput.value.trim().split(' (')[0]);
-                formData.append('contrato', contratoInput.value.trim());
                 formData.append('lacre', document.getElementById('lacre').value.trim().toUpperCase());
                 formData.append('sinalCto', document.getElementById('sinalCto').value.trim());
-                formData.append('tipoCliente', tipoClienteInput.value.trim());
-                formData.append('timestamp', new Date().toLocaleString('pt-BR'));
+                formData.append('colaborador', colaboradorSelect.value);
+                formData.append('photoBase64', photoBase64Value);
 
                 try {
                     await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
                     
-                    showToast("Enviado para a Planilha!");
+                    showToast("Dados enviados para Planilha!");
                     
-                    // Salva o slot atual antes de limpar o form
                     const slotAtual = slotPonSelect.value;
+                    const colabAtual = colaboradorSelect.value;
                     
-                    form.reset();
+                    limparCampos(true);
                     
-                    // Restaura o slot para o técnico não precisar preencher de novo
                     slotPonSelect.value = slotAtual;
-                    
+                    colaboradorSelect.value = colabAtual;
                     getGPS();
                 } catch (err) {
-                    alert("Erro fatal: Aparelho sem internet.");
+                    alert("Erro de conexão ao salvar.");
                 }
 
                 btnSubmit.disabled = false;
@@ -303,11 +434,31 @@
             document.getElementById('btn-cancelar').addEventListener('click', () => { 
                 if (confirm('Apagar tudo?')) { 
                     const slotAtual = slotPonSelect.value;
-                    form.reset(); 
+                    const colabAtual = colaboradorSelect.value;
+                    limparCampos(true);
                     slotPonSelect.value = slotAtual;
+                    colaboradorSelect.value = colabAtual;
                     getGPS(); 
                 } 
             });
+
+            function limparCampos(limparMac) {
+                if (limparMac) macInput.value = '';
+                ctoInput.value = '';
+                contratoInput.value = '';
+                tipoClienteInput.value = '';
+                document.getElementById('lacre').value = '';
+                document.getElementById('sinalCto').value = '';
+                obsContainer.classList.remove('show');
+                obsTexto.innerText = "";
+                
+                // Limpar arquivo de foto
+                fotoInput.value = "";
+                photoBase64Value = "";
+                uploadWrapper.classList.remove('has-file');
+                uploadText.innerText = "Tirar Foto";
+                uploadIcon.className = "fa-solid fa-camera";
+            }
 
             function showToast(msg) {
                 toastMsg.innerText = msg;
