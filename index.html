@@ -422,28 +422,28 @@
                 btnSubmit.disabled = true;
                 btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Atualizando...';
 
+                const locFinalCapturada = locInput.value.trim().split(' (')[0];
+                const ctoFinalCapturada = ctoInput.value.trim().toUpperCase();
+                const slotFinalCapturado = slotPonSelect.value;
+
                 const formData = new URLSearchParams();
-                formData.append('slotPon', slotPonSelect.value);
+                formData.append('slotPon', slotFinalCapturado);
                 formData.append('mac', macInput.value.trim().toUpperCase());
-                formData.append('cto', ctoInput.value.trim().toUpperCase());
-                formData.append('localizacao', locInput.value.trim().split(' (')[0]);
+                formData.append('cto', ctoFinalCapturada);
+                formData.append('localizacao', locFinalCapturada);
                 formData.append('lacre', document.getElementById('lacre').value.trim().toUpperCase());
                 formData.append('sinalCto', document.getElementById('sinalCto').value.trim());
                 formData.append('colaborador', colaboradorSelect.value);
                 formData.append('photoBase64', photoBase64Value);
 
+                // Salva no cache a localização EXATA que foi injetada no formulário agora
+                if (ctoFinalCapturada && slotFinalCapturado && locFinalCapturada && !locFinalCapturada.includes("Calculando") && !locFinalCapturada.includes("Sem GPS")) {
+                    const cacheKey = 'loc_cto_' + slotFinalCapturado + '_' + ctoFinalCapturada;
+                    localStorage.setItem(cacheKey, locFinalCapturada);
+                }
+
                 try {
                     await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-                    
-                    // Salva a localização desta CTO vinculada ao seu Slot!
-                    const ctoSubmetido = ctoInput.value.trim().toUpperCase();
-                    const slotSubmetido = slotPonSelect.value;
-                    const locSubmetida = locInput.value.trim().split(' (')[0];
-                    
-                    if (ctoSubmetido && slotSubmetido && locSubmetida && !locSubmetida.includes("Calculando")) {
-                        const cacheKey = 'loc_cto_' + slotSubmetido + '_' + ctoSubmetido;
-                        localStorage.setItem(cacheKey, locSubmetida);
-                    }
                     
                     showToast("Dados enviados para Planilha!");
                     
