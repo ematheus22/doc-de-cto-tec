@@ -176,7 +176,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             // COLE AQUI A NOVA URL GERADA NO NOVO DEPLOY DO APPS SCRIPT
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyhP1fH7hWEiC_wfbM8iuYuBhEVYo5fDh6n0KPJoUThHPgGQqR6QDy6xKRAt944sxGg/exec";
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQWEkIYkT7jGEHOZTbYXH_15xuKkm2rid4g9yVBJndpMPu2ZlSDu5CkE-TAQPpxxk3/exec";
 
             let fullDatabase = {};
             let currentMacs = [];
@@ -322,6 +322,7 @@
                         obsContainer.classList.remove('show');
                         obsTexto.innerText = "";
                     }
+                    verificarLocalizacaoCTO(found.cto);
                 } else {
                     contratoInput.value = '';
                     tipoClienteInput.value = '';
@@ -329,6 +330,27 @@
                     obsTexto.innerText = "";
                 }
             }
+
+            function verificarLocalizacaoCTO(ctoVal) {
+                if (!ctoVal) return false;
+                const slotVal = slotPonSelect.value;
+                if (!slotVal) return false;
+                
+                const cacheKey = 'loc_cto_' + slotVal + '_' + ctoVal.toUpperCase();
+                const savedLoc = localStorage.getItem(cacheKey);
+                
+                if (savedLoc) {
+                    if (watchId) navigator.geolocation.clearWatch(watchId);
+                    locInput.value = savedLoc + " (Copiado da mesma CTO)";
+                    btnGps.innerHTML = '<i class="fa-solid fa-clone" style="color: var(--success)"></i>';
+                    return true;
+                }
+                return false;
+            }
+
+            ctoInput.addEventListener('blur', (e) => {
+                verificarLocalizacaoCTO(e.target.value.trim());
+            });
             
             macInput.addEventListener('input', searchMAC);
             macInput.addEventListener('change', searchMAC);
@@ -412,6 +434,16 @@
 
                 try {
                     await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+                    
+                    // Salva a localização desta CTO vinculada ao seu Slot!
+                    const ctoSubmetido = ctoInput.value.trim().toUpperCase();
+                    const slotSubmetido = slotPonSelect.value;
+                    const locSubmetida = locInput.value.trim().split(' (')[0];
+                    
+                    if (ctoSubmetido && slotSubmetido && locSubmetida && !locSubmetida.includes("Calculando")) {
+                        const cacheKey = 'loc_cto_' + slotSubmetido + '_' + ctoSubmetido;
+                        localStorage.setItem(cacheKey, locSubmetida);
+                    }
                     
                     showToast("Dados enviados para Planilha!");
                     
