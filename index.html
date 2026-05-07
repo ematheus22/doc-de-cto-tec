@@ -336,7 +336,7 @@
                 const slotVal = slotPonSelect.value;
                 if (!slotVal) return false;
                 
-                const cacheKey = 'loc_cto_' + slotVal + '_' + ctoVal.toUpperCase();
+                const cacheKey = 'loc_cto_' + slotVal.trim() + '_' + ctoVal.trim().toUpperCase();
                 const savedLoc = localStorage.getItem(cacheKey);
                 
                 if (savedLoc) {
@@ -348,7 +348,7 @@
                 return false;
             }
 
-            ctoInput.addEventListener('blur', (e) => {
+            ctoInput.addEventListener('input', (e) => {
                 verificarLocalizacaoCTO(e.target.value.trim());
             });
             
