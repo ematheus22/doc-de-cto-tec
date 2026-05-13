@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- Cole o código do fo<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -78,10 +78,7 @@
                 <div class="form-group">
                     <label for="colaborador"><i class="fa-solid fa-user-gear"></i> Colaborador</label>
                     <select id="colaborador" name="colaborador" required>
-                        <option value="">Selecione seu nome...</option>
-                        <option value="Jhonatan Renan Feitosa Figueira">Jhonatan Renan Feitosa Figueira</option>
-                        <option value="Arthur Martins Queiroz">Arthur Martins Queiroz</option>
-                        <option value="Railton Kley Chagas da Costa">Railton Kley Chagas da Costa</option>
+                        <option value="">Carregando técnicos...</option>
                     </select>
                 </div>
                 
@@ -138,366 +135,399 @@
                 <div class="form-group">
                     <label for="sinalCto">SINAL DA CTO (dBm)</label>
                     <!-- Somente SINAL DA CTO (coluna G), o SINAL DO CLIENTE (coluna F) foi ignorado no salvamento -->
-                    <input type="number" step="0.01" id="sinalCto" name="sinalCto" placeholder="Ex: -24.53" required>
-                </div>
+<input type="number" step="0.01" id="sinalCto" name="sinalCto" placeholder="Ex: -24.53" required>
+</div>
 
-                <div class="form-group">
-                    <label>FOTO DO MAC/CTO (Obrigatório)</label>
-                    <div class="file-upload-wrapper" id="upload-wrapper">
-                        <i class="fa-solid fa-camera" id="upload-icon" style="margin-right: 8px;"></i> 
-                        <span id="upload-text">Tirar Foto</span>
-                        <input type="file" id="fotoMac" accept="image/*" capture="environment" required>
-                    </div>
-                </div>
-
-                <!-- NOVO CAMPO: INFORMAÇÕES / OBSERVAÇÕES -->
-                <div id="obs-container" class="obs-card">
-                    <i class="fa-solid fa-circle-exclamation obs-icon"></i>
-                    <div class="obs-content">
-                        <div class="obs-title">Aviso Importante do MAC</div>
-                        <div id="obs-texto" class="obs-text"></div>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="btn-cancelar">Limpar</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar</button>
-                </div>
-            </form>
-        </main>
-        
-        <div id="toast" class="toast hidden">
-            <i class="fa-solid fa-check-circle"></i>
-            <span>Enviado com Sucesso!</span>
-        </div>
+<div class="form-group">
+    <label>FOTO DO MAC/CTO (Obrigatório)</label>
+    <div class="file-upload-wrapper" id="upload-wrapper">
+        <i class="fa-solid fa-camera" id="upload-icon" style="margin-right: 8px;"></i>
+        <span id="upload-text">Tirar Foto</span>
+        <input type="file" id="fotoMac" accept="image/*" capture="environment" required>
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // COLE AQUI A NOVA URL GERADA NO NOVO DEPLOY DO APPS SCRIPT
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQWEkIYkT7jGEHOZTbYXH_15xuKkm2rid4g9yVBJndpMPu2ZlSDu5CkE-TAQPpxxk3/exec";
+<!-- NOVO CAMPO: INFORMAÇÕES / OBSERVAÇÕES -->
+<div id="obs-container" class="obs-card">
+    <i class="fa-solid fa-circle-exclamation obs-icon"></i>
+    <div class="obs-content">
+        <div class="obs-title">Aviso Importante do MAC</div>
+        <div id="obs-texto" class="obs-text"></div>
+    </div>
+</div>
 
-            let fullDatabase = {};
-            let currentMacs = [];
-            
-            const colaboradorSelect = document.getElementById('colaborador');
-            const slotPonSelect = document.getElementById('slotPon');
-            const macInput = document.getElementById('mac');
-            const ctoInput = document.getElementById('cto');
-            const contratoInput = document.getElementById('contrato');
-            const tipoClienteInput = document.getElementById('tipoCliente');
-            const obsContainer = document.getElementById('obs-container');
-            const obsTexto = document.getElementById('obs-texto');
-            const fotoInput = document.getElementById('fotoMac');
-            const uploadWrapper = document.getElementById('upload-wrapper');
-            const uploadText = document.getElementById('upload-text');
-            const uploadIcon = document.getElementById('upload-icon');
-            const datalist = document.getElementById('mac-list');
-            const statusSinc = document.getElementById('status-sinc');
-            const toast = document.getElementById('toast');
-            const toastMsg = toast.querySelector('span');
-            const locInput = document.getElementById('localizacao');
-            const btnGps = document.getElementById('btn-gps');
-            const form = document.getElementById('cto-form');
-            
-            let photoBase64Value = "";
+<div class="form-actions">
+    <button type="button" class="btn btn-secondary" id="btn-cancelar">Limpar</button>
+    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar</button>
+</div>
+</form>
+</main>
 
-            // 0. CARREGAR/SALVAR COLABORADOR NO LOCAL STORAGE
-            const savedColaborador = localStorage.getItem('colaboradorSalvo');
-            if (savedColaborador) {
-                colaboradorSelect.value = savedColaborador;
-            }
-            colaboradorSelect.addEventListener('change', (e) => {
-                localStorage.setItem('colaboradorSalvo', e.target.value);
-            });
+<div id="toast" class="toast hidden">
+    <i class="fa-solid fa-check-circle"></i>
+    <span>Enviado com Sucesso!</span>
+</div>
+</div>
 
-            // 0.1 PREVIEW DA FOTO (Comprimir para Base64)
-            fotoInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                
-                uploadWrapper.classList.add('has-file');
-                uploadText.innerText = "Foto Anexada!";
-                uploadIcon.className = "fa-solid fa-check";
-                
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        // Comprimir a imagem (Max Width 800px para evitar travamento de rede)
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 800;
-                        let width = img.width;
-                        let height = img.height;
-                        
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                        
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        // Converter para base64 com qualidade 70%
-                        photoBase64Value = canvas.toDataURL('image/jpeg', 0.7);
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-            // 1. CARREGAR TODAS AS ABAS DA PLANILHA
-            async function loadDatabase() {
-                try {
-                    const res = await fetch(SCRIPT_URL);
-                    fullDatabase = await res.json();
-                    
-                    slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
-                    
-                    Object.keys(fullDatabase).forEach(sheetName => {
+        // COLE AQUI A NOVA URL GERADA NO NOVO DEPLOY DO APPS SCRIPT
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMyfJpX3_7dkZ9FA4V7W7Ss56_rP6a14JTUQnal-2jdgnscDu6Hlcj58aT8KXozMqU/exec";
+
+        let fullDatabase = {};
+        let currentMacs = [];
+
+        const colaboradorSelect = document.getElementById('colaborador');
+        const slotPonSelect = document.getElementById('slotPon');
+        const macInput = document.getElementById('mac');
+        const ctoInput = document.getElementById('cto');
+        const contratoInput = document.getElementById('contrato');
+        const tipoClienteInput = document.getElementById('tipoCliente');
+        const obsContainer = document.getElementById('obs-container');
+        const obsTexto = document.getElementById('obs-texto');
+        const fotoInput = document.getElementById('fotoMac');
+        const uploadWrapper = document.getElementById('upload-wrapper');
+        const uploadText = document.getElementById('upload-text');
+        const uploadIcon = document.getElementById('upload-icon');
+        const datalist = document.getElementById('mac-list');
+        const statusSinc = document.getElementById('status-sinc');
+        const toast = document.getElementById('toast');
+        const toastMsg = toast.querySelector('span');
+        const locInput = document.getElementById('localizacao');
+        const btnGps = document.getElementById('btn-gps');
+        const form = document.getElementById('cto-form');
+
+        let photoBase64Value = "";
+
+        // 0. CARREGAR/SALVAR COLABORADOR E BUSCAR DO APPS SCRIPT
+        async function loadTecnicos() {
+            try {
+                const res = await fetch(`${SCRIPT_URL}?action=get_tecnicos`);
+                const json = await res.json();
+                if (json.status === "success") {
+                    colaboradorSelect.innerHTML = '<option value="">Selecione seu nome...</option>';
+                    json.data.forEach(tec => {
                         const opt = document.createElement('option');
-                        opt.value = sheetName;
-                        opt.textContent = sheetName;
-                        slotPonSelect.appendChild(opt);
+                        opt.value = tec;
+                        opt.textContent = tec;
+                        colaboradorSelect.appendChild(opt);
                     });
                     
-                    statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas';
+                    const savedColaborador = localStorage.getItem('colaboradorSalvo');
+                    if (savedColaborador) {
+                        colaboradorSelect.value = savedColaborador;
+                    }
+                }
+            } catch (err) {
+                colaboradorSelect.innerHTML = '<option value="">Erro ao carregar técnicos</option>';
+            }
+        }
+        if (SCRIPT_URL.startsWith("http")) { loadTecnicos(); }
 
-                    const savedSlot = localStorage.getItem('slotPonSalvo');
-                    if (savedSlot && fullDatabase[savedSlot]) {
-                        slotPonSelect.value = savedSlot;
-                        slotPonSelect.dispatchEvent(new Event('change'));
+        colaboradorSelect.addEventListener('change', (e) => {
+            localStorage.setItem('colaboradorSalvo', e.target.value);
+        });
+
+        // 0.1 PREVIEW DA FOTO (Comprimir para Base64)
+        fotoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            uploadWrapper.classList.add('has-file');
+            uploadText.innerText = "Foto Anexada!";
+            uploadIcon.className = "fa-solid fa-check";
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const img = new Image();
+                img.onload = function () {
+                    // Comprimir a imagem (Max Width 800px para evitar travamento de rede)
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 800;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
                     }
 
-                } catch(err) {
-                    statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
-                }
-            }
-            if(SCRIPT_URL.startsWith("http")) { loadDatabase(); }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
 
-            // 2. QUANDO O TÉCNICO ESCOLHE A ABA
-            slotPonSelect.addEventListener('change', (e) => {
-                const selectedSlot = e.target.value;
-                
-                if (!selectedSlot) {
-                    localStorage.removeItem('slotPonSalvo');
-                    macInput.disabled = true;
-                    macInput.placeholder = "Selecione o Slot Primeiro...";
-                    return;
-                }
+                    // Converter para base64 com qualidade 70%
+                    photoBase64Value = canvas.toDataURL('image/jpeg', 0.7);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
 
-                localStorage.setItem('slotPonSalvo', selectedSlot);
-                macInput.disabled = false;
-                macInput.placeholder = "Digite ou selecione o MAC...";
-                currentMacs = fullDatabase[selectedSlot] || [];
-                
-                datalist.innerHTML = '';
-                currentMacs.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item.mac;
-                    datalist.appendChild(option);
+        // 1. CARREGAR TODAS AS ABAS DA PLANILHA
+        async function loadDatabase() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                fullDatabase = await res.json();
+
+                slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
+
+                Object.keys(fullDatabase).forEach(sheetName => {
+                    const opt = document.createElement('option');
+                    opt.value = sheetName;
+                    opt.textContent = sheetName;
+                    slotPonSelect.appendChild(opt);
                 });
-                
-                limparCampos(false);
+
+                statusSinc.innerHTML = '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas';
+
+                const savedSlot = localStorage.getItem('slotPonSalvo');
+                if (savedSlot && fullDatabase[savedSlot]) {
+                    slotPonSelect.value = savedSlot;
+                    slotPonSelect.dispatchEvent(new Event('change'));
+                }
+
+            } catch (err) {
+                statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
+            }
+        }
+        if (SCRIPT_URL.startsWith("http")) { loadDatabase(); }
+
+        // 2. QUANDO O TÉCNICO ESCOLHE A ABA
+        slotPonSelect.addEventListener('change', (e) => {
+            const selectedSlot = e.target.value;
+
+            if (!selectedSlot) {
+                localStorage.removeItem('slotPonSalvo');
+                macInput.disabled = true;
+                macInput.placeholder = "Selecione o Slot Primeiro...";
+                return;
+            }
+
+            localStorage.setItem('slotPonSalvo', selectedSlot);
+            macInput.disabled = false;
+            macInput.placeholder = "Digite ou selecione o MAC...";
+            currentMacs = fullDatabase[selectedSlot] || [];
+
+            datalist.innerHTML = '';
+            currentMacs.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.mac;
+                datalist.appendChild(option);
             });
 
-            // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA E EXIBIR INFORMAÇÕES
-            function searchMAC() {
-                let typed = macInput.value.trim().toUpperCase();
-                const found = currentMacs.find(x => x.mac.toUpperCase() === typed);
-                
-                if (found) {
-                    ctoInput.value = found.cto;
-                    contratoInput.value = found.contrato;
-                    tipoClienteInput.value = found.tipoCliente; 
-                    
-                    // LÓGICA DA OBSERVAÇÃO / INFORMAÇÃO
-                    if (found.observacao && found.observacao.trim() !== "") {
-                        obsTexto.innerText = found.observacao;
-                        obsContainer.classList.add('show');
-                    } else {
-                        obsContainer.classList.remove('show');
-                        obsTexto.innerText = "";
-                    }
-                    verificarLocalizacaoCTO(found.cto);
+            limparCampos(false);
+        });
+
+        // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA E EXIBIR INFORMAÇÕES
+        function searchMAC() {
+            let typed = macInput.value.trim().toUpperCase();
+            const found = currentMacs.find(x => x.mac.toUpperCase() === typed);
+
+            if (found) {
+                ctoInput.value = found.cto;
+                contratoInput.value = found.contrato;
+                tipoClienteInput.value = found.tipoCliente;
+
+                // LÓGICA DA OBSERVAÇÃO / INFORMAÇÃO
+                if (found.observacao && found.observacao.trim() !== "") {
+                    obsTexto.innerText = found.observacao;
+                    obsContainer.classList.add('show');
                 } else {
-                    contratoInput.value = '';
-                    tipoClienteInput.value = '';
                     obsContainer.classList.remove('show');
                     obsTexto.innerText = "";
                 }
-            }
-
-            function verificarLocalizacaoCTO(ctoVal) {
-                if (!ctoVal) return false;
-                const slotVal = slotPonSelect.value;
-                if (!slotVal) return false;
-                
-                const cacheKey = 'loc_cto_' + slotVal.trim() + '_' + ctoVal.trim().toUpperCase();
-                const savedLoc = localStorage.getItem(cacheKey);
-                
-                if (savedLoc) {
-                    if (watchId) navigator.geolocation.clearWatch(watchId);
-                    locInput.value = savedLoc + " (Copiado da mesma CTO)";
-                    btnGps.innerHTML = '<i class="fa-solid fa-clone" style="color: var(--success)"></i>';
-                    return true;
-                }
-                return false;
-            }
-
-            ctoInput.addEventListener('input', (e) => {
-                verificarLocalizacaoCTO(e.target.value.trim());
-            });
-            
-            macInput.addEventListener('input', searchMAC);
-            macInput.addEventListener('change', searchMAC);
-            macInput.addEventListener('blur', (e) => {
-                e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
-            });
-
-            // 4. GPS DE ALTA PRECISÃO (Melhorado)
-            let watchId;
-            let melhorPrecisao = 99999; // Armazena a melhor precisão encontrada
-            
-            function getGPS() {
-                if (watchId) navigator.geolocation.clearWatch(watchId);
-                locInput.value = "Calculando GPS Exato (Aguarde)...";
-                btnGps.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-                melhorPrecisao = 99999; // reseta a melhor precisão ao clicar de novo
-
-                if (navigator.geolocation) {
-                    watchId = navigator.geolocation.watchPosition(
-                        (position) => {
-                            const lat = position.coords.latitude;
-                            const lng = position.coords.longitude;
-                            const acc = position.coords.accuracy;
-                            
-                            // Só atualiza na tela se a nova leitura for mais exata que a anterior
-                            if (acc <= melhorPrecisao) {
-                                melhorPrecisao = acc;
-                                
-                                // Removido o toFixed(6) para enviar todas as casas decimais como o Google Maps
-                                locInput.value = `${lat}, ${lng} (Erro: ${acc.toFixed(0)}m)`;
-                                
-                                if (acc <= 15) {
-                                    btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--success)"></i>';
-                                } else {
-                                    btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--warning)"></i>';
-                                }
-                                
-                                // Agora não para de tentar melhorar, a menos que alcance 3 metros (quase perfeito)
-                                if (acc <= 3) navigator.geolocation.clearWatch(watchId);
-                            }
-                        },
-                        (error) => {
-                            locInput.value = "Céu aberto / Permissão negada";
-                            btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
-                        },
-                        { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
-                    );
-                } else { locInput.value = "Sem GPS"; }
-            }
-            getGPS();
-            btnGps.addEventListener('click', getGPS);
-
-            // 5. ENVIO PARA O GOOGLE (SOMENTE ATUALIZAÇÃO E SALVAR FOTO/LOG)
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                if (!SCRIPT_URL.startsWith("http")) {
-                    alert("Aviso: Falta a URL do Apps Script no código!");
-                    return;
-                }
-
-                if (photoBase64Value === "") {
-                    alert("Aguarde a foto ser processada antes de enviar!");
-                    return;
-                }
-
-                const btnSubmit = form.querySelector('button[type="submit"]');
-                const originalBtnText = btnSubmit.innerHTML;
-                btnSubmit.disabled = true;
-                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Atualizando...';
-
-                const locFinalCapturada = locInput.value.trim().split(' (')[0];
-                const ctoFinalCapturada = ctoInput.value.trim().toUpperCase();
-                const slotFinalCapturado = slotPonSelect.value;
-
-                const formData = new URLSearchParams();
-                formData.append('slotPon', slotFinalCapturado);
-                formData.append('mac', macInput.value.trim().toUpperCase());
-                formData.append('cto', ctoFinalCapturada);
-                formData.append('localizacao', locFinalCapturada);
-                formData.append('lacre', document.getElementById('lacre').value.trim().toUpperCase());
-                formData.append('sinalCto', document.getElementById('sinalCto').value.trim());
-                formData.append('colaborador', colaboradorSelect.value);
-                formData.append('photoBase64', photoBase64Value);
-
-                // Salva no cache a localização EXATA que foi injetada no formulário agora
-                if (ctoFinalCapturada && slotFinalCapturado && locFinalCapturada && !locFinalCapturada.includes("Calculando") && !locFinalCapturada.includes("Sem GPS")) {
-                    const cacheKey = 'loc_cto_' + slotFinalCapturado + '_' + ctoFinalCapturada;
-                    localStorage.setItem(cacheKey, locFinalCapturada);
-                }
-
-                try {
-                    await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-                    
-                    showToast("Dados enviados para Planilha!");
-                    
-                    const slotAtual = slotPonSelect.value;
-                    const colabAtual = colaboradorSelect.value;
-                    
-                    limparCampos(true);
-                    
-                    slotPonSelect.value = slotAtual;
-                    colaboradorSelect.value = colabAtual;
-                    getGPS();
-                } catch (err) {
-                    alert("Erro de conexão ao salvar.");
-                }
-
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = originalBtnText;
-            });
-
-            document.getElementById('btn-cancelar').addEventListener('click', () => { 
-                if (confirm('Apagar tudo?')) { 
-                    const slotAtual = slotPonSelect.value;
-                    const colabAtual = colaboradorSelect.value;
-                    limparCampos(true);
-                    slotPonSelect.value = slotAtual;
-                    colaboradorSelect.value = colabAtual;
-                    getGPS(); 
-                } 
-            });
-
-            function limparCampos(limparMac) {
-                if (limparMac) macInput.value = '';
-                ctoInput.value = '';
+                verificarLocalizacaoCTO(found.cto);
+            } else {
                 contratoInput.value = '';
                 tipoClienteInput.value = '';
-                document.getElementById('lacre').value = '';
-                document.getElementById('sinalCto').value = '';
                 obsContainer.classList.remove('show');
                 obsTexto.innerText = "";
-                
-                // Limpar arquivo de foto
-                fotoInput.value = "";
-                photoBase64Value = "";
-                uploadWrapper.classList.remove('has-file');
-                uploadText.innerText = "Tirar Foto";
-                uploadIcon.className = "fa-solid fa-camera";
+            }
+        }
+
+        function verificarLocalizacaoCTO(ctoVal) {
+            if (!ctoVal) return false;
+            const slotVal = slotPonSelect.value;
+            if (!slotVal) return false;
+
+            // 1. Tentar pegar a localização direto da planilha (Master GPS)
+            const macsDesteSlot = fullDatabase[slotVal] || [];
+            const ctoComLoc = macsDesteSlot.find(m => m.cto.toUpperCase() === ctoVal.toUpperCase() && m.localizacao && m.localizacao.trim() !== "");
+
+            if (ctoComLoc) {
+                if (watchId) navigator.geolocation.clearWatch(watchId);
+                locInput.value = ctoComLoc.localizacao + " (Copiado do Banco de Dados)";
+                btnGps.innerHTML = '<i class="fa-solid fa-cloud-arrow-down" style="color: var(--brand-purple)"></i>';
+                return true;
             }
 
-            function showToast(msg) {
-                toastMsg.innerText = msg;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 4000);
+            // 2. Se não tem na planilha, pegar do cache local do celular
+            const cacheKey = 'loc_cto_' + slotVal.trim() + '_' + ctoVal.trim().toUpperCase();
+            const savedLoc = localStorage.getItem(cacheKey);
+
+            if (savedLoc) {
+                if (watchId) navigator.geolocation.clearWatch(watchId);
+                locInput.value = savedLoc + " (Copiado da mesma CTO local)";
+                btnGps.innerHTML = '<i class="fa-solid fa-clone" style="color: var(--success)"></i>';
+                return true;
+            }
+            return false;
+        }
+
+        ctoInput.addEventListener('input', (e) => {
+            verificarLocalizacaoCTO(e.target.value.trim());
+        });
+
+        macInput.addEventListener('input', searchMAC);
+        macInput.addEventListener('change', searchMAC);
+        macInput.addEventListener('blur', (e) => {
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
+        });
+
+        // 4. GPS DE ALTA PRECISÃO (Melhorado)
+        let watchId;
+        let melhorPrecisao = 99999; // Armazena a melhor precisão encontrada
+
+        function getGPS() {
+            if (watchId) navigator.geolocation.clearWatch(watchId);
+            locInput.value = "Calculando GPS Exato (Aguarde)...";
+            btnGps.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            melhorPrecisao = 99999; // reseta a melhor precisão ao clicar de novo
+
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const acc = position.coords.accuracy;
+
+                        // Só atualiza na tela se a nova leitura for mais exata que a anterior
+                        if (acc <= melhorPrecisao) {
+                            melhorPrecisao = acc;
+
+                            // Removido o toFixed(6) para enviar todas as casas decimais como o Google Maps
+                            locInput.value = `${lat}, ${lng} (Erro: ${acc.toFixed(0)}m)`;
+
+                            if (acc <= 15) {
+                                btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--success)"></i>';
+                            } else {
+                                btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--warning)"></i>';
+                            }
+
+                            // Agora não para de tentar melhorar, a menos que alcance 3 metros (quase perfeito)
+                            if (acc <= 3) navigator.geolocation.clearWatch(watchId);
+                        }
+                    },
+                    (error) => {
+                        locInput.value = "Céu aberto / Permissão negada";
+                        btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                    },
+                    { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
+                );
+            } else { locInput.value = "Sem GPS"; }
+        }
+        getGPS();
+        btnGps.addEventListener('click', getGPS);
+
+        // 5. ENVIO PARA O GOOGLE (SOMENTE ATUALIZAÇÃO E SALVAR FOTO/LOG)
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!SCRIPT_URL.startsWith("http")) {
+                alert("Aviso: Falta a URL do Apps Script no código!");
+                return;
+            }
+
+            if (photoBase64Value === "") {
+                alert("Aguarde a foto ser processada antes de enviar!");
+                return;
+            }
+
+            const btnSubmit = form.querySelector('button[type="submit"]');
+            const originalBtnText = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Atualizando...';
+
+            const locFinalCapturada = locInput.value.trim().split(' (')[0];
+            const ctoFinalCapturada = ctoInput.value.trim().toUpperCase();
+            const slotFinalCapturado = slotPonSelect.value;
+
+            const formData = new URLSearchParams();
+            formData.append('slotPon', slotFinalCapturado);
+            formData.append('mac', macInput.value.trim().toUpperCase());
+            formData.append('cto', ctoFinalCapturada);
+            formData.append('localizacao', locFinalCapturada);
+            formData.append('lacre', document.getElementById('lacre').value.trim().toUpperCase());
+            formData.append('sinalCto', document.getElementById('sinalCto').value.trim());
+            formData.append('colaborador', colaboradorSelect.value);
+            formData.append('photoBase64', photoBase64Value);
+
+            // Salva no cache a localização EXATA que foi injetada no formulário agora
+            if (ctoFinalCapturada && slotFinalCapturado && locFinalCapturada && !locFinalCapturada.includes("Calculando") && !locFinalCapturada.includes("Sem GPS")) {
+                const cacheKey = 'loc_cto_' + slotFinalCapturado + '_' + ctoFinalCapturada;
+                localStorage.setItem(cacheKey, locFinalCapturada);
+            }
+
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+
+                showToast("Dados enviados para Planilha!");
+
+                const slotAtual = slotPonSelect.value;
+                const colabAtual = colaboradorSelect.value;
+
+                limparCampos(true);
+
+                slotPonSelect.value = slotAtual;
+                colaboradorSelect.value = colabAtual;
+                getGPS();
+            } catch (err) {
+                alert("Erro de conexão ao salvar.");
+            }
+
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = originalBtnText;
+        });
+
+        document.getElementById('btn-cancelar').addEventListener('click', () => {
+            if (confirm('Apagar tudo?')) {
+                const slotAtual = slotPonSelect.value;
+                const colabAtual = colaboradorSelect.value;
+                limparCampos(true);
+                slotPonSelect.value = slotAtual;
+                colaboradorSelect.value = colabAtual;
+                getGPS();
             }
         });
-    </script>
+
+        function limparCampos(limparMac) {
+            if (limparMac) macInput.value = '';
+            ctoInput.value = '';
+            contratoInput.value = '';
+            tipoClienteInput.value = '';
+            document.getElementById('lacre').value = '';
+            document.getElementById('sinalCto').value = '';
+            obsContainer.classList.remove('show');
+            obsTexto.innerText = "";
+
+            // Limpar arquivo de foto
+            fotoInput.value = "";
+            photoBase64Value = "";
+            uploadWrapper.classList.remove('has-file');
+            uploadText.innerText = "Tirar Foto";
+            uploadIcon.className = "fa-solid fa-camera";
+        }
+
+        function showToast(msg) {
+            toastMsg.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+    });
+</script>
 </body>
+
 </html>
