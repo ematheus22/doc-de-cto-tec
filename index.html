@@ -78,7 +78,10 @@
                 <div class="form-group">
                     <label for="colaborador"><i class="fa-solid fa-user-gear"></i> Colaborador</label>
                     <select id="colaborador" name="colaborador" required>
-                        <option value="">Carregando técnicos...</option>
+                        <option value="">Selecione seu nome...</option>
+                        <option value="Jhonatan Renan Feitosa Figueira">Jhonatan Renan Feitosa Figueira</option>
+                        <option value="Arthur Martins Queiroz">Arthur Martins Queiroz</option>
+                        <option value="Railton Kley Chagas da Costa">Railton Kley Chagas da Costa</option>
                     </select>
                 </div>
                 
@@ -203,31 +206,11 @@
             
             let photoBase64Value = "";
 
-            // 0. CARREGAR/SALVAR COLABORADOR E BUSCAR DO APPS SCRIPT
-            async function loadTecnicos() {
-                try {
-                    const res = await fetch(`${SCRIPT_URL}?action=get_tecnicos`);
-                    const json = await res.json();
-                    if (json.status === "success") {
-                        colaboradorSelect.innerHTML = '<option value="">Selecione seu nome...</option>';
-                        json.data.forEach(tec => {
-                            const opt = document.createElement('option');
-                            opt.value = tec;
-                            opt.textContent = tec;
-                            colaboradorSelect.appendChild(opt);
-                        });
-                        
-                        const savedColaborador = localStorage.getItem('colaboradorSalvo');
-                        if (savedColaborador) {
-                            colaboradorSelect.value = savedColaborador;
-                        }
-                    }
-                } catch (err) {
-                    colaboradorSelect.innerHTML = '<option value="">Erro ao carregar técnicos</option>';
-                }
+            // 0. CARREGAR/SALVAR COLABORADOR NO LOCAL STORAGE
+            const savedColaborador = localStorage.getItem('colaboradorSalvo');
+            if (savedColaborador) {
+                colaboradorSelect.value = savedColaborador;
             }
-            if (SCRIPT_URL.startsWith("http")) { loadTecnicos(); }
-
             colaboradorSelect.addEventListener('change', (e) => {
                 localStorage.setItem('colaboradorSalvo', e.target.value);
             });
