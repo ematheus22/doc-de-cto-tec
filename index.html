@@ -335,7 +335,10 @@
             }
 
             function verificarLocalizacaoCTO(ctoVal) {
-                if (!ctoVal) return false;
+                if (!ctoVal) {
+                    resetarParaGPS();
+                    return false;
+                }
                 const slotVal = slotPonSelect.value;
                 if (!slotVal) return false;
                 
@@ -360,7 +363,17 @@
                     btnGps.innerHTML = '<i class="fa-solid fa-clone" style="color: var(--success)"></i>';
                     return true;
                 }
+
+                // 3. Se nenhuma das anteriores achar localização, reinicia o GPS para medição limpa
+                resetarParaGPS();
                 return false;
+            }
+
+            function resetarParaGPS() {
+                if (watchId) navigator.geolocation.clearWatch(watchId);
+                locInput.value = "";
+                btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                getGPS();
             }
 
             ctoInput.addEventListener('input', (e) => {
