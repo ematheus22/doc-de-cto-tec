@@ -48,6 +48,7 @@
         .obs-content { flex: 1; }
         .obs-title { font-size: 0.75rem; font-weight: 700; color: var(--warning); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
         .obs-text { font-size: 0.9rem; color: var(--text-main); line-height: 1.4; }
+
         .divider { border: none; border-top: 1px dashed var(--border-color); margin: 20px 0 20px 0; }
         .form-actions { display: flex; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); }
         .btn { padding: 16px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
@@ -75,618 +76,728 @@
         <header class="app-header">
             <div class="header-left">
                 <div class="header-logo-card">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANQAAABQCAYAAABh/1vWAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAABhAElEQVR4nO19B3xcxbX+mbllm3a10qoX9y73blNs043pIFMSICEQkkB4IfknpFt+KSQB0oAkQCAQEh5YYHo12AZcsLFcwJJtyXKRZKtre7tl5v87c+/KayMbOxDyXuLxby3t6u6tc+a073yHwAkMzjkhhPAQD+WboHp6m9rCo0aNiihUAs00imImXJVirKovlFrMTM2fTuscvwMcQFZkSKe1Wrcq9VUW5UmyQ97mBHgLAGKEkNYjDkVWcS7NB2D4OyHEPJHzPDlOjn/VIP+IQEV5tEgLa2fm5+bvNAHGrWreerOTqkNXv7OrYldLCLoiPRCLxcE0TDAMEwiRQJIkyM/zg9ftBG+OG1yKAoU+Ny/y5/QUBvzrhw6q7B43pGidE2A/IeStI44rnRSqk+PfTqBwrNq7yjl/yHzUHKdvb999g+TyXv2DP98DI8ZUQXezxpYvX8Nz8v0SobhzCgAUOBdSAToD0+AcDJPhgYlCKXUpBIoCeULYRg6tgFHFBdr4wWV10ycOfzxXgdcB9HxC1E0AnHAOFAVLaD1LdeGeT46T4/+eQGW0hKZp85pDB7+/L9ZT9eLqFeVnzDiFDSoZxF95712ajnrIX555F1TVjdtbgtR/CAIyN4ESHRgKGqHAOAUOjJuGwZimg6EboKiSVFFUCLMmjobxgwKx+TMmrxxdlr+WEPKrbC35z7ohJ8fJ8UmGfDwbiUkMwFatWuVUFOXsusYdZ24Kt0gRhbCmA3uoySjs7emAwf7R4FRU0Jk131GULKGyBjpCKERCP+HfhIvECVUkSZUlkDmFNOF8fyjEm1asZl5JyXn27Q8vuvysWRdt2d99/uRBBUsBQlt6e9vLHQ7a6/EUdYkdnBSwk+P/kkCJQQj3Nm9ymACTD3Z2JPZ37PPku3xkzKhRQJMUPJIMjBuAAQpdZ0CoJTSHzXVOAbiMRiBKkxApQhgAY2ASAhqhQIATVXYSp+yijHNet7eNvXdfI59ZNWLexadPXXn1wtM25+f7n4yGuvb09MAbBQUQ+yfcl5Pj5PjnCRRqgGWcS9MAIhqAs6SyzCt17zGopMpPb1gB5046E1ySAgkjAVSiwHUTyADWJCcMPSEhSIdeh6xCYgX1hFZj4m8m8ThlibnyYFtzh/nBjmVk3ZadU7985QVT5o0uv9JHSBS/cNIMPDn+twyMGhzXGAYiIMBVgCcGlZZjBM84fdZMCLd1w8G2AxBJR0DT0kAYB04k4EIPob6h9gulhgDhKGrkUMACJDCJBAQkkESsAYVOB04M4WdxUwKJmeByEEn15tHXN+4wb116Lzz44tplcc5v5pyrNTU1Qqj+ubfq5局 190:     <button type="button" class="btn btn-secondary" id="btn-cancelar">Limpar</button>
-191:     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar</button>
-192: </div>
-193: </form>
-194: </main>
-195: 
-196: <div id="toast" class="toast hidden">
-197:     <i class="fa-solid fa-check-circle"></i>
-198:     <span>Enviado com Sucesso!</span>
-199: </div>
-200: </div>
-201: 
-202: <script>
-203:     document.addEventListener('DOMContentLoaded', () => {
-204: 
-205:         // COLE AQUI A NOVA URL GERADA NO NOVO DEPLOY DO APPS SCRIPT
-206:         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6tdT0URlgf4ES50MHQnAwlpgJDzp8w4mF8I2qUA5s71Y1J984dnDn3SKa_HcHhBlT/exec";
-207: 
-208:         // CONFIGURAÇÕES DO FIREBASE (COLE SUAS CREDENCIAIS AQUI)
-209:         const firebaseConfig = {
-210:             apiKey: "AIzaSyA4NkHmvAhMwQl50xXZvnEP1hRRt0vipC8",
-211:             authDomain: "doc-de-cto---registro.firebaseapp.com",
-212:             databaseURL: "https://doc-de-cto---registro-default-rtdb.firebaseio.com",
-213:             projectId: "doc-de-cto---registro",
-214:             storageBucket: "doc-de-cto---registro.firebasestorage.app",
-215:             messagingSenderId: "781167224760",
-216:             appId: "1:781167224760:web:63535de05c6e79502fd14d"
-217:         };
-218: 
-219:         let useFirebase = false;
-220:         if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "COLE_AQUI_SUA_API_KEY") {
-221:             try {
-222:                 firebase.initializeApp(firebaseConfig);
-223:                 useFirebase = true;
-224:                 console.log("Firebase inicializado com sucesso.");
-225:             } catch (fbErr) {
-226:                 console.error("Erro ao inicializar o Firebase:", fbErr);
-227:             }
-228:         }
-229: 
-230:         let fullDatabase = {};
-231:         let currentMacs = [];
-232: 
-233:         const colaboradorSelect = document.getElementById('colaborador');
-234:         const slotPonSelect = document.getElementById('slotPon');
-235:         const macInput = document.getElementById('mac');
-236:         const ctoInput = document.getElementById('cto');
-237:         const contratoInput = document.getElementById('contrato');
-238:         const tipoClienteInput = document.getElementById('tipoCliente');
-239:         const obsContainer = document.getElementById('obs-container');
-240:         const obsTexto = document.getElementById('obs-texto');
-241:         const fotoInput = document.getElementById('fotoMac');
-242:         const uploadWrapper = document.getElementById('upload-wrapper');
-243:         const uploadText = document.getElementById('upload-text');
-244:         const uploadIcon = document.getElementById('upload-icon');
-245:         const datalist = document.getElementById('mac-list');
-246:         const statusSinc = document.getElementById('status-sinc');
-247:         const toast = document.getElementById('toast');
-248:         const toastMsg = toast.querySelector('span');
-249:         const locInput = document.getElementById('localizacao');
-250:         const btnGps = document.getElementById('btn-gps');
-251:         const form = document.getElementById('cto-form');
-252:         const ctoSemMacCheckbox = document.getElementById('ctoSemMac');
-253: 
-254:         let photoBase64Value = "";
-255: 
-256:         // 0. CARREGAR/SALVAR COLABORADOR NO LOCAL STORAGE
-257:         const savedColaborador = localStorage.getItem('colaboradorSalvo');
-258:         if (savedColaborador) {
-259:             colaboradorSelect.value = savedColaborador;
-260:         }
-261:         colaboradorSelect.addEventListener('change', (e) => {
-262:             localStorage.setItem('colaboradorSalvo', e.target.value);
-263:         });
-264: 
-265:         function handleCtoSemMacToggle() {
-266:             const isSemMac = ctoSemMacCheckbox.checked;
-267:             const slotGroup = slotPonSelect.closest('.form-group');
-268:             const macGroup = macInput.closest('.form-group');
-269:             const lacreInput = document.getElementById('lacre');
-270:             const lacreGroup = lacreInput.closest('.form-group');
-271:             const sinalCtoInput = document.getElementById('sinalCto');
-272:             const sinalGroup = sinalCtoInput.closest('.form-group');
-273:             
-274:             if (isSemMac) {
-275:                 slotPonSelect.removeAttribute('required');
-276:                 macInput.removeAttribute('required');
-277:                 lacreInput.removeAttribute('required');
-278:                 sinalCtoInput.removeAttribute('required');
-279:                 
-280:                 slotPonSelect.disabled = true;
-281:                 macInput.disabled = true;
-282:                 lacreInput.disabled = true;
-283:                 sinalCtoInput.disabled = true;
-284:                 
-285:                 slotPonSelect.value = "";
-286:                 macInput.value = "CTO SEM MACS";
-287:                 lacreInput.value = "";
-288:                 sinalCtoInput.value = "";
-289:                 
-290:                 slotGroup.style.opacity = '0.5';
-291:                 macGroup.style.opacity = '0.5';
-292:                 lacreGroup.style.opacity = '0.5';
-293:                 sinalGroup.style.opacity = '0.5';
-294:                 
-295:                 contratoInput.value = "";
-296:                 tipoClienteInput.value = "";
-297:                 obsContainer.classList.remove('show');
-298:                 obsTexto.innerText = "";
-299:             } else {
-300:                 slotPonSelect.setAttribute('required', 'required');
-301:                 macInput.setAttribute('required', 'required');
-302:                 lacreInput.setAttribute('required', 'required');
-303:                 sinalCtoInput.setAttribute('required', 'required');
-304:                 
-305:                 slotPonSelect.disabled = false;
-306:                 macInput.disabled = false;
-307:                 lacreInput.disabled = false;
-308:                 sinalCtoInput.disabled = false;
-309:                 
-310:                 if (macInput.value === "CTO SEM MACS") {
-311:                     macInput.value = "";
-312:                 }
-313:                 
-314:                 slotGroup.style.opacity = '1';
-315:                 macGroup.style.opacity = '1';
-316:                 lacreGroup.style.opacity = '1';
-317:                 sinalGroup.style.opacity = '1';
-318:                 
-319:                 const savedSlot = localStorage.getItem('slotPonSalvo');
-320:                 if (savedSlot && fullDatabase[savedSlot]) {
-321:                     slotPonSelect.value = savedSlot;
-322:                     slotPonSelect.dispatchEvent(new Event('change'));
-323:                 }
-324:             }
-325:         }
-326:         ctoSemMacCheckbox.addEventListener('change', handleCtoSemMacToggle);
-327: 
-328:         // 0.1 PREVIEW DA FOTO (Comprimir para Base64) - Robusto para Android
-329:         let fotoProcessando = false;
-330: 
-331:         fotoInput.addEventListener('change', (e) => {
-332:             const file = e.target.files[0];
-333:             if (!file) return;
-334: 
-335:             // Indicar que está processando (NÃO confirmar antes de pronto)
-336:             fotoProcessando = true;
-337:             photoBase64Value = "";
-338:             uploadWrapper.classList.add('has-file');
-339:             uploadText.innerText = "Processando foto...";
-340:             uploadIcon.className = "fa-solid fa-spinner fa-spin";
-341: 
-342:             // Timeout de segurança: se não processar em 15s, algo falhou
-343:             const timeoutId = setTimeout(() => {
-344:                 if (fotoProcessando) {
-345:                     fotoProcessando = false;
-346:                     photoBase64Value = "";
-347:                     uploadWrapper.classList.remove('has-file');
-348:                     uploadText.innerText = "Tirar Foto";
-349:                     uploadIcon.className = "fa-solid fa-camera";
-350:                     alert("A foto demorou demais para processar. Tente novamente.");
-351:                 }
-352:             }, 15000);
-353: 
-354:             const reader = new FileReader();
-355: 
-356:             reader.onload = function (event) {
-357:                 const img = new Image();
-358: 
-359:                 img.onload = function () {
-360:                     try {
-361:                         // Comprimir a imagem (Max Width 800px para evitar travamento de rede)
-362:                         const canvas = document.createElement('canvas');
-363:                         const MAX_WIDTH = 800;
-364:                         let width = img.width;
-365:                         let height = img.height;
-366: 
-367:                         if (width > MAX_WIDTH) {
-368:                             height *= MAX_WIDTH / width;
-369:                             width = MAX_WIDTH;
-370:                         }
-371: 
-372:                         canvas.width = width;
-373:                         canvas.height = height;
-374:                         const ctx = canvas.getContext('2d');
-375:                         ctx.drawImage(img, 0, 0, width, height);
-376: 
-377:                         // Converter para base64 com qualidade 70%
-378:                         const resultado = canvas.toDataURL('image/jpeg', 0.7);
-379: 
-380:                         if (resultado && resultado.length > 100) {
-381:                             photoBase64Value = resultado;
-382:                             fotoProcessando = false;
-383:                             clearTimeout(timeoutId);
-384:                             uploadText.innerText = "Foto Anexada!";
-385:                             uploadIcon.className = "fa-solid fa-check";
-386:                         } else {
-387:                             throw new Error("Base64 vazio ou inv\u00e1lido");
-388:                         }
-389:                     } catch (compressErr) {
-390:                         fotoProcessando = false;
-391:                         clearTimeout(timeoutId);
-392:                         photoBase64Value = "";
-393:                         uploadWrapper.classList.remove('has-file');
-394:                         uploadText.innerText = "Tirar Foto";
-395:                         uploadIcon.className = "fa-solid fa-camera";
-396:                         alert("Erro ao comprimir a foto. Tente tirar novamente.");
-397:                     }
-398:                 };
-399: 
-400:                 img.onerror = function () {
-401:                     fotoProcessando = false;
-402:                     clearTimeout(timeoutId);
-403:                     photoBase64Value = "";
-404:                     uploadWrapper.classList.remove('has-file');
-405:                     uploadText.innerText = "Tirar Foto";
-406:                     uploadIcon.className = "fa-solid fa-camera";
-407:                     alert("Erro ao carregar a imagem. Tente tirar a foto novamente.");
-408:                 };
-409: 
-410:                 img.src = event.target.result;
-411:             };
-412: 
-413:             reader.onerror = function () {
-414:                 fotoProcessando = false;
-415:                 clearTimeout(timeoutId);
-416:                 photoBase64Value = "";
-417:                 uploadWrapper.classList.remove('has-file');
-418:                 uploadText.innerText = "Tirar Foto";
-419:                 uploadIcon.className = "fa-solid fa-camera";
-420:                 alert("Erro ao ler o arquivo da foto. Tente novamente.");
-421:             };
-422: 
-423:             reader.readAsDataURL(file);
-424:         });
-425: 
-426:         // 1. CARREGAR TODAS AS ABAS DA PLANILHA
-427:         async function loadDatabase() {
-428:             try {
-429:                 if (useFirebase) {
-430:                     const snapshot = await firebase.database().ref('/master').once('value');
-431:                     fullDatabase = snapshot.val() || {};
-432:                 } else {
-433:                     const res = await fetch(SCRIPT_URL);
-434:                     fullDatabase = await res.json();
-435:                 }
-436: 
-437:                 slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
-438: 
-439:                 Object.keys(fullDatabase).forEach(sheetName => {
-440:                     const opt = document.createElement('option');
-441:                     opt.value = sheetName;
-442:                     opt.textContent = sheetName;
-443:                     slotPonSelect.appendChild(opt);
-444:                 });
-445: 
-446:                 statusSinc.innerHTML = useFirebase 
-447:                     ? '<i class="fa-solid fa-wifi"></i> Banco Conectado (Firebase)'
-448:                     : '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas (Sheets)';
-449: 
-450:                 const savedSlot = localStorage.getItem('slotPonSalvo');
-451:                 if (savedSlot && fullDatabase[savedSlot]) {
-452:                     slotPonSelect.value = savedSlot;
-453:                     slotPonSelect.dispatchEvent(new Event('change'));
-454:                 }
-455: 
-456:             } catch (err) {
-457:                 console.error("Erro ao sincronizar base:", err);
-458:                 statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
-459:             }
-460:         }
-461:         if (useFirebase || SCRIPT_URL.startsWith("http")) { loadDatabase(); }
-462: 
-463:         // 2. QUANDO O TÉCNICO ESCOLHE A ABA
-464:         slotPonSelect.addEventListener('change', (e) => {
-465:             const selectedSlot = e.target.value;
-466: 
-467:             if (!selectedSlot) {
-468:                 localStorage.removeItem('slotPonSalvo');
-469:                 macInput.disabled = true;
-470:                 macInput.placeholder = "Selecione o Slot Primeiro...";
-471:                 return;
-472:             }
-473: 
-474:             localStorage.setItem('slotPonSalvo', selectedSlot);
-475:             macInput.disabled = false;
-476:             macInput.placeholder = "Digite ou selecione o MAC...";
-477:             currentMacs = fullDatabase[selectedSlot] || [];
-478: 
-479:             datalist.innerHTML = '';
-480:             currentMacs.forEach(item => {
-481:                 const option = document.createElement('option');
-482:                 option.value = item.mac;
-483:                 datalist.appendChild(option);
-484:             });
-485: 
-486:             limparCampos(false);
-487:         });
-488: 
-489:         // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA E EXIBIR INFORMAÇÕES
-490:         function searchMAC() {
-491:             if (ctoSemMacCheckbox.checked) return;
-492:             let typed = macInput.value.trim().toUpperCase();
-493:             const found = currentMacs.find(x => x.mac.toUpperCase() === typed);
-494: 
-495:             if (found) {
-496:                 ctoInput.value = found.cto;
-497:                 contratoInput.value = found.contrato;
-498:                 tipoClienteInput.value = found.tipoCliente;
-499: 
-500:                 // LÓGICA DA OBSERVAÇÃO / INFORMAÇÃO
-501:                 if (found.observacao && found.observacao.trim() !== "") {
-502:                     obsTexto.innerText = found.observacao;
-503:                     obsContainer.classList.add('show');
-504:                 } else {
-505:                     obsContainer.classList.remove('show');
-506:                     obsTexto.innerText = "";
-507:                 }
-508:                 verificarLocalizacaoCTO(found.cto);
-509:             } else {
-510:                 contratoInput.value = '';
-511:                 tipoClienteInput.value = '';
-512:                 obsContainer.classList.remove('show');
-513:                 obsTexto.innerText = "";
-514:             }
-515:         }
-516:         function verificarLocalizacaoCTO(ctoVal) {
-517:             if (!ctoVal) {
-518:                 resetarParaGPS();
-519:                 return false;
-520:             }
-521:             const slotVal = slotPonSelect.value;
-522:             if (!slotVal) return false;
-523: 
-524:             // 1. Tentar pegar a localização direto da planilha (Master GPS)
-525:             const macsDesteSlot = fullDatabase[slotVal] || [];
-526:             const ctoComLoc = macsDesteSlot.find(m => m.cto.toUpperCase() === ctoVal.toUpperCase() && m.localizacao && m.localizacao.trim() !== "");
-527: 
-528:             if (ctoComLoc) {
-529:                 if (watchId) navigator.geolocation.clearWatch(watchId);
-530:                 locInput.value = ctoComLoc.localizacao + " (Copiado do Banco de Dados)";
-531:                 btnGps.innerHTML = '<i class="fa-solid fa-cloud-arrow-down" style="color: var(--brand-purple)"></i>';
-532:                 return true;
-533:             }
-534: 
-535:             // 2. Se não tem na planilha, pegar do cache local do celular
-536:             const cacheKey = 'loc_cto_' + slotVal.trim() + '_' + ctoVal.trim().toUpperCase();
-537:             const savedLoc = localStorage.getItem(cacheKey);
-538: 
-539:             if (savedLoc) {
-540:                 if (watchId) navigator.geolocation.clearWatch(watchId);
-541:                 locInput.value = savedLoc + " (Copiado da mesma CTO local)";
-542:                 btnGps.innerHTML = '<i class="fa-solid fa-clone" style="color: var(--success)"></i>';
-543:                 return true;
-544:             }
-545: 
-546:             // 3. Se nenhuma das anteriores achar localização, reinicia o GPS para medição limpa
-547:             resetarParaGPS();
-548:             return false;
-549:         }
-550: 
-551:         function resetarParaGPS() {
-552:             if (watchId) navigator.geolocation.clearWatch(watchId);
-553:             locInput.value = "";
-554:             btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
-555:             getGPS();
-556:         }
-557:         ctoInput.addEventListener('input', (e) => {
-558:             verificarLocalizacaoCTO(e.target.value.trim());
-559:         });
-560: 
-561:         macInput.addEventListener('input', searchMAC);
-562:         macInput.addEventListener('change', searchMAC);
-563:         macInput.addEventListener('blur', (e) => {
-564:             e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
-565:         });
-566: 
-567:         // 3.1 CONTROLE DO SINAL DA CTO (BOTÃO +/- E FORMATAÇÃO INTELIGENTE)
-568:         const sinalCtoInput = document.getElementById('sinalCto');
-569:         const btnSinalNegativo = document.getElementById('btn-sinal-negativo');
-570: 
-571:         btnSinalNegativo.addEventListener('click', () => {
-572:             let val = sinalCtoInput.value.trim();
-573:             if (val.startsWith('-')) {
-574:                 sinalCtoInput.value = val.substring(1);
-575:             } else if (val !== '') {
-576:                 sinalCtoInput.value = '-' + val;
-577:             } else {
-578:                 sinalCtoInput.value = '-';
-579:             }
-580:             sinalCtoInput.focus();
-581:         });
-582: 
-583:         sinalCtoInput.addEventListener('blur', (e) => {
-584:             let val = e.target.value.trim();
-585:             // Normalizar vírgula para ponto decimal
-586:             val = val.replace(',', '.');
-587:             if (val !== '' && !isNaN(val)) {
-588:                 let num = parseFloat(val);
-589:                 // Como sinal da CTO é sempre negativo em campo, garantimos o sinal de menos automaticamente
-590:                 if (num > 0) num = -num;
-591:                 e.target.value = num.toFixed(2);
-592:             } else if (val === '-') {
-593:                 e.target.value = '';
-594:             }
-595:         });
-596: 
-597:         // 4. GPS DE ALTA PRECISÃO (Melhorado)
-600:         let watchId;
-601:         let melhorPrecisao = 99999; // Armazena a melhor precisão encontrada
-602: 
-603:         function getGPS() {
-604:             if (watchId) navigator.geolocation.clearWatch(watchId);
-605:             locInput.value = "Calculando GPS Exato (Aguarde)...";
-606:             btnGps.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-607:             melhorPrecisao = 99999; // reseta a melhor precisão ao clicar de novo
-608: 
-609:             if (navigator.geolocation) {
-610:                 watchId = navigator.geolocation.watchPosition(
-611:                     (position) => {
-612:                         const lat = position.coords.latitude;
-613:                         const lng = position.coords.longitude;
-614:                         const acc = position.coords.accuracy;
-615: 
-616:                         // Só atualiza na tela se a nova leitura for mais exata que a anterior
-617:                         if (acc <= melhorPrecisao) {
-618:                             melhorPrecisao = acc;
-619: 
-620:                             // Removido o toFixed(6) para enviar todas as casas decimais como o Google Maps
-621:                             locInput.value = `${lat}, ${lng} (Erro: ${acc.toFixed(0)}m)`;
-622: 
-623:                             if (acc <= 15) {
-624:                                 btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--success)"></i>';
-625:                             } else {
-626:                                 btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--warning)"></i>';
-627:                             }
-628: 
-629:                             // Agora não para de tentar melhorar, a menos que alcance 3 metros (quase perfeito)
-630:                             if (acc <= 3) navigator.geolocation.clearWatch(watchId);
-631:                         }
-632:                     },
-633:                     (error) => {
-634:                         locInput.value = "C\u00e9u aberto / Permiss\u00e3o negada";
-635:                         btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
-636:                     },
-637:                     { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
-638:                 );
-639:             } else { locInput.value = "Sem GPS"; }
-640:         }
-641:         getGPS();
-642:         btnGps.addEventListener('click', getGPS);
-643: 
-644:         // 5. ENVIO PARA O GOOGLE (SOMENTE ATUALIZAÇÃO E SALVAR FOTO/LOG)
-645:         form.addEventListener('submit', async (e) => {
-646:             e.preventDefault();
-647: 
-648:             if (!SCRIPT_URL.startsWith("http")) {
-649:                 alert("Aviso: Falta a URL do Apps Script no c\u00f3digo!");
-650:                 return;
-651:             }
-652: 
-653:             if (fotoProcessando) {
-654:                 alert("A foto ainda est\u00e1 sendo processada. Aguarde o \u00edcone mudar para \u2713 antes de enviar.");
-655:                 return;
-656:             }
-657: 
-658:             if (photoBase64Value === "") {
-659:                 alert("Tire a foto antes de enviar! Verifique se aparece 'Foto Anexada!' com \u2713 verde.");
-660:                 return;
-661:             }
-662: 
-663:             const btnSubmit = form.querySelector('button[type="submit"]');
-664:             const originalBtnText = btnSubmit.innerHTML;
-665:             btnSubmit.disabled = true;
-666:             btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Atualizando...';
-667: 
-668:             const isSemMac = ctoSemMacCheckbox.checked;
-669:             const slotFinalCapturado = isSemMac ? "CTO SEM MACS" : slotPonSelect.value;
-670:             const macFinal = isSemMac ? "CTO SEM MACS" : macInput.value.trim().toUpperCase();
-671:             const lacreFinal = isSemMac ? "" : document.getElementById('lacre').value.trim().toUpperCase();
-672:             const sinalFinal = isSemMac ? "" : document.getElementById('sinalCto').value.trim();
-673:             const locFinalCapturada = locInput.value.trim().split(' (')[0];
-674:             const ctoFinalCapturada = ctoInput.value.trim().toUpperCase();
-675: 
-676:             const formData = new URLSearchParams();
-677:             formData.append('slotPon', slotFinalCapturado);
-678:             formData.append('mac', macFinal);
-679:             formData.append('cto', ctoFinalCapturada);
-680:             formData.append('localizacao', locFinalCapturada);
-681:             formData.append('lacre', lacreFinal);
-682:             formData.append('sinalCto', sinalFinal);
-683:             formData.append('colaborador', colaboradorSelect.value);
-684:             formData.append('photoBase64', photoBase64Value);
-685: 
-686:             // Salva no cache a localização EXATA que foi injetada no formulário agora
-687:             if (!isSemMac && ctoFinalCapturada && slotFinalCapturado && locFinalCapturada && !locFinalCapturada.includes("Calculando") && !locFinalCapturada.includes("Sem GPS")) {
-688:                 const cacheKey = 'loc_cto_' + slotFinalCapturado + '_' + ctoFinalCapturada;
-689:                 localStorage.setItem(cacheKey, locFinalCapturada);
-690:             }
-691: 
-692:             if (useFirebase) {
-693:                 // Envio direto do Base64 para o Realtime Database (bypass Firebase Storage)
-694:                 try {
-695:                     btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gravando...';
-696: 
-697:                     const now = new Date();
-698:                     // Formatar data/hora no padrão brasileiro de Manaus
-699:                     const dataHoraStr = now.toLocaleDateString('pt-BR', { timeZone: 'America/Manaus' }) + ' ' + now.toLocaleTimeString('pt-BR', { timeZone: 'America/Manaus' });
-700: 
-701:                     // Gravar no Realtime Database (/registros)
-702:                     const databaseRef = firebase.database().ref('/registros').push();
-703:                     await databaseRef.set({
-704:                         slotPon: slotFinalCapturado,
-705:                         mac: macFinal,
-706:                         cto: ctoFinalCapturada,
-707:                         localizacao: locFinalCapturada,
-708:                         lacre: lacreFinal,
-709:                         sinalCto: sinalFinal,
-710:                         colaborador: colaboradorSelect.value,
-711:                         fotoBase64: photoBase64Value, // Envia como String Base64 direto no JSON
-712:                         dataHora: dataHoraStr,
-713:                         sincronizado: false
-714:                     });
-715: 
-716:                     // Atualizar localmente a CTO e localização do MAC na memória
-717:                     if (!isSemMac) {
-718:                         const macsDesteSlot = fullDatabase[slotFinalCapturado] || [];
-719:                         const found = macsDesteSlot.find(x => x.mac.toUpperCase() === macFinal.toUpperCase());
-720:                         if (found) {
-721:                             found.cto = ctoFinalCapturada;
-722:                             found.localizacao = locFinalCapturada;
-723:                         }
-724:                     }
-725: 
-726:                     showToast("Enviado com Sucesso!");
-727: 
-728:                     const slotAtual = slotPonSelect.value;
-729:                     const colabAtual = colaboradorSelect.value;
-730:                     limparCampos(true);
-731:                     slotPonSelect.value = slotAtual;
-732:                     colaboradorSelect.value = colabAtual;
-733:                     getGPS();
-734: 
-735:                 } catch (dbErr) {
-736:                     console.error("Erro ao salvar dados no Firebase:", dbErr);
-737:                     alert("Erro ao registrar os dados. Tente novamente.");
-738:                 }
-739:                 btnSubmit.disabled = false;
-740:                 btnSubmit.innerHTML = originalBtnText;
-741:             } else {
-742:                 // Fluxo Legado (Google Apps Script)
-743:                 try {
-744:                     await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-745: 
-746:                     showToast("Dados enviados para Planilha!");
-747: 
-748:                     const slotAtual = slotPonSelect.value;
-749:                     const colabAtual = colaboradorSelect.value;
-750: 
-751:                     limparCampos(true);
-752: 
-753:                     slotPonSelect.value = slotAtual;
-754:                     colaboradorSelect.value = colabAtual;
-755:                     getGPS();
-756:                 } catch (err) {
-757:                     alert("Erro de conex\u00e3o ao salvar.");
-758:                 }
-759: 
-760:                 btnSubmit.disabled = false;
-761:                 btnSubmit.innerHTML = originalBtnText;
-762:             }
-763:         });
-764: 
-765:         document.getElementById('btn-cancelar').addEventListener('click', () => {
-766:             if (confirm('Apagar tudo?')) {
-767:                 const slotAtual = slotPonSelect.value;
-768:                 const colabAtual = colaboradorSelect.value;
-769:                 limparCampos(true);
-770:                 slotPonSelect.value = slotAtual;
-771:                 colaboradorSelect.value = colabAtual;
-772:                 getGPS();
-773:             }
-774:         });
-775: 
-776:         function limparCampos(limparMac) {
-777:             ctoSemMacCheckbox.checked = false;
-778:             handleCtoSemMacToggle();
-779: 
-780:             if (limparMac) macInput.value = '';
-781:             ctoInput.value = '';
-782:             contratoInput.value = '';
-783:             tipoClienteInput.value = '';
-784:             document.getElementById('lacre').value = '';
-785:             document.getElementById('sinalCto').value = '';
-786:             obsContainer.classList.remove('show');
-787:             obsTexto.innerText = "";
-788: 
-789:             // Limpar arquivo de foto
-790:             fotoInput.value = "";
-791:             photoBase64Value = "";
-792:             uploadWrapper.classList.remove('has-file');
-793:             uploadText.innerText = "Tirar Foto";
-794:             uploadIcon.className = "fa-solid fa-camera";
-795:         }
-796: 
-797:         function showToast(msg) {
-798:             toastMsg.innerText = msg;
-799:             toast.classList.add('show');
-800:             setTimeout(() => toast.classList.remove('show'), 4000);
-801:         }
-802:     });
-803: </script>
-804: </body>
-805: 
-806: </html>
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANQAAABQCAYAAABh/1vWAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAABhAElEQVR4nO19B3xcxbX+mbllm3a10qoX9y73blNs043pIFMSICEQkkB4IfknpFt+KSQB0oAkQCAQEh5YYHo12AZcsLFcwJJtyXKRZKtre7tl5v87c+/KayMbOxDyXuLxby3t6u6tc+a073yHwAkMzjkhhPAQD+WboHp6m9rCo0aNiihUAs00imImXJVirKovlFrMTM2fTuscvwMcQFZkSKe1Wrcq9VUW5UmyQ97mBHgLAGKEkNYjDkVWcS7NB2D4OyHEPJHzPDlOjn/VIP+IQEV5tEgLa2fm5+bvNAHGrWreerOTqkNXv7OrYldLCLoiPRCLxcE0TDAMEwiRQJIkyM/zg9ftBG+OG1yKAoU+Ny/y5/QUBvzrhw6q7B43pGidE2A/IeStI44rnRSqk+PfTqBwrNq7yjl/yHzUHKdvb999g+TyXv2DP98DI8ZUQXezxpYvX8Nz8v0SobhzCgAUOBdSAToD0+AcDJPhgYlCKXUpBIoCeULYRg6tgFHFBdr4wWV10ycOfzxXgdcB9HxC1E0AnHAOFAVLaD1LdeGeT46T4/+eQGW0hKZp85pDB7+/L9ZT9eLqFeVnzDiFDSoZxF95712ajnrIX555F1TVjdtbgtR/CAIyN4ESHRgKGqHAOAUOjJuGwZimg6EboKiSVFFUCLMmjobxgwKx+TMmrxxdlr+WEPKrbC35z7ohJ8fJ8UmGfDwbiUkMwFatWuVUFOXsusYdZ24Kt0gRhbCmA3uoySjs7emAwf7R4FRU0Jk131GULKGyBjpCKERCP+HfhIvECVUkSZUlkDmFNOF8fyjEm1asZl5JyXn27Q8vuvysWRdt2d99/uRBBUsBQlt6e9vLHQ7a6/EUdYkdnBSwk+P/kkCJQQj3Nm9ymACTD3Z2JPZ37PPku3xkzKhRQJMUPJIMjBuAAQpdZ0CoJTSHzXVOAbiMRiBKkxApQhgAY2ASAhqhQIATVXYSp+yijHNet7eNvXdfI59ZNWLexadPXXn1wtM25+f7n4yGuvb09MAbBQUQ+yfcl5Pj5PjnCRRqgGWcS9MAIhqAs6SyzCt17zGopMpPb1gB5046E1ySAgkjAVSiwHUTyADWJCcMPSEhSIdeh6xCYgX1hFZj4m8m8ThlibnyYFtzh/nBjmVk3ZadU7985QVT5o0uv9JHSBS/cNIMPDn+twyMGhzXGAYiIMBVgCcGlZZjBM84fdZMCLd1w8G2AxBJR0DT0kAYB04k4EIPob6h9gulhgDhKGrkUMACJDCJBAQkkESsAYVOB04M4WdxUwKJmeByEEn15tHXN+4wb116Lzz44tplcc5v5pyrNTU1Qqj+ubfq5Dg5Pv2wuYQ/39u1/bWtsX1nvfzOG8bXLrqR5qoe+NPKv1OnWQZvrdrDNZ0RSimYpslR03DGORDKKZXwd7QGuSKsOxGdEIIH3BTay8RABW4AFCgHoBjcEGeJ2osBkWTQNZ3TVAS+eOn55Obq83ZVetVTa2trg6eccoqjvLw8cSLXdHKcHP8aH8oaOLc5Hz3+q+Ng5H+zcPJqyZCgPdYL3aGImSflkli4j1JTNtH0czudEqUEHG4XoYSAwUwwuAGmyUDTDIglNJMTiQBVuaxK3CETSSGMUG4IIUPhYkQRvpelvYgIbBDFSbgiw33LX9R74/HRt1150UPV1dU3tQfbPZzzFjzRk4GKk+NfMU7YTMr2V4LceD4aT/n2HthflJJS45I9HHbt6ohVVY3MwV0n44k+SVGIppttpmHopmFAOp0mmmHypG6U6sBL9xzsgt5wFNq7w3CgO4QJYU5kYjodDkmRKQHGwbDihSAxjA9aGg21GZUAQqGofvW5pynfuObCF0YV5lxaX18vV1VVGUREO06Ok+OzHf+Q34GmXz2AVB5Klfn9zhAApABgFuiggQK7AaDK3vce3N7tcuzX0hqqDUCNxUwGBuMFADA+CWC2tPZM7I1Gzmxu65y+vytUuX3/QXh/eyN0hxOGrDjB7VKoRDglDH0wFCoOjHBgFD0vFXrDPdrXFi9Sb7t44W3l+fK9n/pdOjlOjn9EoDLa51hRM845BidYnxZdDgBv56ve3y3bvl1dPH681sh7fGqITx+SV7jyOI77kf1zLoRs5sFYfNGHTS3X7mrr9a5870PYtns3hFOG6XTlShRD68zE0J4IdEjcBF2hkI5G2K3nzzdrvnLZXWFdfzZXUbai03VSU50c//s0FLeC3athtQQwHxYQYmwJ7vVPyRsa+uim3AUAKgAMtXO52cLD7fcNR2LztmzZMWTKlLH7svYzAgDO3bhjn2N9fcMtm3a3DntrQz0kmWz43B6JMEY4aiyxG/S1ALgW1l984FfK5CL3bYSQezPC/8lv08lxcpyAQGEMjhDg8XhPudsd6EwGg2We/PyWlatWyWPGjHGUlpbGs7+EAW/0ZQzO5mNEPQFwZZwlIZ1KkV4tqkVTiTEuWR0eTSfBZCLOZ0XqOIEc1QUJI7nNrTi6Ajk+8Dt94KKK4QXlcQDA47wjERqy8lDW4Jy7W4OJG97Z0vDbZ1avl9Zv2wGS6uGK7CAmSwuEBQYvokbCnFZZzO+89canJwzLbQ9F++4v9hc3/28QrJO5sn/NwGefWcg/izkgonw1FvAUQrHUSJpKuZhKfD3RxOyA170snYgu5pyvAQDURhf0QnLwvlDP5/d1t8l/+3DVqJ5EFFp6O6Az2AvBcBhiehJ64yH8nescfSUTGLcStug/Ycw84M+b5HflgFd2QoHHB2X5hVBRULJwWNEg8Kuutl3R9vYROcX/AwB7AeBdQkgvANzHOX95yuhhP3l6xbvXLF+5kXSGE0zxqDRth9e9Dqe0Zdd+c23D7qsmjpj1ZHOk+eD/FqT6yajjv2ZkCdFngv88DGXQwrlrECFJcXTO8yO6fl3MTN60J9RRur2piR5Mdec29x6ELS37IJwMQ0dXF2NM4yBJlq5DiLklNIQTSvF38bKHxDhIJgfdNBlHCUDMn2FYfzQJUEmG0oISaXCgGOaMnAgj80th9rDx4RJ//tOFSg6jAPcSQj7knA95buOON/7w/Osjt25rM90et0QAT5tBlEjmiPxccucXLnvhzNlVlz7FmLT4EwgU3p9aVMq1tbB48eJ/aIV75ZVGdfRUn3/4H//YvenCC6Vp06bxI/27kwj6T3cs48ukxWSxGTISnzMMYwshDqL19e3705/+lJw/fz6F+fNhPs46e+5ny4Gdb2W1tbW0uro646bg8+LHafKJHeAeET43DABytza23VE6uPzKH/7PL+D5xg0QTxuQSAVNYSAqDgoSBYxrY+TOyhABUHt6ZEw8kc897GD4XtQb2slagvAL3BAot4BHGtOZEDLNMJ3gkCr8BXTy8NEwf8IsOHX4ZBgdqPiVAtDOAM7Z1REc/ZsHnxn26uYGkFwuULgJhkQgGu4zl9x8rXTLhaferhLy202bNinTp0/X4V9rdhQTQtqzP6+uXiYtW1ZtGcP/C7Tov9PgtoD0pdMTTTWy14jL1b37Dvxt/Pjx2jG+Iyw2QhCmc/R9Huu4JB7vqfB4CtrwTVdP6rbuUPeolmj6unse/rv38kULjB2pevr7Vx8jjtx8TKsSjDMQTkGXLC8HhUfsSKAdLGEWMKPDYXriPaoYjvCHDDiWAyDoSKAh+s8oI6CSKAExDIPzdIqjsA7OK6GXzDwTLp15LlQVDTmYL0kPHkimL73z4dqxy95Yr6gOF8mRXJCKJ83RY8ro3d+4fu2E8sC8WgBSfZwrDOdcIYTomRtYX9/lqaoqmtidhOuCfd1z+5Iao0IVH/+gAKZLIqauQ59mmrXTxlZgCg1LUrb3HzfWWQKGQyN+f99Jf+vTH/hc42Be0xXrXexxu98vojmNAPBkTU0NrampkaLRnqEO4pTUnMhegLKpJsAve9Ks0SHTer8Ee9vaejdUVha0fdyzIYloV7Urp7B1S2voh2vfq1tUGshhRFXrN+3eP6q9s9Ox4MKJ8LWHfgRpRQUgJph2VA3lIhO+O6RxsnbcfyXWG/yR+U7mYwTLZrY9/Ayt+WqBI6xcE2E6mEaEs5TGcuQicsH40+n1p5wHC8ZW1XBQbn3kuZUFDz39IvREKHhcuZCIHzT/uPR2aeG00X+nANei+l68ePExtQDerBBALqRSV4Q6Ov72/vtD9OpqGPXW1n1vL1/9TuG2pj3AwXn81rh9YcK+kyRQgEOhLweGluRBRYFfHzyo7InzT5nUowDs7O3qWgUAnUVFRfGT/tYnHxkTOhKJjHL4fEveaqpb+Mr2df6mzlbI83hh/rhpcMGUUzZXsNxvtba3fuD3+6nP5+tJcT76tbUNb37Y3FzR1tkOTlmFRWeeDnMmDttohsNX+/3+PccKcpEw5xc1Ne1f+nbD/snPv/K6+bff/ndXDjHXvbx++yUPP/mCdPstF8Htz/4K9sT6hI8DgAWCwsA7fEeHLkXkiDJmYGawj2x1SLqsoDwmbTNCRw5FBlEYGUJpMRQJIrBh6gawuM79ag65aPIs+MpFX4Sp+YPaN27fnfpt7ctDV2/dzR0659ctOo3c8dUru/MkUny8DwEncziVGt203bFn2jRgy9ds3fmLvz4zYldbn+ZxuWWGaI0TTIfjs2UI9BWHMDnXNVCpKQ8bXAELZk+Fy+bNjkyq8P9UJuSuBzZtUm7+F5qn/y5jE9+kTCfT9Rjn970XbL6l+me3QTARNECREVnAIWnyG866XPnRBdfvGpJTNA4FJM3555986/1H7nxwmdITTpmKREGnQHKIzu740pX0uovnrXIDXA4A0aPV4cmGyR5+6uUVBb7cAuO8U2bKDz35aqkWD13uLwgkiSy7UmkCBd482BPqACJJwEC2fSEmBACHmPf27ygImBOyfj80MiWFmd+EJ4XC078PS3rwu4iCEOYgs/5OQAeDUDCICmjdKpSB7FNJiKfgsc0r+Cs7t8GNp11U8o2F1XDv978Gv3h4OVn2/Fu8ft8B6Aml9nIeL+vsjJolJSWdx1LZWUntXRhL+fBg5J6nVq8bsauj18jNL1aJbgCniDM8/KoylyW8wEOXmLUV+oi4pGDwRgHucIlo0P62PvNPf13O3ly5xld97oLv9Ro8EpDJA2KXnNMaAFh6Mo92wgOfYU1NDVIleDd1Ny+67Q9LjaAeI87cXFnRGTDKIeWj8MiKZ/SJQ0ePvnnWRT/jnC/f2Nr9+N2PPgVBnTN3oFBCuUMuFDMdpvf8ZZk5fdqUM6dX+KYj54kdd/iIxUPdEr0/bqjJtMHo3FnT4P2drbytuyd8y1ULW8qKcqE9lOBF3jwAQxc6CUUJtYglOKhFbBhQ5oV+EgoFPfQSiFr7Jb5pbyeSsZntEWlOhV6yZigBMCiALnHQqSxKQBA0i/4iYvt0jkFEBVS3j/QYYfLLVx8i1/72O6S5uxl+/rUr4Y6brwBmpsmuXc3tAO6eHTuSYTuEfmyn0hYqk3HSuHvfdR/saON+h5dyIw0MXSuGGpgAQU8KE8sCDmW9MPZw5AsvFEG+OshggAQGBjYB8YlAqMMhewsCaks4zn/zxHN5f3nu7T91xs0H0DnGFfOkMP1jA5/h0qVLcQVTNu/cXryvr0OmbhfVuAlJyiBtL4nU5ZRf3/gu70mFbkkB/O71NXXQ3htnHodCTTMFDJ+SngSMvQV1CV58ax3uUxS01h7l2LIR02q5lliShHz4wyNPwGnjJxCnEc9dv7kp1wEUjFSa5Lm81qxHLJ5I1OJLVHLYGiSjaTJBicPVU8bYFOZcpljX3gTDHNaKjurIXuG5JbR4BDFRUeAGOHmLt4KDTFXgXhne2LsNmu79Hnz/8i/DrZctNIfk5bVTMzkRAMbNmepB36TpuCI1tlD1BvvCpmkWiOyCdQVCsPEkrUJ+61NR73WoGuXwc7QXkf5t7d9wQcFfNMbBoTiIAk7+0wf+qikO6ctfuuDUF4Lp9EHgfHCe0/nc/4bE9P+Fwftp7ng+hSje4WR3IqIZCnVRk4EpAxjotZgcZDTdKTCDMBpOxFYGnH4tEolyZD6x3K9Dfrw19Ql0dXXRoAajAWDD0c5B1ol6MaNOHkqkeCweppOrhsLQkgLoTurgdrsgqaXBITuEKsEJg9g5kzK7nCJzJZmSW0sQhLdgvxc/7M3sSLlITWUihBYjkm0C2n6TEKLMrj8mI8cIAwlVnQEg+XJgXzoM33nsl/xAqI1/55ybWpPx5DNdXV27vV45L6LrlwDAC8eb5COUSB8NuFirhbjRYjcSMCKyDuLe2O7gEeag8J6sH/37sqKkGJ/lDGvAZOIIlKi/fewZViQ7Hr3qvBlXd0ci9fbTPUlKcwKDptMlSWKqXhUaRpYP9soGMN1BCRaqEsNO5cgUtHSKDR88RMrLL1xpGvABIVK1tWBK/c9RQIgwcoAZJQR2M5iEXy9cPTBsj+Z5oKe4KI/Fo73sgksuYvf/bTmseHcjbN+y7UAwHuI6mmEoARjOtv0amYGYPBJnIBEOEmFAxYrLgIEJJjfAYDroegr0dJJriaihxSNGOhEx0umYoaUTpq6lwUhrQHQTZFwxRM0TErVIIKHg2kGKj/P/MVKIAi5yWjqAJDkg6lbJ0hceU2peeXC25FG+WlRUNGhDZ6SbcX5pBwBiDY9rMFSYhzIAtia2NJOladAnooCsTabODBMLVAyrUEXXDetl4E8TCZ0MgxGTWPxqIlAhnqtYQRjoxACZyCSaBvbye5sKGtuDVxbl5jatXr36Y83Uk8MaNVAjbqrP6WwoduQhOFqaPbxq9aVTT6d6X5+ucBlcpgyEyqDpaZareskFo2aYZeCo02ToMYVHZFtYYmHPSgsRdDskVAYeOMZABbh5dHmgQaJsAjfQt1HNc885c+PoPMddpSWDnt7ddYBw9J8swRW+C+cG51jqruuAZbmAZHtEkiRFoThBZCCG2+UmeXm5klNRSSA/X3bIqih7x7mfSKcgGI1A0tAgkoxDNBGHlK4LmJKoPlRkQhQJqIyWjpXfEujyAS5A+HIU/S8UdlsIiQJSjo/86vmHDVmVh91+1lV/WzB06FQAuD5TdXw8Q/h4/SKNNwAJ0CyuJhwSmCAZaVbodlKXw0GxlP8j4RcRpbTMwmQ6BZ09PVxxukWRJDJvoOkBRAMmGSCbFFxOj7Smfiff1NB4Gef8Z4SQfXzJEkosn+Bjh63RSF1dnRSdNo031tWRUdOmcUQFWBPj6MJ5BFpAnP5qAMlbV0fqsrabhq9p03gNAKv5B1mn+BHcikusIAx9sK6O3PziiyYc5/Vmj6VkKQIT+h8YISTJOb/opjMvfYWo0unL3nmdJQmjsiHDYFeA/vALN9LTRk+6jhCyNsn5GTj1+i8ETScRaMq6NKx0IFB2rHOQ24PB7rkzJj42qi88d29bd9XskUNH72/aPeeNts7lb7y1jl1w6dlmW1s7sFiUcBNNNMICbq/scTqhuDQAQ0oq5VJfAHIdbkB8XmleAYwsGyQ7nQ5Ix5Nxt6pi+fvrsiwbDiqpkgk8beh5EpFO6UvH9Wg66YynU1JbqMto6e6Q20M9tPFgC+wLdsCBUBfW+FJwqEBlRaAquPDhsq6RS3aZPBMCgFhBapogIZQpzy//fPlfDODKlAjX/+IjyhczRJnHNwls/w1N2cx9zkCDuQ4y09id3/svWqjyD4M9vU1McgrnK3PzxSIkFDcnhHKe0PT8lo7u+ctefgv64jFQ1BwRqOAUdbIBlBlgSm7SHdX13Qd78k2AswDgz1BTQ482wTITCOFRizFIal2XcNNOdGJnfEdbK2bQAgOiBjJj6SGEAT9eeE7meBlBmr96NcUKhqVZ5+xQkEWr32s4dL6Z7x/xmabppD3aO4YQssP2OU37Z5xzftPYxcN/MW/E5Iv2BjvAZZL47BETeueOmOJOabEtuB2qBnRT+015Yi3iR5y1cHuPdV1yTl5evIyQewDgHs55TuvwiusVhzx8R/Oerxhy0jVq7BAY3FoC18y9EEZVDoMRg4ZRN5dSJf6CiC/HHfO4Pc8MkfPw+t5HYlm8qSbAFxiAorgBQa1NCHDNQJvEDeDcDwCTBoOQ9g8BxHYVANAdB/0n8XT6gu3de9me7oP5aza/z9Y1f8D2hDuIgQhBt5MqOFMRRYFRRmGGCkkCg6LJyYBLCOhAbSID8XnkXz77F2NkefkXUtxk7ftabhHJtAFCnh8ZdhDFCulnfCAbVmVy5stxkyH5ro0zhxSfQciwwxD5Aw3Ma2iGed6oISXLfnr/kzm9SYPLskpNJgmTgkm4fx1UxUU+2LUP9nUlZqBA1dbWHq02LXthENdjT25UIqft6UlyjQEpDbiSuRL8Hbp3uKBobEfdpjo5A8XKFoCDPSnMxzSgENma3B834ZK+qJ7fFezhBjOITGWen+sjFfkeUwFYhoXbOGmPck7HyvWNMhhLBghpRUHinA+KAlzd0NzDwNBm5zjI5CRGuO3oQCbmZYcKrPe2tHHOWV/SkALeAJ7Pd3GeJYPtQ6LR6FkHOH+itrZmX3V1zZU3Tj93LQBMx3wvAPw4mIiN1VCGHIQljyD5scNrGUNfLK2mqWM846/49+75A/u1so+QnmXLlkn1hYV4oRgSvB//0NXbteL8BbN+muPzNX33ki95/V73GI/sjjkAsMzieQPg/5lg7nMS+c6sm3WGDjBKAdhKAM5r1yK3MoN541pSVhmRt3Xs2QaU8v3RnvEg0WSh05tjUv62F9TbTIDzJYA2Dyi3+J3Oaw0MWnL+3RunnHvnXiNE1+zcDMvfewtW7twCkWSUyW4HFRrLnuTI64fJ04yfJ0L4nIHCKZhuKt/20J3auKVDb5g5ZOiThJAVqziXcVWEYwzLZ+JAGQGGjiMgs4wpjmNwwlw5OfK+3fvenTW0JH7PPctckUi9jvViHx2rrf9Xiwn8Guf8sk31ra89+vxKkiOjk4pXIINOTFBAA4ek0I7eMETi0TPxewOBcpHWDVfhddu358+pqlI1gG/v6QqN/ctra0p7Q7HJ4WgaOsNJiGspKAl4Yfyg0u9csXDun0BnY4fLw2/D6gHOuScK4GbhcG5LS0tvacCBKIAp2w90L3767c1nN+4/MKYzkvaEEhok4lEwUPNLFPJ9OVBZFIDSgO9nY0cMazc5f50C1NXW1PyVEKJ9TFRSrE6U65XE1LtRGJp7Et98/PV1N+1obfc2tnRDTzAKqVTq0Beyprqd8rc1iQ0B4BwC/nw4c+qo63XO58c1+K1TbXo2HXYtL6+pSfGamgXbDnTd9+qaLeW7mvbyHEUunjhm9H9ffPZpu0py4Ne2hkpkzHuxaPZrQyuvyokpjutwiMX/qEPECDPAzIy6RyRuESGvAsCrGfBsazicG/CTvswXW0Kdd1FZzcGJOQO069vifVcub37/7D3dbdDd1wXRVBL2tx+ASCoJaUMTdVGSqs6gMgVTM8CjOtxe2QEluYFzygoKd5Z689mYyuE04M29sY2H24oh5xETzJYk438upO7CK8af4T1r3MxBaxrqSpZtfifn+brVTCcmUVwOgoLD7VpGGVEVDMCUsZoXAbscuCJB1Ewrt973M+OvX//J3Zzz8wGg48Qxc5aWQiAvRiJNRkB1ut24nwcffND41reWGpYRNPBYsoTTW26pwZV/y6ThZcyjcMVEf1Sy8lkorgLDiHk2xiAeiyYGCvFl8IYa12YqoFz/zvbdl6z7YFfZmq2NsPdAD3SHQ8gjb1DJgSATICxNfDIZ5AyU/XzhzCG/yCN5ojC0B4AaqVBOqT9vNwp5Ryx1+zNvvn3qO9uakAcRemIpSOsGIrKZjGEiKgk/F01sYmrEo8rOssL8oWfMmvyVay84Dapraqp4Tc0PCCGJDGJ7gPvLly3j0t2/IKtqavjnX9rQcPdTK9YVvrP5Q4iluc5kCRTZQeUsMbICpZb9ZwECbIGyC/nwCPva90Pj7j0lHgctvv7Sc66prR1Zu3gxQVxk6crt+5/46SO1RR/sbcPlUNDSPb9h+6DuqDbo2gvmzR2UpzwX4XxiJqKHIxMQO/LkTQOUY80QTCBm4VLF72LVtleZDHIAZ2tfRuDmz5+PN2p31gMua+45eHb1L76pMYVIWErLCWMgyxKi0sXASCHidqxSLyQ2t8JoJgekHFNAom7FwYcNGjp7XOVwOH3UpCvGBsraqsqHLAmQnEdwuetJxd6+aPxpoQXjZziunnH2hF8++yhsPLiDEa+DYhhfwqwp2nOy5ftg8hVBvIybILsc5P22neTxTW9O/O6Cqy70EfVPODFt8+/4hkDEW4EHK1OBD5eJSfPAAwLg8LGjulr4CQ5JUUGTVeBY5SJuOfqCKFIWsEucP77NGgKYzyxh4pxX7umOfHf5yjcv/esrb0NrT9xE/g2nLBGX10fcnCPFjVhdMQGeTiaNX93/EPjZ56Zwzud3dnbuKCSkE2E0Kc6/tfz9hh8+/txK/4ZtO5guu5mkuqhL9RCfqkkSGJKBJqm4YosoixInBpD4gd4gf2j5K6z2tTf5V66+6BvnnzID938VIaRjoOuvASBLFwv/5rQ/Ln/n3vuXv+xri2q61+2XfSpTGE41rD6w84ziXtvRHfE+4yLaPI/WXwAcThXiGuf3PfWacfrsWedVV+fOSiaTHQ3t4e/+ZfkbRdsa9hu+/HyZk7Rd1SCZD9Q+C2OHBJ7gnM8OGjBbVlWh747EoR42BQaOjX08jVhGZWeEagCBw8/EKgQAf2xta73Bl+8fEudpxiVqUerZoccMwbkMggGzPxTdH5JG2eIMYswgdS0NZt2e7fD4qhf4yPyKijOnzX74d2ufW3L2lLkvBBye33bHI6minNxXOefPThs8+sK7X3pMevDt55nmkYRvhUyAImmKZhq6UiL6B0AMBsTrove98IQ+b0jVHznn2JfqbydSgGjdBdp/TZTpIHGNLlmyhOblTZBXZQISA43VAN3d9ZSQ8WgSOZpaD5CEZnC3W87Uk/Yn3TDwokgE/D6fmr1De3FDYVr4dsOB+/7092eHvbn5A4N4A5LLXyBhUEM2ddDFjZWsJDzBHAoH2eWT93f0mft6oufqAH2KS7k3xfmccAymPvD0Wz/6/bKXIJbkpseTKzkJpQxzNsJ0poCGqG1o9dcWmALtLBHqcBOPy03TJoNfPPSMuemDpnlfu+ai9zjnVzc3b2sePnxSd1bkUKRVf8z5b5a90/CNu//+IkQJZzk5OYqi6yBj8pUifs5aYjK3pH9OC9Mrkxo/AhfKAKiikO5EWqpr2J0YVzrN73Q61fo9zYs3fLiT+3xuiRhpkARFHSLAHFJEA33z7hbXglmTz3Yp8CRn/EsirJwFifunUTEf5TMhXC5F7blrdS3okl0veERWVphIuLG9YorvZxYa29EUUCSZgCw7JSGJHGB3vIs3rXiKeXLyBr2ye/OtV02d96VF42d9nXM+/P3t7982Y/yMn/1i8S0Lp46b+N+3/uVXZgI0qmDI3bSsa0RhWJJtJ4CpTGKpuHzPK0+aM2+Z8niUpzVCyLJ/DIlgrZKcykkL5rI0eVzf4rxoY3PbM2+u3SQ5KOcy0yjiFMXf8Hzxp6GxwSUB6nQoL+HnD2zaJCNgtru7Jye/gP+udlXdwl8/+UbJrgPdut9fqKAZw42ECM3jhLTMIAESsyagiI5ykBQF9vd0G1EGzYHcwPrWqPnqX19ded7vH31Sl91FsuyVJY0hxAwZqqzopgkW7Eskre0kgpWFs/xXUdDDCDiAgy8vT3q1bqfRGY4N/n/XXnTXommTMKraJbB1Vgk6BjvObQrq3/jlA3/hKTDALTsoGJpYoEyKfqTQErgC9jeaOHzy9WPYMu/EuQhNzHTudKikLxzGciQsjUl09QW5wQnRZLSbFJAZFYKLS6gsueBgZ5TvO9jZOXpw8Qy0lDI9YzL75v9kosvMpBATMKQnzzY0FinweDaYQh3jqogrF9Yh2ttmwYYO4fkOH6IHh51Nw0U+U5goOWTCnV4paaTYq5tWsJVb1rmuP2Xhn794+oWJGeNnfJ8Q8rtgMLj7+vFnzNWuSp39w6f/SHrNJCpIDICK6B/u1pAsLSUZDBSvm6xqqCOvNKznl46b+7uWUOhNQTF4PJAksRAgwy1eI6XhlAbU5T6lI2282NkdeVV1YC+FI4ZpApMUgtAX3UgWPbvug68+9uyKkg8PRDiu7JKRBB354G1md4UwIEyDkZXlbHhRHp4bfHnaNMjjXCoA+MErdTuv/8kjz9GOaMrMzfUoiLy3Vm0RIrT4CgUr1KEQP36Glrehx/moyiI5n4LRGdK+en/tawvuffp5zeMLKBIHgkEHRH1gwtraZ8asPRQAyBQJ4NniJLYQM1YPMMYJ+HJ98vY9e80/PfXCKR7XYiTKubK2tjZWc1q1syYZLAwDXP348yvYvr4Q8+blyWKVJTJokpX6wHSEIOnO2FYDwNgQIpn9pISfiOpM18Ajg3n2KTPGaAALVIDHXdxQceFTGUCaUEhT5B9JgkzSIFGDJFIacTudC1wAd6bSqZ/317rZxyWfhUBhwZ51ccTNCElxzic8sf2dgJlIMSLb/mMW6iajlcR5ZufJssw+4egeJm1c5JOsmwXU4fRSpHR+cOUz7N36re5fXHvbbzXO/V2h0Jo8QhZyzhdrhvHY7U/9XiYuKguqMcGTbidn0f9B6AjloMsmfXTFM+aF4+aW5LrUCwkhj2Fw5eNyLtkXIMuUhmMp+MOTL8/KfdkNsuK4YKC6jozFi08pHo/BjuZ9EEwaTHXnUZPrIIEMlCOKH/UJokwI97icZPyIwVjdu9fKNggzb9DG1p47fnT//7DOSJJ53IrEzRSYuKKL6CZ6d5jLsqORNrpF9OIC4KHeHn3ejKnqiOKC5wBgzcoPd7/58AtvgicnX0TcTUTA2FXWqJkO/bM0nQhFcEZkgpBfRtC0ztRgowha6EYG3DTB682V1mxr0oa/u+XciqLA0sWLF3+jsbHRGFkyMvlBQ9vw1Ru2UNXjBYNJIBEVTIQLi4CrxV6F6tRAmoRMh7Gs+yqyZZQQkyGLvu3LItLE0DhJx8jV1YvkccXe7wbj0Kt6wMMIYxiwokwCWSz01rdEFBgMzA/i2kjTABcqSOVgr+YC3CzgYYdXnf9TBCrD0ZCvOJ8XT4vzz/l8Xq+ma4bIyGUBYLPHQFCijGuJwmQhEzLYN+j3gbBCWKxXEhDZ75N29LXym379I+PBO35Wc1bl5Bd7oiGyc2fPq9fNOv8P+9Phb95T+yfT5fVIuu2wifL6jKmJDq9TgU17tsPWrp18TtGYsSLYchzXbVmp/YUmIne0eXcbw2dvEWSIcuQBhnV05BR0qA5JdTkoZymLbpoibsyq91IogUg0Zlx5/gJl2vjRLxBCdq5b1+KaOxeSHbHUxY8sfw32tAd5nt8nIaU1x4ATmgSZyS0S0BKkDNNMJ+JAuYn4FXDIlJ4xaZj6lcXntp4+fthv39m+/877nljO01ThHkIwEAoMI3hiYdOtagIBkaLcSCYY0xPcoaqywThPAyWayXWH2yURSaIcfVaOeTScEmheUtBMArl5BcqyV1cag/PcX+Sc34N9lDnn4Q937Bl3sCsIqiIjYE1oHEpMEa/C0BQ3dSDMIIFcv6QoVkBNPHvbbdINDbR0Gtwer2ArsSDJBnhzAnDdxQvh7Klj8Fi/tOelX8OMOiL8JRRWZoFiuQym8A2TzOV0SsFo+q2yQu8ZDiyiFc/xHzf6/iGByoxXGhsdC0eOxChZEkvVha0+QLjx4xw8gTqXbAvdRmfjYiIQ5xgIpNZagX8yEUPodZK+uCbfeNf3jbuvv33eNdPOnRkr7v5SLpXvu2bK/JlvbVt36od76k3Z6bIL9Q8/lkQlCCUifPWOzWRa0ZgSxQq8fOz1Hr4YWOfqcLpOqBxehPgz0atsAcVSFd3g+Q5Oz542Zvcwv+MdzDXNAUhjwv3Rl9757qp1mzkmk7Glqk4VwLibwnQrcEAdgGt6KhHlIyoLpKljp4tckc/pgPKAR58yYcTGylxyRxSg6t3tu+Y07NtveP0FMqJfKMekcmb1RlwmgbSuMcpMOmXUYGnWpBHgdVHN6fKq+9p7jIPBmLJu8wcQjMdNl8cnmSZGKjP1YDZMTEKUp0JeW1PnO33qGIykYYJucnskkhNPpZlH8ViZHcy9CdNcBY0ZMMjN2deuvCTlzclfH47GWokkHJsMaII73VJZjssxors3+A4qSwyPyLLEhw6uJNPHDOEOgLv1aPejCQaYH22xmIKOrmPQt1RlmkMAEKYEn3R8IoFyjRwpchS2T3VMzSicbdwkc3mieNCKFQpbXMBz7LVc3D0rmiMmHDrUeLIoXJjEZRpILon0JZLS3S887qsoLmNnV0562UKv85tvOOX8Ld/avQPRRwMvMPjAnTJ9det6WDx1/kTOua8GIHaieSm8HvQbsj45ypbZ2xzeOctaRBCpzhDPaN7y+cvlBdPG/Y4Q8iR2jIT587U93bGb3t2+t6w3YRo+D5Gx5CNjjlkrN9YhGFwx0+zzF86XFs6euHLS2GHL8xTAvCEqni2Y5uCcl3/Y0PLX2rfe5bLHRzmzwvUWsMoQZiOnKmIOeVmui155zqnhC846ZcOowpyXFYDnbPLStr1R/ep3Noz50strNg95u67ecOT4ZbwPXNTKWWF/1DiKyytt2XPQfG/X7lOnjagcGgaYRp0uVWOgewmqI+sBWaFiyg0zya++ZJHxhUWnXaXI0ou4cBw5hC9oci+xeoN9ZGg9PbOIk8q5uYFGznludpCh/wlY1nBW6tZSlPApjE8kUMcamaKDTGWJsOJ0E0ydgYy5Vgy5otjYQQsUEt1M6cJ8kWQJQ6BorkiqJBY+5ENHowC/gMg3BDJKbgfZ3rfffPjN5a4Dyd6v5TnzXtcAlFOGVW2eNHTs7E0tDUxyOi2dn31uGPJ2OcgHbc2wt+PAlNHeMvdSQiLAl2RIEY/vGm1NY785vFvjkdtmaaTDD3HIRke/p7KyAnIVQNZc+J/GRnPBggXsiZUbbnqvoQkczhyKCBJceGRbAEyKIW3CFTNu/vjma+Trzp15q0ui96O2yh7N0WixDvDuhu07h7Z19jKnt4AS0yq1y9RsyYRAMqmz0oJC+NbnF+343Pzx56GplrUb0dkEAH7KOf/7rMkTHv/V/Y+csmLzTi67c4mZyaLY91uwxEkqf3vzLji1asLFk4YUhIWaEd6RfX6ZBK1NNyfLIlPQOJAw4cCPM8IUCoXy1qz5EC644LTgupYW15zKSmwSgbVKGzKpHjQqBWOdfazMGnTYs/sUxz9NoMTICBX6MLoOk8tGwGXTz4Bcj5dQw+SyJDM0v9KGDik9KVGnonSGemFXy15o7miFfX2dEA6FDHC7qCwrVOtP9FnRO3SMJbdTemnbeumGMy65f96gvBdCidjqMfmD02eOmw6bmj4A5FQ5cgizTyIkEY0ZzX2deJYXY3R6PsynS+H4Uc4CgI9a1RamQ7VQRxxMOMCHJriAS2VukZ2XQ7MNex/c//DfYHjxbV/inKOW2ss5v2Hp4y8P6QoGmdtTYAkUotyZjiF7AKqCEe2Dmy45U7763JkPKomeZ7taGivzy0e019XVkWnTprH6+nppuNfb2dIdvWfr7v33SZyihUfR9xGcAmLSWQ65A9Lm9266Qlk8a/g3UZhWreIyoqkQrY4AXGSPqrMAAXsJwKkrP9h1f2co/NVtezpN6smVECBB7H4pmDPPcTqkD3a1QNOBjm9PGlLw34qZ1h2yhEFFG3mCDffEkkoQe/ncijWOArfzrXX1+1tNE3PmVn14RkBl0YiP8Tyfl3TqyopFi07dxTmvJ4RszaJsE2AES2gwGpnpQfbPr4L55wqUPSRCAOufJg0eBd9acBUGSntUgKtx4eyviwDwMusz2qFFrulOhp3bWhpztx/Y53pm/euwp6eNKzlegnkWXOHspjaCRD2ajhjPbF1LZw0aT4o83t9wzt8aVzpkg+xwOtBOH0jtWMEkg+/raZc1gEr8zFvnPeaSdTjS2YLAJOMJrhsmyoPVvTELe9bvT9prJX5HVR2S7FD7V0qKuDFMQmMfLaeT7GzrMF5cU5czaug5N/EDB37aHmc37enocnFgpsI5aBTDDppA3utEhlQyZU4eXi5dcsasOjfAdzt1Ja+kYiRi8sj06dM5ormhthbzP2UbdrbeWL+3hedIiP8yISXJQEW3SBRQJ4QTIX7tubOUM6cOQW741y0+Q4tSzR6ZtABGHVGozPkTRt3bdfmir337F3/Cyz+kb8UioyNfFQmFTGhq7ywGGL+uyOc74PN6hmjovOHayBBtj+GjtKhcbjgQhJq/LC8vzveXf1SLWJRzIs8mS1CY55t9ysRRMHv8iCjn/AcA8IgNe8per4So9pvI/+cEKpPdziAiMslcRpgqqTQF5p51r74x8fzzz08P8O0f4X98O19aVuWjkyZUDoYJcNY5I6d8/bF3Xh79tw0rdCnXrVghdqvmFaUTnKq0fttGsn/eJQh7KQWA3QGPv6ksr3BCa6SLEVkRbBWZRyPoUvDEJArNwXZojncInoDsmp+jDXFsXIPFeqrBteedQoaVFUppdO77cwWHfwfnNGqw3lgU3nlvG9/bdhBMVy7hRBbwK1xTKZJ0cgYOTw59edV6Pm/88MXnTBn+632N3V0dPRGQJRUM5EQU1aQCoismlmnE+Tmz58PkoSWvEEIQ+R0UjyHL/ly6dCmvqalxHuyLDO4NxhElQKw8E5pnlutgMp0FfLl0wvDybQFF+mP1smXIcHvUNAImaZesWoXzZ/ewyrKfT55Q9f0NO/YaTpdD+FOZ0DuuNAyS0N7egefTPLVqzIvjh3/w9XXbd5pOt0fWMBiCwDPEMmKc1OGAkGHw4IFe22g9LLwlSl3Eb4wB23sQVqzfzIcGvN6vfP7y318wf9p/cc7HtLe35x082OdGjDfhij0jPxsGgU9doDKXn8HcCwSE+IQITSUDl1CYMtnzzPeQ4acO6iSc1WQ8ydSc7MIXwowmD59YP2Zslf8nj9/PzBwZ1ZTAABoYfJUl0tZ1AHoifRWQW4alIbFSfz7JdbqhJciAqBY7bf/IaH9Zons7WjAMeznn/C70zL98zMBERjMS0A1mFhV4pfNPm/nsgvGDf2fDsI4GYcLboaUBrr21+ryb7/pzLfx95XtAVL9ICQA1hDNvcAKKqpKeUJi8t2Vb6aWzx/Q8tWaHlEhqohQF76VAQNg8G6gSVAp0WFkx7uWZDBlCNpSqqtaKESAbcCyR8qZSOldz0K+0o3J2UELTNT6iohTGDB/SgcKCANaPC9DMnz9fCFaE87rRw4fAmq0N4HYqYrHBgA2eK1YBADFZMh4nPSmYMXFYweAL582EtVu2EZm4BdqUiXtwiIsE4aDEga0tPzpEigEDH2ihqg5gnhzo0JL8u799UG/cf+7wmy497zejS0u/j8l6LN41qcJlTMYLYpyBWql/uuNTiWwc98GQ91xQAVpGELL6ZF4YLUQeNazTwb/jC8tKsCn1h517TNnQvvSD2Zfd94W551EjmbZWKlGjjnY1hTgzoLWnEycA9th1+x3ukQxxUGLhy/TpPWLICglHItg1ZLBtd3+MTZAB34jcCFcVGbp6+/YRQt4mhKy0fw70WlW7ePF7TkK+WuhUTr/1usUPnT65Coxo3MRFxrL/LAQ7JZSkDGYc6A074mn9Yi2tpUxEeKOzdtjZ2TyFQKCgsEDo6aziwoGGlNTTWF0w4KTCqJzLIYPX7cECvROad14AT36ux2bCyvgr9t1CoeLEdLg8RNOMK+IA1581a+I7Z86ZTsKhhKESWeDrkBcKfS/ME2HEUwgNy3rZ7wWSxi7ZEMWmBlLtOYk/r0R97PnVeu2KNbf2JI3/tgskF+YG8j2Gphv9nOH/NgLFGXM4nSCD9Jr94I967Ez1KDK9Yn3NhOJhkTzFs5wQ8vWbF1VvnDp0LDeSaZH9EA3YOJpgAAlTywQVfbpp9lgObT+i8/DTsSNbWL2f1vWBzM/DzykLOpWJ2KGWdKrUgQBbDHHjzwFeOIml8x7+w8jt27d7CCHvDvLJP55RNUJXJFFSaJ8dxi6RtJkBlRS6q+WgtLcnclVhvvesUDiE1b+CMCb7jEzTZDneHNLbF0Ja4WZYcswopeRwuQ7RtB027CwS9j/WWdE/UNKe0AxdhO8tkpPMTbYcSvyhW4n6WB4hoUG56k9qbv0CHTe4TO5LhE3DiazEkmgmQZAOAFMjgMnXrJf93kCrRJJAxwboIsWEwiUQJqD6CuQHn33DePrN965CvCcArO8L9iZk1SXb7u2/i0CJWgSaTCZBB/NK8cnxIrytHFcymk5XHUxFxk3xD/n+F+ddQCCNHH3IjWdl51GwPC433rRICtjNaq67vLuv1yQyJhg/OocyfqtYVVk2OOo4rsUeIprCTEH039jYiMI/0AtDuabPV7hzfFUVlmOjaUjLSwJAFYxUWoZIBkONyANZkWlPKIqNva9SFTkXa8lEki7rDISzzThXVQeJxOIthJAeaMA+docLgygXqa7GY+6MR6Ifer0e1P6oSA6FrrH/gyKTjq5uONDVW4VWQX31cUxAC15C2pLm6P0HuoAidEegNuyonJ3oxxVPN0yQKB1sBzPeHJ2nfO2ub32hZd7EoVIs2GPENNPUqMyZ5ABMqKDno1ICKrFf+DslqIZBEuUEyOiBPhUCiAzQJaS94iTGJPL82u0l7zUc+Ak27DO1ZJJLzn76N/h3MvksN1X04z2xr+HkoaxSBYqRnHVTioe2DCospZqhC1sOLWQnkaDIK0rxqQzUaO5p58FkDCiuZEeiHAW27hCdkZgIJ3Y69m4O1eR83EAzaokdzhXnKMuHsUlZjLn41oYSMQIpTcd1SJg4GaTIkWeCC4pMiXo0M00IWG0tmtThfK+3J9fnRRCsCOlYuXhLkFVVoW3tPWZTRzfSZF2wtKYGMMp3rOvp7hal+byhufWqD5v2gaw6CQjzza7pspPfWOsZj0Xws4sBwl78bjzSHps1wv/LO75wzQ9+8bUvyOMrApJkpkiiL2TGQ1EzHI4a+AqFI0Y4EjVCoYgRCkbMaKTXSCX67DZ+ViBDRV8SkTVMA6fTIW1p2M037mhEyuQGGbPXyDdyyK446iUdz3O0XENOhkEd/ZeFzcXgzHTneKgDpAfFW2ul+lgwakaT+RXXay2hlo0BhydV5i9sGVE+eFDLjnZTVX1S2khDkb8ASn35uD+DARjb2/YQzUiDQhyAuZvD9tl/ThwxZeBQ1RO/HNulz6xJeXlCmI91HXzZsmWYZMYvpHt7eoCZBBQqCTgVruZo6qD4Y8RAphKGkc1YOp6SqORBs+aoAzHAKDjV1QP++WDjwYLSkXmehnZDKSwo4Ae6+0CRsQ7LXhDs2k+HywvL31jFp44sX0KXLl0+falgEfpIvZjomWU3X9A5v+J7f3x6zN6D3czty5WIkRCLgoV/yDA0Mi5LFBlBDgLkCvPa4yt9sanp1eTsUSJAdWD6iPKFu5r3n96X1Er7EogYzMAZrLCpRWqKdWIATfs74K336wEUQWndTzLKQQcXZ5DQDb6z7aCqA3ydcJlLHBPYqqjhOsZDchzr+fXfag5Y8iOs2H+hQInbSo10GnEwWH7+++MiSfmo6SdK8Dt59KnKQPGpWL6KjixPJ8zpVVW0yJ37AIaND+iRK1ZvXo8k6FaRY3/fqiPOiXHwOHLAbZmKA49MWsVOBSAWlRIUUZz6DiTbQ7tKWnz//ezLDzww4IpeenAUX7p0gZnp/oHVth827SeabiDSR4TVhQ1GMNsqQ9LQzZKSgORyOpf1Huhw5flyL4kmehFHKyJfGV0kMN5ZQYbqo1AExyAWASgNDS2FF6eOGXbqlm3bODjdWCMPipkW+9DBCcTpkPa0dbPHlr00cUdX6AejCnPvJwQbkiyhq1bV0EZvHbl5+nQ0YTHVg4vDDx9+bc0Pnlu9UXG6XByDQJglw8ktkP42YNfgxPTleCkx2XJCpITdryuEWMXfvfKKA9H+APAY1ooBwG0xAMUJ8K6J+feseaIBSG6AxN4YfEV96InLnlu5UWAJOQKFsfQDY8j4TyZwsCcMwbRZIMtEQv8qUz4vSj/YoRo9keTHeBlAEwNToANlZMxiJqRkKwKKZiVSfiEmBUw4/8DOTY2+8mHnRHKSz5VBmZ5pf/TZaijEI2PtDrAx1rsTc3wxCogdFabBNEiD6S725IpbLWpFdA7zp80hxar3UaxmbdC7Rq9t2GoQt1NGFMPAQ3RP5IMDpRBweY/BE3C4Ey/wiIgsEPhDBvleD4HaWszK48Q4anBDUST0iVwmwDf+Z23Dt9/aUE9VtwfNVax4sQUDj6OAZiTNscMrpcEB58sbGoyFiCYZ8Myw9OA4EDSjRo0S58U5v3dCZdHXAznusgi3UqpWlb3V/JuaGqieHPr65l3MeOjpn37tc5d+hXN+uyzRpxcssBAkMnakMEx3pw6PvrZ2U/Xdj9aaSdMJkkIJajmR4c48swxTlD11cV7i54FAAC9It6sW8N5hhDKFxYgA8MNjXQs2ABiaAxcMHVrJdWMteFCzCz4OC3FvVfziIRVIJ7Qthm6UyLJarBuHIr2ZW5aJ1+q6zhwAywN5uXcK6np7QRDXIPL3BBwOp7S5fgfsOth125zR0yTo3XCn1zsbI8qA0ejq6mrr/sBnOOzq4hP1ofqpp0amxw/pJYl73aoacGKylFOi65yPLR0pzRxRhfttiQOc8ezGVbwnGeRSrleEVj9yHhmB5pwM8hWwUtX3FSv3suxjyuGtYj0x7SmRQpEw7Ovovmr52q3+F97fMeGBF995DScNMiuLrbFTPVDuUIjD78upql3z4dgPmlvLnl2xFqIa+i0YWECfSQKFG5bZRxW0PeThhX488S0mMy/+NFDQq1atQhM72dwR/c3sqRPveXbtZsPvwRozBQzkMoS06MGlEweAt5CiJO/c01Zx0enTah97Y/1rZUWF26lMeVrTpj/y2pqJK9ZtDrz34W5mSk4qyZKAX8ER+OhMmYuVVrWmPI6hQ4diDd2QFMCNO3a3qdv3t1+4btf+lcxkCUoI7i9XdSijwUTzyg6oCsAL1+vbw7MSlHpfW7WOu9xOoZ1w1iPJaCapQalEtVQKFFU53+XylKJlRGRMRn50GKYBsoOUI2eKm9I2j0spT1NkdKNU4likahfmKE6yLxTiv3liuZd+/orvlubNIFHOaQ5AghBMqVrjMxUoe5xwNiCjzUxHoovqzjsp0OsMzqaDhE0xDHbFrDONYa6C/4fJvC09Tbc9/OazQN0q1sIN7GnaQQDqcNHh+SVxm08Q6uvrj6PQxA4PUIWENAZ3/f3lfE9OzjUoIDkedUIGIZIBM4uydoMB11KQSKagLxpjqstDZEUh1EgiU69Y1TEXg9WZKV1jg0oCdOSg8h1uh9LwzHs7B2mYEv6ESM758+ebyH0xrDjnz/Omjv72qi3bCnXGmEwlLLu0krGSW+QKKdcg163KHcEwv2/Z66S4qPC8QJ7/PPTr+sJB6O0LQlrTQXV5KYa7RZeKgZ4bt2Bf1kIkqjAkm7Lrh1tbw99+4vW3c5r27sd7Ag53zhihqRmaiAwTzUJPHPZAsB4qGYeuYMiMG4BMxYKAx7Ia7CgeHkfXeXHAR/weOZbUWIoS8Fqo88MlHoVX1FY5ldmEkCWvb9zVVxHwVeztSzHkXcJuLyYCLLG8xCCguvLI25sbeFPj3TBn4oQ7vF4XjBtWASGDT82V4L96e1u1zzAoYSGKP8msyCf5SFD4dpAnv9yXTuAkZZNGTpUWTpizJXef8nDvkPTKJ9a8Wr63s42pPjdFE2TA7mgI2WEmL3HnwaShI9HMyLRcwDYoxzwHq7wEGYoswxuJVsJ9ETT3aSyCPYgH+g6G7lUEbFBPjpdiuBfzMobktFmULD4hUZyXjvG5kyaa08ePfTyR1se8v7dnViwW5VhV+glunViUVq1ahRo40mvwu9uC0bt/+cizekEgQJmBrVscFkaOIWe9aSHyFZUoTi+0xwzzQBDbGjOMKFJFcVFFcROBqcSSj6M+VN6vp5DPz+QMn9+Cxo5Qze1L7ybbWrt11eUiXJKpwfsY5US0frUrLgeE3slIpSxLEkFhEvfMPr5NSIq/SiwN44aUm06Ax5IGu12WpUI9i4a2PzUPwGUFTWxzu4haxtmHU0ZUVDW/vQ1ITp4Ighh4T0SOzGpIQZw+0pVMw7LV6w2TUS6baWg+2HPhNQtPp2Py/L/4zMPmR69q/fixaskqaQlfQmOGPqQz3Ac0xfnSz31Vmlg2PBkdor/0dtv2Ux974wUmeT0WTdlRSrRQsHlSg1mDRpMJ5cOQ7gqhTh+JSn+0xMsq9UaBwoy+jHTM1CQeoskuolNFdioDvVRJkVXZxGlDOBYEIosg2vpEsTsb4qTApK7OS7wSufj0aRBwwRO2oMOnNVBLoVmbL8HDF50y6+nzZ09QIqF2A9neEHirYp2ZgOlIYFAsTceQgA4uqks+h6n4HFxxKVyScbm2SVus7pMD3GN+qIuK0NIEIUUk1WXC1EdfeJN82NKp5xUWKKrTKTtUB/U4HLLLqSpOl6o4nQ7ZqTokp+OjL8mhokhZvbdsExwFXZhnuFClNHN4WTGMrCh8w+/L+b3LqRRpSAJzFFsF/VNDB4Rb8UIP/cq5c6akC5wKdoAQ9KM2gZbVkALxj+i3yyo4fLmyx5+nOAOlyu8ff0Z/c33dIl3xzvjsEruHfjsmUeDRhlWmvprVQE1BwtSKGnfvNr564dWOBWUTv+MAaeOOyMF53/rjr/SUAzM3WMGKpsjRd4ZdPk4ZPSlW5PQjWXy0trb2sKSoqsgMkQiH8RnYnQhx8iOZiUkUSFEHpKhTNIUzqTHgi1GcpJZZhRl+LHxEE8/JEuAwU6IOSSISxENR/es3fJ6eNmnED0L7OvDAEV3XQ5J0VFaBExp4ffX11eiQhiaU537pm9detnPq+NFyXyhmuKzMnGWaZfGUWD4QgzSRQEPEguC/sNu9WGnxjx6H209cpPos2jVc7XPcCrzzXl1+3c59XMoJkLRp1wLg9rgbDGp8zL/DjfhMUaMFLsZQezIe45effzadP2vS1nRaw0eNHng/YmOAuQAKUTKWWnLerKkPLV54DklGYgzr8TC/hWh8TcbnZwXnEXYhIYuukRSa3JGTL69Y+77Z2hf//meooThzulzocD9lXcfxd8HITIaGKoEE6Hp/69b9Z0yaI9983pWtPgDPztiBr9/+519K+2LtsoQV6WKVtVZGRbTesUG6WJSNjmgqxcYOHk6nDR/zPlay4qqdFdIW56XpxnmDK8vLtWTSYBISDXJQGNr1hyaZ0LmC78Jie7WAqx99ZZvv6JorSKYismMCZiRYY+PBLnbb9Rerl5w+9RUF4Lfr9Wg7IaQlGA6u9+f6SZphTTN+34LmWBOaABPUAUepxhtgLF1KmB18icwcXnLWT26+tum8mePlnlCfoXGJ4fngooGaCpO0ol0PXp9oNdlfECHQ83gXcDIj+NRyY6iAAeHfrSAEByfXQGGUpLCVjwL5CjFHxqIJkBECa1t21mphM12hqWlHPAd6oXVgkdDgJVukNHiPJZlAMBI1504YKl80f9omvwyvJ9OaK0fSVKz70jDYIrxFq0IBjywjRhI0LstWI5vfv/qqHFDIN6rPnfXqeadOlqKhmEERa8iwa4zlGGPFuCDUwevG+4BJeEohkUjRZCqZoXX9Zw+rph3taAA4YH94Qu4UrjPjqsfxIOf+kcUV4y6ZeMrrE7xld+yIdyz53iO/dW/YvR2UHBdhYtU7tG6KMnh7HoieU/gmrZHzJsyGU8snvBZuawvUV2Nfs35PILOQdVSWFih+t4rVwhyQnQdNNCE8Gf7rrActvikP+JI4FYItemCJ1R0XRAdwkgPRRMLg6bB+2+cuJ1+9/LwXylS4FPGLsZEjjb179zpHDhqk+J1OkxrYp8Oil5YRPCrJoBsAPo+bDxtcYfUsOkpi98iBi4edsD0wa1jpqUtvub7uS1ecJ3tUTuORkIFHoaCChP2AUWiICU6GCwqW6lsmMxYFcmTlpRw0g0MsEjP1VILLEhK24OKCPEkYxlaRitucOnYU5pDaAg7PpkEFeURjSY59mnByWklt1PoohKgBreZ+A71Q2DFYYFeTAZWQ9UmGnmDEmDCsVPr2DZc3j8x3zUVQMm4Q8Lq35Hlc3OQ6Q5PWbaZB4WkhkJpuQlFRCSksyMdSD1g4YqGYKhPK/V/+zpcu+fCsGRPk3njUQCYqlSOnn1U6wygDEzkoqQOIrICRTvLy4jxSmOdv/AzBsZbT/UkKU7D/TzwSkcaUVD50xtgpP1rT2fj9W/56D7y0433m8LoJ161KUQH1soUI+/SiUCEfBZoVmqabIyuG07PGTtuiAPy+NRSK4n4z5l4WR8bWymL/3TdcsUhOBTsM0zA5hrQRO40vqx4kw3ZkvUfCkIFeGGESHLP4YpSn0oaZikYMSITglKrB8uO/+q5y+7Xnf6PIRS6uqRGdL0g1AMnLy3ONKPE+d/Wi0yQ52QOGnhZMRQZVeVrnjCdjcN7cyWTi6EHb8NyXVVcft1loVbT2+KK9XaeNLnDP+N6NF/3kZzdfvWPR9NGyZMZIbyxkhJNJAzSTKQbWQBJuEpkbIHPNxJZhJk9Fo0Y6EjbLcp3w3S9fLZ05eQxJ9PYyhsE8USACrDMcSs+dMtIxqTT/VQBtxanTql6dOWZwUtKjxEzFmcR0TrkhXqJfEnYkxv4/R3kJGw7FimF9qMES4aAhJ8Nw/YVnynd/64bk/HFDz+/q6kJCCcwLxqdNmvjcWdPHkXBfp27ZE07OqZNH0ynDpRKYMmpo2C/DK3jPR44EPXLwYEE83DtuQmne3CVfuWr5T796neyHNElGe3na1DhG/SjHfzLnkgqJSNgsdFOyeOEZRpFL/ulnGTYnpqCVBZHYPUHuBloPIL++dasSYMwrOd0TXt5bd8ePah9ybDnYxOV8D+L6LN/GYoPpJwvJvER0DgklIzq79byrpAWDp2AXjtQqLorkDj9RQhjy9OUSckdTb0wlhH7jL7Uvs95Y2nQ4XegRD1ABfBQWT7ttKbapQRsfKZYrS3Kl8UPGwNSxw/icqVOWjy32/WH16tXrMC+W1cCM2QScj583d4Kv7fqLfv63NzZATzItLihXJuSSS+bDnImjr/MS8viJst/aGjmqeMJbQx0dQwKlpT/mnC+dVTX0rs2NzTdt3n0gp2F3G+zddwCwHitNNUvLI7qCUCj0+mHqmBny1AmjYNq4ITCmNO/hHZOHDxtUXLDgmZUbROhbBo1cfe5Mx/mzp7552oShlzY1NTkKyiuv//xFZz+WU1T0lfueeBF0TReI/2ykosUcfJSAksAgMuF35uW5yOzTJ9HTJ4/V58+d+lieDHetrqnZM/M73ykuJgQhTWgf/ubKc06p1mRlynOvrYYoV4XVWJHvk79z/efhnOmjlhJCNmKeDoM23tLS3lQspLW2tuaOq6y8ZdyiacsmVOTe+9K7Gwrf2boD2npjOgOqoEQzI61NHlqh3njFIv206WN/+GBd3eufnUARSlPpNIbTkL/hv44HbZ7ND4Bujcn5T2MA1zy69tnyXz37GBzQI0z2OKnF/3yo47x48Ic4QCzwKVZ9xxPmORPm0LNHTfmbAvCQuIkwf8DzWGBXpI4M5NyONdUL50y6vflgL205cLBXOO8DRN+sT44kYenHhmPVLasoziP5+QXbKsoCr5U6pGcJIUgD0D9qly0ThYohXT8Xf9bX179TVVj4l5sWX9o7b+6pP39/az1DDvOqMaPoqCGlvy5zJtj27dtVNBNP6HEcCsCI49t+FQrkN5HP4sLZk2/adTCsdgXDl/RGIvnRcJAbhklcLhcE8vKhON8fGTmo8EUvhT0A8CIhBMvuR/7g5suemz9ncmFbeyf1u9XQhLHDnxhV4L/TRpGkQ5z/rcwN8WsXzvbOGTvsvG07d5magSptwHLCj5RAY7RQligvLPSTwkBBYlh58QuFKvyJEILUy9ZYujTjVuDihEnkG8sHV149ZXDBTXs7u91+b35iwtCha06bNvRVN6Rebgu3BSpyKzJtavCA2TSNT3HO3547acRFLd2xO4PxeH5dQ6OZTqXp2BGD1PLSsnWjCnNqFEJWYHeVT5QszPRY4pxf8fzeTbWX//oOg3kE6tIiS7QnuYwueDDG/t+F19GfLfryTgchY4+2zyxfpr+LXpob16kgzX1p13sTn3p/1Zwn1ryqYy8VBftLMCt6ZgUd7JuO5p39QISPgxEe0wB/WjGf/fG90qkFI6egSZe9qg9EIZYNAsUODYjiAYCnB5CaExlIfBrPfBkfQk2NrURtjByeU1DX5yMMwKeqa7LOB219krWfWCrW+2vVk/9ju7fXJx7ZARr7mBjHyY7MZq4d27+819raWFFZOaqtfy4s4xJUC2oc3K4SOwoe4/56/sH7mDmHPKir6yJWUSoqB1GoemRr06zfsdkactBjo7+ttbWL+84898+z2ltbN1VVVen929ktWPG7dXUgI6/Ggb6+QWV5eacBQI7NloCI6gmIQbSFVoC9PyMNlZ1QA8dAF2zfECkLD4eCOgcABm3rafntG81b8h546Slo7mnlqt+jmNQEHaM0Aq5j0wdncbci42ymTAOJUCCWMpbe8F/y7IKRP+/t7U0v40ITiK1DPJQX1pLYfrP2EIl3/youEAY4eQDgvU/rhqziXJpvT4DsXHJGwPMUpX+VzCLbF9ixzEACFgch3+yO6xf3JvjmgFuws55gz6tDzyCZDA6tr29us0lORL9bG/j5EWR1uKeH9/X15SaTSWxzhPfHyLTiRNZpe7MdKGjImNR/TiK703+tH9v18WOGuB+Z42c+POL6aWNjo1xUVnJ7V1/fu8WBwCYExbS0tOSfseiPpflu34bA+PGHWSmZfsYZVLl9f5BC7e9HHH9dVvM7cfxPXaCyG1VlzC8L2oZepGgp0J4lTFjxjXXNpL611adD0sVbQkmozMVV5MbNfft/vGHfzoL7Xvo7NBzcbRC3iyp+D0X8G0ZnRVRIBCDsZtX2QUVpONbIYE96zP0E48Ydl94oXzXjgjtlqKvRtDL/YnJoFfYTf7AfqD1AugK7a+BNw0DBiaLkB7xHhPCP655om7tCwDKl7UfWPGUFUJ7P3vc/cj740zDkBNKO2ULdr7mP8p0NA3zGjthedNw4YqND4dQTLLU/cqBmr6k51Gr2KOcp6MRawuEHBgcCwYwGHjRoEFYu9DcQPNbIWA5Z9YMM+f0z8yHbfflsonx4NopMY/FkwgHwg1Wd21FtWuaWRSbFqyorE5MrR43sKXfevaxhzYpfbXj291f97gcFX3vwZ0ZDsI0r+T5ZUiQrvGNdpoVQsdlyMn4T5jEwaICChuXSeihifG7uIvqNM68M5gO9i5DpellZWfeJXsLiQ9W3/JO+jud4tiAdNlEG2s8JBiIyJfkDvrxeb+fq1atx9ggoVkZzZb/QBEZLAv3PAfZPRAdMi7BGJIyy94+TeaDrwe/Y38teEKSPe9XUWNSIuG/7fD4ioLbZDoP9/iCWjVRXV4vrw9/RnEXrY6Dv4P6yz9d+Hob9YtnzIfu7n43Jh2eA3TAUBYu4Vs0vqrpABvKyztkMDeAPbcm+2KuN75ft6To4avX+D2Hd7u1wsL1VJy6nrPhzZIEyEE2oLXJmsUv7Jdt5U+xNhUk3AcjEEmpOQA/HzS/Ou0y+9+pvg8OAL2Ct1DFaVf5bj+zWr8caCxYsOEyjHBk9zPavLC57EcnOZlsyjrV/nMBWP62jHzO799g/Oo7oZi/OOdOo+8iRifBlLVL9xz9RE/qfxstnMcZmdSmkBBJck5pTYWjpaf3Dw5vfCN+1+qlh7YmIZ/v+RtjRsR/aettRIkxwqMSR68FcKBhIxCjywnbJWn9/ImtoWB0meM+5nWyUgBscWDhhfOviL8rfPu/z6zwAv6j5aQ12PTyMYus/ZWQmRTAYvNTp9BQlElHU5WKR67dhREmKhI2kiKFpeqAwsByhTyhMoql5fT1y+9FoNDrL6/WOR9fBXqAyAmdi0CSdNs7l3CiKxRKcUvsYlLL8fD9+d7vP51t7pFBFo4lrGNMln8/3NJaY4H6i0cS1TNeRfgXJjgQQ2RoS8ngIaoPM5bndbrzGoMulIpGPmSUE6Ne5IpHEWS6XoywajWWFDE3udnuJ06m8hAnuzH2y96nGYrHLHQ5HK5LqDLQIHG38UzSUgMjwwwseJKcTXtr6Llm7YwuYhjEozXTojvSBbqbx7mBxEJG8bsSjC42k2RRUiimM1MN6TGVK/izsmd17FSOLyIgTT7Mcppo/+fJ3lc9NW/hKIVEWZbTaxyHJ/x1HpsZr586dt6xbt+6+nt4gIJ/FQCNTw4q88bqh3z102NC2rq7gF4qK8jbjZGtv77xq8+Ytj0cjURg+YtiNnPOzsJkamlD79rX8/PnnX7w+Eo0WCb4MkQe080mi9AzA63VrnZ0HziwqKltbXV2tjh8/Xmtqarp4zZo1f4+EIzB02NDLZFm5dPXqt5cHg+FzE4m4hboQkCbbFLHP1EbfiHdYVaCqKlSUlz1v9/fVsNNOY2Pz0ueff/GmcChcqjocQhCzEeeI1QMgoffrtvxh+tTJSH3dZZfx3NvY1HxTIh6HnTsbfj969NhvVFVVHRb9/MyJLg89JFugsJYmHYfeZFhwZiCXHnEoRKGq1XJG3C9EYVu/q1iGbLectOpdBj6WYuC+qQUFCUaMqYOq5F9d/016enkVdoy4cn9Pd3llINCnheKjHXk5W/+RKNj/5VFYWChunq7rp2/dupW1tB5MI5ckwx40R0T/LZiRxdCuqmrejh078oJ9wbqu3t5vYYI0Gg17mnc3w5bNW9PXXvc5DEE7r7766vDosRNeqtu0adHmzXWQTqdZpmxG4PSwH5dMSTweS8+bN8+paexUQsiadevWCRWj68bN72/cZPb19XGX2+FzOFRIJBLnvvjSywzb1AiWA9sMUxSZodYzTQMp1ISPJ84bef8cinzGGfNG4pRArblhw8ZH3n777Su3bN4KWlpn2E/rMJC21VyOOR1Of2vbwe8zzr7MOZ+F+bSu7q789za8h4VW0ujRo87AYy9ZsoT/y0y+7F8zuFAUGhkLrkVBHaEoKJnydOw7I8w4LOm2+nYJPBfChpC5TrDEZi1QGcWMvpJJOdeTceYwZfjOxV+Qv3DKoh1jfZV3rV69+vFGr5dcNngwt82ID6wb+Z8jTNmDMRZ3Ol3U6XQpI0aMkPLz8zXTRFBrNoRRAH5FSKu3t9exf/9+tnbtWirJ9PsXX3jhrz/44ANdURTu9XkVXTewQtpsbm7+zspVaxatX79eKy0tU0tLS4jXm4ONue1GnZxiJa4kU6m4uLheUZRNy5YtU3t6eoRA1Nfv5E6nU8KEMaUK0zQN8gL5j5599tlXZ85PkHMSIjU371GCwT4oLS2FIUOGahzhSIJghpt5/jwWCPifwcqB5ua9Sxsbm65cv259qry80jl48CCqOFQMMWc4g0XtKedM7ujohJ07d6YIYQWmoX+Lc/71d95913Q6XNhJAfd/Qvm9T12gREO9Qw3NDz2r/pIu67EJrWSH1TFMgPefirJ2SxJx/cTtJdFuPFNELQlSfbzJuK0RixtAqTyvapZ02xmXwaIRcx9wAPyIENItdkgIvxngIB77xJtS/3sNTmRqYKNmKskTJ0zcfvrpc84+SoJalAA1Njaf9+677/xh85at8r49Lb69e/febhi8De045BJEYB3WfDY17b61vr7eDATy5dmzZ+w884xzrlJVEKaTXWeGRYXIzBsWz+XQEMiO7Q07RKhXLLiyRHRdh7mzZ2PXw+/Z22Uorq94+pnn73399dfMyZMmwOeuqcYc5cEjrqET/a/nnn9h0bYPPjCLSkrlM8+av/3UU09BdE5bv8GUYfYEKN60adPPODev3tPczIqLim48c8GCW15+8bU04k4tLZjN3Pnx49PPQ+F/RyneETPaFhShkfoRDRZ6OyNkGXCr9QcrpyTsaPS1cF1JagBJk8+fMlNeMGxC4oZ5F22rcPgR/nJnNoJDfP0/zMQ7+rBrnAiBdDqJqAAsrDzWeHTFm29d0bx376JoLAo9PT1nV1QM/suhDowiCpbX2dlVGImEyaxZM+nUKVN/4nCQbZlJ3ti4b1xvb/s94XBkpq7r7bW1z3TI2MOIgVFRUc5mzpz+ze31O9IZLYl+F44lS5aoR55fKBTNQIOEz4TCNNA1IPoiFotPTCSSUmlpGbhc7sR77238vskMJXPitkQhO7Pm8/pKAoECumfPHgxgqIlE4uyVb74dR38cNeSJAjk+U06JDOYxG2snPsf/bFpuQdNl8TxafTKxVABJQLDkJxoxndQjTR08Fi6eOJdcOPuMv4/1liJ12Lu4Czv5KvIFmX2fFKYjBjZXQEcJ0Rc1Nfj6yIx58MEH5by8POZyuzk67oaho28UG8AjN3VDEwTzDoeC91r4L+vXr3fMmTMntXXrtrs3bty0cM+ePeByucaqikMEAhKJJDidKsTjkVXYd9cKDhwaDQ0NIlJnvxXNxOPx5JGFqYLcE/NiNuMQLpzC+EE+eIfDqbS3d/Jnn31hptvpmonch5netFZ8wwpioUaMxxPc6XShdrTsI1FrJW6WWJDte3Vcc/yzJWnJAFazNJhoVG2rNVFYKYitLPQP0xmY6bSJjq3P4YGLZi+S5gytSlww7fRIiTN/vQpw6+9ffTWJrVeWVVcfN73zf/Kwg2UiR1NWVoY/PyJQqqpiRMt4d+06UU7WHxizfZrDqAFs3xYnJyFMUAm43W6K+w8EAq2BQABSyTQoigg2QDQSNeLxuNHd3S2bpqZhkGEgoHEWmkYkfzEMf+SlZIIFixcvPrxHsmBlsyKLhm5AnCU/wryQESj73AkzGXO73ZKu6yM550hmaTkmXCRwkaRUWbVq1THdhvnz57NPS6COC0JyiFHC7p6LvpDdd1cwyzDGdaz6Qg4ATnjAmavMqJomnTpqIiycdBoMD5Q9lgvyrwBgLwYauhKR0xcvWND6Xy7XXuEznRzH8QyEQBhHJlOPGOJv8VgsP53WMWhA3E6nAwVK7ENw4Yn+QDIGFFDDhMNRSCbTxdlYPs75LW6vd31PZ28pNv8oDORNXrNu3fXvvvuugZNXVV0OZgpu+E/9yaHmGTJkCMyZPbfVNIxu0awl23yzRUNWFVK3qW7C1i1bbMGmzOVyq5QitjEFiURMUEcfL5r/0xIoY0DAfTYfQwa8avfUxQifqemY8MB6c1Hf6fPkyhMrh8tjKofC9OFVML1iJASc7pqxuZUIFMV8yso9bW2j71i3DskCSBEh72Tt/6Sf9DEDn4FhMC5ROT+V0i9LJpME8+DijyaS76MGYhKlirmzYefC9zfXnRYMhtKjRo5ylFVU/E8wGGEZYZIkLMCFXYFA4fqiopLTGxt3G8VFdT/bt6/FyM31H0SHPhgM6sUFBa2DK4YcSKdTg9+v2zS1eU+z6cConscDTqfnJQA43/aJPtWh6xqvrKwgs2ZN+Skh5EHURgMdB4WlqbGpg1JahKZSOp2UAoHCp0tLS76yb99+befOXVU+n782GIw8gclnzkUcOmtYzAm5ublI9Lnv0xKoXMYZRsP7u7iLMnQD6Trt4lbsVi2cKCvMpzqcMCi/RCrz5cOo8kEwafBoKPcEtECO9+/jKob1FFPRnvPpw0CYgqSdNMJiG4xhARaPGx/3Hz0sxk/BjLxhw8ahra0tz2CAwaIPt7An2EQGB27Z0d4BrW1tWmFhoWP4iBEHi4uLn+rs7LnOSjJZJh6ivcePn/g/0Vhy/hsrXjfXrFnj6uzsuNfj8VhNxbHlKPYcZwyQMGXv3r3Q3dWtT5k6RSktLfs2IaRze8MOlym0FO7u6Ca7VdPJGfIGflykAGcZbmeaBgsGw+h70SeffFJGMzazDWL6amtFswOnYRiZ5DFLpTTX6NHD3+/s6uhoamwq2bb1Q72vN3R5aWnp5YcxuYnTOCSgGFApKir+ZOUb8+0LMwEuccgypfEUNyUH9lUFRZLB78kjTkkGr+qCiuJSqdifDxWBYij1F0GJLw+cRNkxpnCQ6XK76wPgQLLJNYSQ+uxjIG1YFdQgsvcjPtJ/eij8RIZEWQ6yNSZSSbqvZT80Ne8WzQUP9bG1e9eKvA8Dj8cjDRs+RJ06dWp02tQpV+O93rWrKQfJIZOJBFcVBSdqUVlZ4YM7duwu4tz4ydYtm2Hb1g9MS+Yy+7LmPk7wvLx86bRTT1XGj5+wduqUib9H7bBrV5MHuEm0dBJkmeYe7fwJYQ6HKtNoJMREm+GjA7vxqpyxaJSoikIURUL8KLMDF/3zZdkyRE5lqG64Mx6PovBTSaL5gruwt/esRDz2RsOOxrLdu5uhee8e9KUGFGXk2EilEnDqqaccBYNyAgNxThLAL8fll498/OYfj9KdMnM5nOBVnESSpPZCjz/HqzrCqqrclKM4x7gldYYM8rt2u0/s7nfYKWKA4WvV1cRrdTDHi2AA/3mQoU9roKOME3fnzp1/rKoad0ZF5WC/VWZhTcjD4gsW3RdHtIKsyB+MHD7i3XHjxtxLCMG2rLSzs3PniOFDG0tLi0e6XI4/YA9bRG2PHTvip729ve8XFuR/NxgMzkun0/xQzphh4hXb5bDcXP+bEydOfKW4uPDB2tpabJ7A9+zZc8+kSROmJRIJWlAQeAO/MW7cuOw5IerRPB7Pa7m5vrpLL710SkVFxT70044kJ7WR4+lRo0Y2eTzuMYFAXkNOTs5z9ucf0X7258aoUSN2uVyO6cXFpXs9HvffbHwiMvfMKS8ffEtV1bgbIpFIvoGJvAHiBbhsIAFvSWnRvk/sDWYVCHrsBJ61PFkD602wehPzCk2hZHJYOJ0mg/3+7LJvEZasq6uTDgnQyfEpD7tqnyOHd+7HmEwZlYWtTpNHmtZI1m9X4jYcWdVMLP9q3NH2n6nezXwvK5I3zA57H0YHcOS2nHMs+xkkmlET0nNkjjFru3wAKEGGLeyLdbRcZNb2PgDAe4P77bUFNROGx+0qrM6nHzu6/j9903ZryUCA/wAAAABJRU5ErkJggg==" alt="Brasil Digital" class="header-logo">
+                </div>
+                <div class="header-title">
+                    <h1>REGISTRO T&Eacute;CNICO<br><span class="header-subtitle-inline">BRASIL DIGITAL</span></h1>
+                    <p>Preenchimento em Campo</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div id="status-sinc" class="status-online"><i class="fa-solid fa-spinner fa-spin"></i> Baixando...</div>
+            </div>
+        </header>
+
+        <main class="form-container">
+            <form id="cto-form">
+
+                <div class="form-group">
+                    <label for="colaborador"><i class="fa-solid fa-user-gear"></i> Colaborador</label>
+                    <select id="colaborador" name="colaborador" required>
+                        <option value="">Selecione seu nome...</option>
+                        <option value="Jhonatan Renan Feitosa Figueira">Jhonatan Renan Feitosa Figueira</option>
+                        <option value="Arthur Martins Queiroz">Arthur Martins Queiroz</option>
+                        <option value="Railton Kley Chagas da Costa">Railton Kley Chagas da Costa</option>
+                    </select>
+                </div>
+                
+                <hr class="divider">
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: var(--btn-secondary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); user-select: none;">
+                        <input type="checkbox" id="ctoSemMac" style="width: 20px; height: 20px; accent-color: var(--btn-primary); cursor: pointer;">
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); text-transform: uppercase;">Registrar CTO sem MAC</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="slotPon">SLOT PON (Aba da Planilha)</label>
+                    <select id="slotPon" name="slotPon" required>
+                        <option value="">Aguardando Sincroniza&ccedil;&atilde;o...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mac">MAC (Buscar / Confirmar)</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="mac" name="mac" placeholder="Selecione o Slot Primeiro..." list="mac-list" required autocomplete="off" disabled>
+                        <i class="fa-solid fa-search"></i>
+                    </div>
+                    <datalist id="mac-list"></datalist>
+                </div>
+
+                <div class="form-group">
+                    <label for="cto">CTO DA CAIXA</label>
+                    <input type="text" id="cto" name="cto" placeholder="Ex: CTO.03.124" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="contrato">ID CONTRATO</label>
+                        <input type="text" id="contrato" name="contrato" placeholder="Autom&aacute;tico" readonly>
+                    </div>
+                    <div class="form-group half">
+                        <label for="tipoCliente">TIPO CLIENTE</label>
+                        <input type="text" id="tipoCliente" name="tipoCliente" placeholder="Autom&aacute;tico" readonly>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="form-group">
+                    <label for="localizacao">LOCALIZA&Ccedil;&Atilde;O EXATA (GPS do Poste)</label>
+                    <div class="input-with-button">
+                        <input type="text" id="localizacao" name="localizacao" placeholder="Aguardando GPS..." required readonly>
+                        <button type="button" id="btn-gps" class="btn-icon" title="Atualizar GPS"><i class="fa-solid fa-location-crosshairs"></i></button>
+                    </div>
+                    <small style="color: #94A3B8; font-size: 0.65rem; display: block; margin-top: 4px;">Fique abaixo da caixa e aguarde o Erro ficar abaixo de 10m.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="lacre">LACRE A COLOCAR</label>
+                    <input type="text" id="lacre" name="lacre" placeholder="Ex: BDO002205" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sinalCto">SINAL DA CTO (dBm)</label>
+                    <!-- Somente SINAL DA CTO (coluna G), o SINAL DO CLIENTE (coluna F) foi ignorado no salvamento -->
+                    <div class="input-with-button">
+                        <input type="text" inputmode="decimal" pattern="-?[0-9]*([.,][0-9]+)?" id="sinalCto" name="sinalCto" placeholder="Ex: -24.53" required>
+                        <button type="button" id="btn-sinal-negativo" class="btn-icon" title="Alternar Sinal Positivo/Negativo" style="font-weight: 600; font-size: 1.1rem; width: 52px; font-family: 'Inter', sans-serif;">+/-</button>
+                    </div>
+                </div>
+
+<div class="form-group">
+    <label>FOTO DO MAC/CTO (Obrigat&oacute;rio)</label>
+    <div class="file-upload-wrapper" id="upload-wrapper">
+        <i class="fa-solid fa-camera" id="upload-icon" style="margin-right: 8px;"></i>
+        <span id="upload-text">Tirar Foto</span>
+        <input type="file" id="fotoMac" accept="image/*" capture="environment" required>
+    </div>
+</div>
+
+<!-- NOVO CAMPO: INFORMA&Ccedil;&Otilde;ES / OBSERVA&Ccedil;&Otilde;ES -->
+<div id="obs-container" class="obs-card">
+    <i class="fa-solid fa-circle-exclamation obs-icon"></i>
+    <div class="obs-content">
+        <div class="obs-title">Aviso Importante do MAC</div>
+        <div id="obs-texto" class="obs-text"></div>
+    </div>
+</div>
+
+<div class="form-actions">
+    <button type="button" class="btn btn-secondary" id="btn-cancelar">Limpar</button>
+    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar</button>
+</div>
+</form>
+</main>
+
+<div id="toast" class="toast hidden">
+    <i class="fa-solid fa-check-circle"></i>
+    <span>Enviado com Sucesso!</span>
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // COLE AQUI A NOVA URL GERADA NO NOVO DEPLOY DO APPS SCRIPT
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6tdT0URlgf4ES50MHQnAwlpgJDzp8w4mF8I2qUA5s71Y1J984dnDn3SKa_HcHhBlT/exec";
+
+        // CONFIGURAÇÕES DO FIREBASE (COLE SUAS CREDENCIAIS AQUI)
+        const firebaseConfig = {
+            apiKey: "AIzaSyA4NkHmvAhMwQl50xXZvnEP1hRRt0vipC8",
+            authDomain: "doc-de-cto---registro.firebaseapp.com",
+            databaseURL: "https://doc-de-cto---registro-default-rtdb.firebaseio.com",
+            projectId: "doc-de-cto---registro",
+            storageBucket: "doc-de-cto---registro.firebasestorage.app",
+            messagingSenderId: "781167224760",
+            appId: "1:781167224760:web:63535de05c6e79502fd14d"
+        };
+
+        let useFirebase = false;
+        if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "COLE_AQUI_SUA_API_KEY") {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                useFirebase = true;
+                console.log("Firebase inicializado com sucesso.");
+            } catch (fbErr) {
+                console.error("Erro ao inicializar o Firebase:", fbErr);
+            }
+        }
+
+        let fullDatabase = {};
+        let currentMacs = [];
+
+        const colaboradorSelect = document.getElementById('colaborador');
+        const slotPonSelect = document.getElementById('slotPon');
+        const macInput = document.getElementById('mac');
+        const ctoInput = document.getElementById('cto');
+        const contratoInput = document.getElementById('contrato');
+        const tipoClienteInput = document.getElementById('tipoCliente');
+        const obsContainer = document.getElementById('obs-container');
+        const obsTexto = document.getElementById('obs-texto');
+        const fotoInput = document.getElementById('fotoMac');
+        const uploadWrapper = document.getElementById('upload-wrapper');
+        const uploadText = document.getElementById('upload-text');
+        const uploadIcon = document.getElementById('upload-icon');
+        const datalist = document.getElementById('mac-list');
+        const statusSinc = document.getElementById('status-sinc');
+        const toast = document.getElementById('toast');
+        const toastMsg = toast.querySelector('span');
+        const locInput = document.getElementById('localizacao');
+        const btnGps = document.getElementById('btn-gps');
+        const form = document.getElementById('cto-form');
+        const ctoSemMacCheckbox = document.getElementById('ctoSemMac');
+
+        let photoBase64Value = "";
+
+        // 0. CARREGAR/SALVAR COLABORADOR NO LOCAL STORAGE
+        const savedColaborador = localStorage.getItem('colaboradorSalvo');
+        if (savedColaborador) {
+            colaboradorSelect.value = savedColaborador;
+        }
+        colaboradorSelect.addEventListener('change', (e) => {
+            localStorage.setItem('colaboradorSalvo', e.target.value);
+        });
+
+        function handleCtoSemMacToggle() {
+            const isSemMac = ctoSemMacCheckbox.checked;
+            const slotGroup = slotPonSelect.closest('.form-group');
+            const macGroup = macInput.closest('.form-group');
+            const lacreInput = document.getElementById('lacre');
+            const lacreGroup = lacreInput.closest('.form-group');
+            const sinalCtoInput = document.getElementById('sinalCto');
+            const sinalGroup = sinalCtoInput.closest('.form-group');
+            
+            if (isSemMac) {
+                slotPonSelect.removeAttribute('required');
+                macInput.removeAttribute('required');
+                lacreInput.removeAttribute('required');
+                sinalCtoInput.removeAttribute('required');
+                
+                slotPonSelect.disabled = true;
+                macInput.disabled = true;
+                lacreInput.disabled = true;
+                sinalCtoInput.disabled = true;
+                
+                slotPonSelect.value = "";
+                macInput.value = "CTO SEM MACS";
+                lacreInput.value = "";
+                sinalCtoInput.value = "";
+                
+                slotGroup.style.opacity = '0.5';
+                macGroup.style.opacity = '0.5';
+                lacreGroup.style.opacity = '0.5';
+                sinalGroup.style.opacity = '0.5';
+                
+                contratoInput.value = "";
+                tipoClienteInput.value = "";
+                obsContainer.classList.remove('show');
+                obsTexto.innerText = "";
+            } else {
+                slotPonSelect.setAttribute('required', 'required');
+                macInput.setAttribute('required', 'required');
+                lacreInput.setAttribute('required', 'required');
+                sinalCtoInput.setAttribute('required', 'required');
+                
+                slotPonSelect.disabled = false;
+                macInput.disabled = false;
+                lacreInput.disabled = false;
+                sinalCtoInput.disabled = false;
+                
+                if (macInput.value === "CTO SEM MACS") {
+                    macInput.value = "";
+                }
+                
+                slotGroup.style.opacity = '1';
+                macGroup.style.opacity = '1';
+                lacreGroup.style.opacity = '1';
+                sinalGroup.style.opacity = '1';
+                
+                const savedSlot = localStorage.getItem('slotPonSalvo');
+                if (savedSlot && fullDatabase[savedSlot]) {
+                    slotPonSelect.value = savedSlot;
+                    slotPonSelect.dispatchEvent(new Event('change'));
+                }
+            }
+        }
+        ctoSemMacCheckbox.addEventListener('change', handleCtoSemMacToggle);
+
+        // 0.1 PREVIEW DA FOTO (Comprimir para Base64) - Robusto para Android
+        let fotoProcessando = false;
+
+        fotoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Indicar que está processando (NÃO confirmar antes de pronto)
+            fotoProcessando = true;
+            photoBase64Value = "";
+            uploadWrapper.classList.add('has-file');
+            uploadText.innerText = "Processando foto...";
+            uploadIcon.className = "fa-solid fa-spinner fa-spin";
+
+            // Timeout de segurança: se não processar em 15s, algo falhou
+            const timeoutId = setTimeout(() => {
+                if (fotoProcessando) {
+                    fotoProcessando = false;
+                    photoBase64Value = "";
+                    uploadWrapper.classList.remove('has-file');
+                    uploadText.innerText = "Tirar Foto";
+                    uploadIcon.className = "fa-solid fa-camera";
+                    alert("A foto demorou demais para processar. Tente novamente.");
+                }
+            }, 15000);
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const img = new Image();
+
+                img.onload = function () {
+                    try {
+                        // Comprimir a imagem (Max Width 800px para evitar travamento de rede)
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Converter para base64 com qualidade 70%
+                        const resultado = canvas.toDataURL('image/jpeg', 0.7);
+
+                        if (resultado && resultado.length > 100) {
+                            photoBase64Value = resultado;
+                            fotoProcessando = false;
+                            clearTimeout(timeoutId);
+                            uploadText.innerText = "Foto Anexada!";
+                            uploadIcon.className = "fa-solid fa-check";
+                        } else {
+                            throw new Error("Base64 vazio ou inv\u00e1lido");
+                        }
+                    } catch (compressErr) {
+                        fotoProcessando = false;
+                        clearTimeout(timeoutId);
+                        photoBase64Value = "";
+                        uploadWrapper.classList.remove('has-file');
+                        uploadText.innerText = "Tirar Foto";
+                        uploadIcon.className = "fa-solid fa-camera";
+                        alert("Erro ao comprimir a foto. Tente tirar novamente.");
+                    }
+                };
+
+                img.onerror = function () {
+                    fotoProcessando = false;
+                    clearTimeout(timeoutId);
+                    photoBase64Value = "";
+                    uploadWrapper.classList.remove('has-file');
+                    uploadText.innerText = "Tirar Foto";
+                    uploadIcon.className = "fa-solid fa-camera";
+                    alert("Erro ao carregar a imagem. Tente tirar a foto novamente.");
+                };
+
+                img.src = event.target.result;
+            };
+
+            reader.onerror = function () {
+                fotoProcessando = false;
+                clearTimeout(timeoutId);
+                photoBase64Value = "";
+                uploadWrapper.classList.remove('has-file');
+                uploadText.innerText = "Tirar Foto";
+                uploadIcon.className = "fa-solid fa-camera";
+                alert("Erro ao ler o arquivo da foto. Tente novamente.");
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // 1. CARREGAR TODAS AS ABAS DA PLANILHA
+        async function loadDatabase() {
+            try {
+                if (useFirebase) {
+                    const snapshot = await firebase.database().ref('/master').once('value');
+                    fullDatabase = snapshot.val() || {};
+                } else {
+                    const res = await fetch(SCRIPT_URL);
+                    fullDatabase = await res.json();
+                }
+
+                slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
+
+                Object.keys(fullDatabase).forEach(sheetName => {
+                    const opt = document.createElement('option');
+                    opt.value = sheetName;
+                    opt.textContent = sheetName;
+                    slotPonSelect.appendChild(opt);
+                });
+
+                statusSinc.innerHTML = useFirebase 
+                    ? '<i class="fa-solid fa-wifi"></i> Banco Conectado (Firebase)'
+                    : '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas (Sheets)';
+
+                const savedSlot = localStorage.getItem('slotPonSalvo');
+                if (savedSlot && fullDatabase[savedSlot]) {
+                    slotPonSelect.value = savedSlot;
+                    slotPonSelect.dispatchEvent(new Event('change'));
+                }
+
+            } catch (err) {
+                console.error("Erro ao sincronizar base:", err);
+                statusSinc.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #F59E0B"></i> Erro ao Sincronizar';
+            }
+        }
+        if (useFirebase || SCRIPT_URL.startsWith("http")) { loadDatabase(); }
+
+        // 2. QUANDO O TÉCNICO ESCOLHE A ABA
+        slotPonSelect.addEventListener('change', (e) => {
+            const selectedSlot = e.target.value;
+
+            if (!selectedSlot) {
+                localStorage.removeItem('slotPonSalvo');
+                macInput.disabled = true;
+                macInput.placeholder = "Selecione o Slot Primeiro...";
+                return;
+            }
+
+            localStorage.setItem('slotPonSalvo', selectedSlot);
+            macInput.disabled = false;
+            macInput.placeholder = "Digite ou selecione o MAC...";
+            currentMacs = fullDatabase[selectedSlot] || [];
+
+            datalist.innerHTML = '';
+            currentMacs.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.mac;
+                datalist.appendChild(option);
+            });
+
+            limparCampos(false);
+        });
+
+        // 3. BUSCAR O MAC ESPECÍFICO DESSA ABA E EXIBIR INFORMAÇÕES
+        function searchMAC() {
+            if (ctoSemMacCheckbox.checked) return;
+            let typed = macInput.value.trim().toUpperCase();
+            const found = currentMacs.find(x => x.mac.toUpperCase() === typed);
+
+            if (found) {
+                ctoInput.value = found.cto;
+                contratoInput.value = found.contrato;
+                tipoClienteInput.value = found.tipoCliente;
+
+                // LÓGICA DA OBSERVAÇÃO / INFORMAÇÃO
+                if (found.observacao && found.observacao.trim() !== "") {
+                    obsTexto.innerText = found.observacao;
+                    obsContainer.classList.add('show');
+                } else {
+                    obsContainer.classList.remove('show');
+                    obsTexto.innerText = "";
+                }
+                verificarLocalizacaoCTO(found.cto);
+            } else {
+                contratoInput.value = '';
+                tipoClienteInput.value = '';
+                obsContainer.classList.remove('show');
+                obsTexto.innerText = "";
+            }
+        }
+        function verificarLocalizacaoCTO(ctoVal) {
+            if (!ctoVal) {
+                resetarParaGPS();
+                return false;
+            }
+            const slotVal = slotPonSelect.value;
+            if (!slotVal) return false;
+
+            // 1. Tentar pegar a localização direto da planilha (Master GPS)
+            const macsDesteSlot = fullDatabase[slotVal] || [];
+            const ctoComLoc = macsDesteSlot.find(m => m.cto.toUpperCase() === ctoVal.toUpperCase() && m.localizacao && m.localizacao.trim() !== "");
+
+            if (ctoComLoc) {
+                if (watchId) navigator.geolocation.clearWatch(watchId);
+                locInput.value = ctoComLoc.localizacao + " (Copiado do Banco de Dados)";
+                btnGps.innerHTML = '<i class="fa-solid fa-cloud-arrow-down" style="color: var(--brand-purple)"></i>';
+                return true;
+            }
+
+            // 2. Se não tem na planilha, pegar do cache local do celular
+            const cacheKey = 'loc_cto_' + slotVal.trim() + '_' + ctoVal.trim().toUpperCase();
+            const savedLoc = localStorage.getItem(cacheKey);
+
+            if (savedLoc) {
+                if (watchId) navigator.geolocation.clearWatch(watchId);
+                locInput.value = savedLoc + " (Copiado da mesma CTO local)";
+                btnGps.innerHTML = '<i class="fa-solid fa-clone" style="color: var(--success)"></i>';
+                return true;
+            }
+
+            // 3. Se nenhuma das anteriores achar localização, reinicia o GPS para medição limpa
+            resetarParaGPS();
+            return false;
+        }
+
+        function resetarParaGPS() {
+            if (watchId) navigator.geolocation.clearWatch(watchId);
+            locInput.value = "";
+            btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+            getGPS();
+        }
+        ctoInput.addEventListener('input', (e) => {
+            verificarLocalizacaoCTO(e.target.value.trim());
+        });
+
+        macInput.addEventListener('input', searchMAC);
+        macInput.addEventListener('change', searchMAC);
+        macInput.addEventListener('blur', (e) => {
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9:]/g, '');
+        });
+
+        // 3.1 CONTROLE DO SINAL DA CTO (BOTÃO +/- E FORMATAÇÃO INTELIGENTE)
+        const sinalCtoInput = document.getElementById('sinalCto');
+        const btnSinalNegativo = document.getElementById('btn-sinal-negativo');
+
+        btnSinalNegativo.addEventListener('click', () => {
+            let val = sinalCtoInput.value.trim();
+            if (val.startsWith('-')) {
+                sinalCtoInput.value = val.substring(1);
+            } else if (val !== '') {
+                sinalCtoInput.value = '-' + val;
+            } else {
+                sinalCtoInput.value = '-';
+            }
+            sinalCtoInput.focus();
+        });
+
+        sinalCtoInput.addEventListener('blur', (e) => {
+            let val = e.target.value.trim();
+            // Normalizar vírgula para ponto decimal
+            val = val.replace(',', '.');
+            if (val !== '' && !isNaN(val)) {
+                let num = parseFloat(val);
+                // Como sinal da CTO é sempre negativo em campo, garantimos o sinal de menos automaticamente
+                if (num > 0) num = -num;
+                e.target.value = num.toFixed(2);
+            } else if (val === '-') {
+                e.target.value = '';
+            }
+        });
+
+        // 4. GPS DE ALTA PRECISÃO (Melhorado)
+        let watchId;
+        let melhorPrecisao = 99999; // Armazena a melhor precisão encontrada
+
+        function getGPS() {
+            if (watchId) navigator.geolocation.clearWatch(watchId);
+            locInput.value = "Calculando GPS Exato (Aguarde)...";
+            btnGps.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            melhorPrecisao = 99999; // reseta a melhor precisão ao clicar de novo
+
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const acc = position.coords.accuracy;
+
+                        // Só atualiza na tela se a nova leitura for mais exata que a anterior
+                        if (acc <= melhorPrecisao) {
+                            melhorPrecisao = acc;
+
+                            // Removido o toFixed(6) para enviar todas as casas decimais como o Google Maps
+                            locInput.value = `${lat}, ${lng} (Erro: ${acc.toFixed(0)}m)`;
+
+                            if (acc <= 15) {
+                                btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--success)"></i>';
+                            } else {
+                                btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--warning)"></i>';
+                            }
+
+                            // Agora não para de tentar melhorar, a menos que alcance 3 metros (quase perfeito)
+                            if (acc <= 3) navigator.geolocation.clearWatch(watchId);
+                        }
+                    },
+                    (error) => {
+                        locInput.value = "C\u00e9u aberto / Permiss\u00e3o negada";
+                        btnGps.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                    },
+                    { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
+                );
+            } else { locInput.value = "Sem GPS"; }
+        }
+        getGPS();
+        btnGps.addEventListener('click', getGPS);
+
+        // 5. ENVIO PARA O GOOGLE (SOMENTE ATUALIZAÇÃO E SALVAR FOTO/LOG)
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!SCRIPT_URL.startsWith("http")) {
+                alert("Aviso: Falta a URL do Apps Script no c\u00f3digo!");
+                return;
+            }
+
+            if (fotoProcessando) {
+                alert("A foto ainda est\u00e1 sendo processada. Aguarde o \u00edcone mudar para \u2713 antes de enviar.");
+                return;
+            }
+
+            if (photoBase64Value === "") {
+                alert("Tire a foto antes de enviar! Verifique se aparece 'Foto Anexada!' com \u2713 verde.");
+                return;
+            }
+
+            const btnSubmit = form.querySelector('button[type="submit"]');
+            const originalBtnText = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Atualizando...';
+
+            const isSemMac = ctoSemMacCheckbox.checked;
+            const slotFinalCapturado = isSemMac ? "CTO SEM MACS" : slotPonSelect.value;
+            const macFinal = isSemMac ? "CTO SEM MACS" : macInput.value.trim().toUpperCase();
+            const lacreFinal = isSemMac ? "" : document.getElementById('lacre').value.trim().toUpperCase();
+            const sinalFinal = isSemMac ? "" : document.getElementById('sinalCto').value.trim();
+            const locFinalCapturada = locInput.value.trim().split(' (')[0];
+            const ctoFinalCapturada = ctoInput.value.trim().toUpperCase();
+
+            const formData = new URLSearchParams();
+            formData.append('slotPon', slotFinalCapturado);
+            formData.append('mac', macFinal);
+            formData.append('cto', ctoFinalCapturada);
+            formData.append('localizacao', locFinalCapturada);
+            formData.append('lacre', lacreFinal);
+            formData.append('sinalCto', sinalFinal);
+            formData.append('colaborador', colaboradorSelect.value);
+            formData.append('photoBase64', photoBase64Value);
+
+            // Salva no cache a localização EXATA que foi injetada no formulário agora
+            if (!isSemMac && ctoFinalCapturada && slotFinalCapturado && locFinalCapturada && !locFinalCapturada.includes("Calculando") && !locFinalCapturada.includes("Sem GPS")) {
+                const cacheKey = 'loc_cto_' + slotFinalCapturado + '_' + ctoFinalCapturada;
+                localStorage.setItem(cacheKey, locFinalCapturada);
+            }
+
+            if (useFirebase) {
+                // Envio direto do Base64 para o Realtime Database (bypass Firebase Storage)
+                try {
+                    btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gravando...';
+
+                    const now = new Date();
+                    // Formatar data/hora no padrão brasileiro de Manaus
+                    const dataHoraStr = now.toLocaleDateString('pt-BR', { timeZone: 'America/Manaus' }) + ' ' + now.toLocaleTimeString('pt-BR', { timeZone: 'America/Manaus' });
+
+                    // Gravar no Realtime Database (/registros)
+                    const databaseRef = firebase.database().ref('/registros').push();
+                    await databaseRef.set({
+                        slotPon: slotFinalCapturado,
+                        mac: macFinal,
+                        cto: ctoFinalCapturada,
+                        localizacao: locFinalCapturada,
+                        lacre: lacreFinal,
+                        sinalCto: sinalFinal,
+                        colaborador: colaboradorSelect.value,
+                        fotoBase64: photoBase64Value, // Envia como String Base64 direto no JSON
+                        dataHora: dataHoraStr,
+                        sincronizado: false
+                    });
+
+                    // Atualizar localmente a CTO e localização do MAC na memória
+                    if (!isSemMac) {
+                        const macsDesteSlot = fullDatabase[slotFinalCapturado] || [];
+                        const found = macsDesteSlot.find(x => x.mac.toUpperCase() === macFinal.toUpperCase());
+                        if (found) {
+                            found.cto = ctoFinalCapturada;
+                            found.localizacao = locFinalCapturada;
+                        }
+                    }
+
+                    showToast("Enviado com Sucesso!");
+
+                    const slotAtual = slotPonSelect.value;
+                    const colabAtual = colaboradorSelect.value;
+                    limparCampos(true);
+                    slotPonSelect.value = slotAtual;
+                    colaboradorSelect.value = colabAtual;
+                    getGPS();
+
+                } catch (dbErr) {
+                    console.error("Erro ao salvar dados no Firebase:", dbErr);
+                    alert("Erro ao registrar os dados. Tente novamente.");
+                }
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalBtnText;
+            } else {
+                // Fluxo Legado (Google Apps Script)
+                try {
+                    await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+
+                    showToast("Dados enviados para Planilha!");
+
+                    const slotAtual = slotPonSelect.value;
+                    const colabAtual = colaboradorSelect.value;
+
+                    limparCampos(true);
+
+                    slotPonSelect.value = slotAtual;
+                    colaboradorSelect.value = colabAtual;
+                    getGPS();
+                } catch (err) {
+                    alert("Erro de conex\u00e3o ao salvar.");
+                }
+
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalBtnText;
+            }
+        });
+
+        document.getElementById('btn-cancelar').addEventListener('click', () => {
+            if (confirm('Apagar tudo?')) {
+                const slotAtual = slotPonSelect.value;
+                const colabAtual = colaboradorSelect.value;
+                limparCampos(true);
+                slotPonSelect.value = slotAtual;
+                colaboradorSelect.value = colabAtual;
+                getGPS();
+            }
+        });
+
+        function limparCampos(limparMac) {
+            ctoSemMacCheckbox.checked = false;
+            handleCtoSemMacToggle();
+
+            if (limparMac) macInput.value = '';
+            ctoInput.value = '';
+            contratoInput.value = '';
+            tipoClienteInput.value = '';
+            document.getElementById('lacre').value = '';
+            document.getElementById('sinalCto').value = '';
+            obsContainer.classList.remove('show');
+            obsTexto.innerText = "";
+
+            // Limpar arquivo de foto
+            fotoInput.value = "";
+            photoBase64Value = "";
+            uploadWrapper.classList.remove('has-file');
+            uploadText.innerText = "Tirar Foto";
+            uploadIcon.className = "fa-solid fa-camera";
+        }
+
+        function showToast(msg) {
+            toastMsg.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+    });
+</script>
+</body>
+
+</html>
