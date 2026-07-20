@@ -444,7 +444,7 @@
                     let activePops = 0;
                     Object.keys(firebaseMasterData).forEach(popKey => {
                         const popData = firebaseMasterData[popKey];
-                        if (popData && typeof popData === 'object') {
+                        if (popData && typeof popData === 'object' && !Array.isArray(popData)) {
                             activePops++;
                             const popName = popData._popName || popKey;
                             const opt = document.createElement('option');
