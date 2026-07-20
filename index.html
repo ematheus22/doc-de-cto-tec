@@ -103,6 +103,13 @@
                 
                 <hr class="divider">
 
+                <div class="form-group" id="pop-group">
+                    <label for="popSelect"><i class="fa-solid fa-map-location-dot"></i> Bairro / POP</label>
+                    <select id="popSelect" name="popSelect" required>
+                        <option value="">Aguardando Sincroniza&ccedil;&atilde;o...</option>
+                    </select>
+                </div>
+
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: var(--btn-secondary); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); user-select: none;">
                         <input type="checkbox" id="ctoSemMac" style="width: 20px; height: 20px; accent-color: var(--btn-primary); cursor: pointer;">
@@ -248,8 +255,8 @@
         const locInput = document.getElementById('localizacao');
         const btnGps = document.getElementById('btn-gps');
         const form = document.getElementById('cto-form');
-        const ctoSemMacCheckbox = document.getElementById('ctoSemMac');
-
+        const popSelect = document.getElementById('popSelect');
+        let firebaseMasterData = {};
         let photoBase64Value = "";
 
         // 0. CARREGAR/SALVAR COLABORADOR NO LOCAL STORAGE
@@ -427,30 +434,63 @@
             try {
                 if (useFirebase) {
                     const snapshot = await firebase.database().ref('/master').once('value');
-                    fullDatabase = snapshot.val() || {};
+                    firebaseMasterData = snapshot.val() || {};
+                    
+                    popSelect.innerHTML = '<option value="">Selecione o Bairro / POP...</option>';
+                    popSelect.closest('.form-group').style.display = 'block';
+                    popSelect.setAttribute('required', 'required');
+                    
+                    let activePops = 0;
+                    Object.keys(firebaseMasterData).forEach(popKey => {
+                        const popData = firebaseMasterData[popKey];
+                        if (popData && typeof popData === 'object') {
+                            activePops++;
+                            const popName = popData._popName || popKey;
+                            const opt = document.createElement('option');
+                            opt.value = popKey;
+                            opt.textContent = popName;
+                            popSelect.appendChild(opt);
+                        }
+                    });
+                    
+                    slotPonSelect.innerHTML = '<option value="">Selecione o Bairro Primeiro...</option>';
+                    
+                    if (activePops === 1) {
+                        const singlePopKey = Object.keys(firebaseMasterData)[0];
+                        popSelect.value = singlePopKey;
+                        handlePopChange();
+                    } else {
+                        const savedPop = localStorage.getItem('popSalvo');
+                        if (savedPop && firebaseMasterData[savedPop]) {
+                            popSelect.value = savedPop;
+                            handlePopChange();
+                        }
+                    }
                 } else {
                     const res = await fetch(SCRIPT_URL);
                     fullDatabase = await res.json();
+                    
+                    popSelect.removeAttribute('required');
+                    popSelect.closest('.form-group').style.display = 'none';
+                    
+                    slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
+                    Object.keys(fullDatabase).forEach(sheetName => {
+                        const opt = document.createElement('option');
+                        opt.value = sheetName;
+                        opt.textContent = sheetName;
+                        slotPonSelect.appendChild(opt);
+                    });
+                    
+                    const savedSlot = localStorage.getItem('slotPonSalvo');
+                    if (savedSlot && fullDatabase[savedSlot]) {
+                        slotPonSelect.value = savedSlot;
+                        slotPonSelect.dispatchEvent(new Event('change'));
+                    }
                 }
-
-                slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
-
-                Object.keys(fullDatabase).forEach(sheetName => {
-                    const opt = document.createElement('option');
-                    opt.value = sheetName;
-                    opt.textContent = sheetName;
-                    slotPonSelect.appendChild(opt);
-                });
 
                 statusSinc.innerHTML = useFirebase 
                     ? '<i class="fa-solid fa-wifi"></i> Banco Conectado (Firebase)'
                     : '<i class="fa-solid fa-wifi"></i> Abas Sincronizadas (Sheets)';
-
-                const savedSlot = localStorage.getItem('slotPonSalvo');
-                if (savedSlot && fullDatabase[savedSlot]) {
-                    slotPonSelect.value = savedSlot;
-                    slotPonSelect.dispatchEvent(new Event('change'));
-                }
 
             } catch (err) {
                 console.error("Erro ao sincronizar base:", err);
@@ -458,6 +498,46 @@
             }
         }
         if (useFirebase || SCRIPT_URL.startsWith("http")) { loadDatabase(); }
+
+        function handlePopChange() {
+            const selectedPop = popSelect.value;
+            if (!selectedPop) {
+                localStorage.removeItem('popSalvo');
+                slotPonSelect.innerHTML = '<option value="">Selecione o Bairro Primeiro...</option>';
+                macInput.disabled = true;
+                macInput.placeholder = "Selecione o Bairro Primeiro...";
+                return;
+            }
+            
+            localStorage.setItem('popSalvo', selectedPop);
+            
+            const popData = firebaseMasterData[selectedPop] || {};
+            fullDatabase = {};
+            
+            slotPonSelect.innerHTML = '<option value="">Selecione o Slot PON...</option>';
+            
+            Object.keys(popData).forEach(key => {
+                if (key !== "_popName") {
+                    fullDatabase[key] = popData[key];
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.textContent = key;
+                    slotPonSelect.appendChild(opt);
+                }
+            });
+            
+            const savedSlot = localStorage.getItem('slotPonSalvo');
+            if (savedSlot && fullDatabase[savedSlot]) {
+                slotPonSelect.value = savedSlot;
+                slotPonSelect.dispatchEvent(new Event('change'));
+            } else {
+                macInput.disabled = true;
+                macInput.value = "";
+                macInput.placeholder = "Selecione o Slot Primeiro...";
+                limparCampos(false);
+            }
+        }
+        popSelect.addEventListener('change', handlePopChange);
 
         // 2. QUANDO O TÉCNICO ESCOLHE A ABA
         slotPonSelect.addEventListener('change', (e) => {
@@ -670,6 +750,10 @@
             const locFinalCapturada = locInput.value.trim().split(' (')[0];
             const ctoFinalCapturada = ctoInput.value.trim().toUpperCase();
 
+            const selectedPopKey = popSelect.value;
+            const selectedPopData = firebaseMasterData[selectedPopKey] || {};
+            const popNameFinal = selectedPopData._popName || "";
+
             const formData = new URLSearchParams();
             formData.append('slotPon', slotFinalCapturado);
             formData.append('mac', macFinal);
@@ -679,6 +763,8 @@
             formData.append('sinalCto', sinalFinal);
             formData.append('colaborador', colaboradorSelect.value);
             formData.append('photoBase64', photoBase64Value);
+            formData.append('popKey', selectedPopKey);
+            formData.append('popName', popNameFinal);
 
             // Salva no cache a localização EXATA que foi injetada no formulário agora
             if (!isSemMac && ctoFinalCapturada && slotFinalCapturado && locFinalCapturada && !locFinalCapturada.includes("Calculando") && !locFinalCapturada.includes("Sem GPS")) {
@@ -707,6 +793,8 @@
                         colaborador: colaboradorSelect.value,
                         fotoBase64: photoBase64Value, // Envia como String Base64 direto no JSON
                         dataHora: dataHoraStr,
+                        popKey: selectedPopKey || "",
+                        popName: popNameFinal || "",
                         sincronizado: false
                     });
 
@@ -722,9 +810,14 @@
 
                     showToast("Enviado com Sucesso!");
 
+                    const popAtual = popSelect.value;
                     const slotAtual = slotPonSelect.value;
                     const colabAtual = colaboradorSelect.value;
                     limparCampos(true);
+                    if (useFirebase) {
+                        popSelect.value = popAtual;
+                        handlePopChange();
+                    }
                     slotPonSelect.value = slotAtual;
                     colaboradorSelect.value = colabAtual;
                     getGPS();
@@ -761,9 +854,14 @@
 
         document.getElementById('btn-cancelar').addEventListener('click', () => {
             if (confirm('Apagar tudo?')) {
+                const popAtual = popSelect.value;
                 const slotAtual = slotPonSelect.value;
                 const colabAtual = colaboradorSelect.value;
                 limparCampos(true);
+                if (useFirebase) {
+                    popSelect.value = popAtual;
+                    handlePopChange();
+                }
                 slotPonSelect.value = slotAtual;
                 colaboradorSelect.value = colabAtual;
                 getGPS();
